@@ -27,7 +27,7 @@
          <p class="fs12">{{ item.title }}</p>
        </view>
      </view>
-    
+    <authorization v-if="authorDialogVisibility" />
 	</view>
 </template>
 
@@ -35,6 +35,7 @@
 	export default {
 		data() {
 			return {
+        authorDialogVisibility: true,
         classList: [{
           title: '桌上冰壶',
           src: '/static/1.png',

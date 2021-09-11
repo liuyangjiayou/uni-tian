@@ -1,5 +1,5 @@
 <template>
-  <image :style="{ width, height }" :src="src" :mode="mode" />
+  <image :src="src" :mode="mode" :style="{ width, height }" />
 </template>
 
 <script>
@@ -23,9 +23,6 @@ export default {
       default: 'aspectFill',
     }
   },
-  mounted() {
-    console.log(this.$attrs);
-  }
 }
 </script>
 

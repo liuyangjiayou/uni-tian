@@ -1,44 +1,62 @@
 <template>
-  <view class="al-dialog">
-    <view :style="{ ...initBgConfig, ...bgConfig }" class="bg" />
-    <view>
-      <text>我是title</text>
-      <text>x</text>
-    </view>
-    <view class="content">
-      我是内容插槽
-      <slot />
+  <view v-if="value" class="flex align-center justify-center al-dialog">
+    <view class="content pb20 px20">
+      <view v-if="title" class="flex align-center justify-center title relative">
+        <text>{{ title }}</text>
+        <text class="close absolute" @click="close">x</text>
+      </view>
+      <slot name="content" />
     </view>
   </view>
 </template>
 
 <script>
 export default {
-  name: 'Dialog',
+  name: 'AlDialog',
   props: {
-    bgConfig: {
-      type: Object,
-      default: () => ()
+    value: {
+      type: Boolean,
+      default: false,
+    },
+    title: {
+      type: String,
+      default: '提示',
     }
   },
   data() {
     return {
-      initBgConfig: {
-        backgroundColor: 'rgba(0, 0, 0, .7)',
-      }
     };
+  },
+  methods: {
+    close() {
+      this.$emit('input', false);
+      this.$emit('close');
+    }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.content{
+  min-width: 400rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  overflow: hidden;
+  .title{
+    height: 80rpx;
+    background: #fff;
+  }
+  .close{
+    position: absolute;
+    right: 0rpx;
+  }
+}
 .al-dialog{
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-}
-.bg{
-  background: #000;
-  opacity: 1;
+  background-color: rgba(0, 0, 0, .7);
 }
 </style>
