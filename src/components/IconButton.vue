@@ -1,5 +1,5 @@
 <template>
-  <view class="flex flex-column align-center">
+  <view class="flex flex-column align-center" @click="handlerClick">
     <al-image :src="src" />
     <text class="fs14">{{ title }}</text>
   </view>
@@ -18,6 +18,11 @@ export default {
       default: '/static/logo.png'
     },
   },
+  methods: {
+    handlerClick(){
+      this.$emit('handlerClick')
+    }
+  }
 }
 </script>
 
