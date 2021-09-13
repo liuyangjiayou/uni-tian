@@ -41,3 +41,11 @@ export function getRun(data) {
         data,
     })
 }
+
+// H5的页面 首页登录
+export function h5login(data) {
+    return http({
+        url: '/user/h5login',
+        data,
+    })
+}

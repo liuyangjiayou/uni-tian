@@ -97,9 +97,11 @@ export default {
       if (!this.token) {
         return this.authorDialogVisibility = true;
       }
+      // #ifdef MP-WEIXIN
       uni.navigateTo({
         url: `/pages/${type}/${type}`
       })
+      // #endif
     }
   }
 }

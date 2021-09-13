@@ -11,7 +11,6 @@ const modules = files.keys().reduce((modules, path) => {
     return modules;
 }, {});
 
-// console.log(modules);
 export default new Vuex.Store({
     strict: true,
     getters,

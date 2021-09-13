@@ -34,10 +34,8 @@ export default {
                       encryptedData,
                       iv,
                     }).then(res => {
-                      console.log(res);
                       this.src = `${this.src}?step=${res.step}&add_step=${res.add_step}`
                     })
-                    console.log(run);
                   }
                 })
               }

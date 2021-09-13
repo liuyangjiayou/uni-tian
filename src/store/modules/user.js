@@ -18,7 +18,6 @@ const mutations = {
 
 const actions = {
     setUser({ commit }, info) {
-        console.log(info)
         commit('SET_INFO', info)
     }
 }
