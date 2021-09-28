@@ -23,7 +23,7 @@
     <divider />
     <!-- 项目分类   -->
      <view class="class-list px20">
-       <view v-for="(item, index) in classList" :key="index" class="mt10" @click="launchEnd('run')">
+       <view v-for="(item, index) in classList" :key="index" class="mt10" @click="handlerRun('run')">
          <al-image width="100%" height="228rpx" :src="item.src"></al-image>
        </view>
      </view>
@@ -81,28 +81,17 @@ export default {
   },
   methods: {
     // 健步走
-    handlerRun () {
-      uni.navigateTo({
-        url: '/pages/run/run'
-      })
-    },
-    // 我的个人信息
-    handlerInfo () {
-      uni.navigateTo({
-        url: '/pages/info/info?id=1111'
-      })
-    },
-    // 验证授权
-    launchEnd(type) {
+    handlerRun (type) {
+      // 验证授权
       if (!this.token) {
         return this.authorDialogVisibility = true;
       }
-      // #ifdef MP-WEIXIN
-      uni.navigateTo({
-        url: `/pages/${type}/${type}`
-      })
-      // #endif
-    }
+      this.$Router.push({ path: `/pages/${type}/${type}`})
+    },
+    // 我的个人信息
+    handlerInfo () {
+      this.$Router.push({ path: `/pages/info/info`, query: { id: 123 } })
+    },
   }
 }
 </script>

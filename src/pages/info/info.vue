@@ -27,6 +27,7 @@ export default {
   methods: {
     // 验证授权
     launchEnd() {
+      console.log(this.$Route.query.id);
       getInfo().then(res => {
         this.user = res.user;
       })

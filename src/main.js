@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store'
+import { router, RouterMount } from './router.js'
 // 全局注册组件
 import AlImage from '../src/components/AlImage';
 import IconButton from '../src/components/IconButton';
 import AlDialog from '../src/components/AlDialog';
 import Authorization from '../src/components/Authorization';
 import Divider from '../src/components/Divider';
+Vue.use(router);
 // 全局图片组件
 Vue.component('al-image', AlImage);
 // 图片导航组件
@@ -25,4 +27,10 @@ const app = new Vue({
   ...App,
   store,
 })
-app.$mount()
+// #ifdef H5
+RouterMount(app,router,'#app')
+// #endif
+
+// #ifndef H5
+app.$mount(); //为了兼容小程序及app端必须这样写才有效果
+// #endif
