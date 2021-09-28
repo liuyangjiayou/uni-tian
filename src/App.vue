@@ -1,5 +1,5 @@
 <script>
-import {getToken, h5login} from "./api";
+import { getToken, h5login } from "./api";
   import store from './store'
   export default {
 		onLaunch: function() {
@@ -14,6 +14,7 @@ import {getToken, h5login} from "./api";
               store.commit('SET_INFO', user)
               store.commit('SET_TOKEN', token)
               store.commit('SET_OPENID', openid)
+              console.log(res);
               getApp().globalData.onLaunchEnd = true;
               if (getApp().pageCallback) {
                 getApp().pageCallback();

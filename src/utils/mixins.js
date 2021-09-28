@@ -1,5 +1,7 @@
+import {getInfo} from "../api";
+
 export const launchOrload = {
-    onLoad() {
+    created() {
         if (getApp().globalData.onLaunchEnd) {
             this.launchEnd && this.launchEnd()
         } else {
@@ -7,5 +9,5 @@ export const launchOrload = {
                 this.launchEnd()
             };
         }
-    }
+    },
 }

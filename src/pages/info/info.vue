@@ -18,7 +18,10 @@ export default {
   mixins: [launchOrload],
   data() {
     return {
-      user: {}
+      user: {
+        nickname: '',
+        phone: '',
+      }
     }
   },
   methods: {

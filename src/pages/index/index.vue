@@ -89,7 +89,7 @@ export default {
     // 我的个人信息
     handlerInfo () {
       uni.navigateTo({
-        url: '/pages/info/info'
+        url: '/pages/info/info?id=1111'
       })
     },
     // 验证授权
