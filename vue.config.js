@@ -13,5 +13,6 @@ module.exports = {
                 }, true )
             })
         ]
-    }
+    },
+    transpileDependencies: ['@dcloudio/uni-ui'],
 }

@@ -16,7 +16,7 @@
     <!--  页面导航  -->
     <view class="flex align-center my20">
       <icon-button class="flex flex-1 justify-center" title="赛事动态" src="/static/test/nav1.png" />
-      <icon-button class="flex flex-1 justify-center" title="我要报名" src="/static/test/2.png" />
+      <icon-button class="flex flex-1 justify-center" title="我要报名" src="/static/test/2.png"  @handlerClick="$Router.push({name:'join'})" />
       <icon-button class="flex flex-1 justify-center" title="比赛进程" src="/static/test/3.png" />
       <icon-button class="flex flex-1 justify-center" title="个人信息" src="/static/test/4.png" @handlerClick="handlerInfo" />
     </view>

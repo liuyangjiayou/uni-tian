@@ -20,6 +20,9 @@ const router = createRouter({
         path: '/pages/run/run',
         name: 'run',
     },{
+        path: '/pages/join/index',
+        name: 'join',
+    },{
         path: '/',
         redirect: { name: 'index' },
     }]
