@@ -1,13 +1,16 @@
 <template>
-  <view>
-    <view class="flex flex-column align-center pt100 mb40">
-      <al-image :src="user.avatar"/>
+  <view-container src="/static/images/bg1.png" :back="false">
+    <template #header>
+      <view class="my-header flex flex-column justify-center align-center">
+        <al-image width="125rpx" height="125rpx" round="50%" src="/static/test/user.png"/>
+        <view class="mt20 fs30 text-color-white">账号昵称</view>
+      </view>
+    </template>
+    <view class="flex align-center justify-between fs0">
+      <view class="flex align-center fs26"><al-image class="mr20" width="51rpx" height="51rpx" src="/static/images/team1.png"/>我的成绩</view>
+      <al-image width="20rpx" height="34rpx" src="/static/images/arrow2.png" @click.native="$Router.push({name:'score'})" />
     </view>
-    <view class="flex flex-column pl40">
-      <view class="mt20">姓名：{{ user.nickname }} </view>
-      <view class="mt20">电话: {{ user.phone }} </view>
-    </view>
-  </view>
+  </view-container>
 </template>
 
 <script>
@@ -36,6 +39,11 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.my-header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
 </style>

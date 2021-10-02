@@ -58,5 +58,6 @@ import { getToken, h5login } from "./api";
 
 <style lang="scss">
   @import '../src/style/base.scss';
+  @import '../src/style/index.scss';
 	/*每个页面公共css */
 </style>

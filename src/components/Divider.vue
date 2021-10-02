@@ -16,6 +16,6 @@ export default {
 
 <style scoped>
 .divider{
-  background: #eee;
+  background: #e5e5e5;
 }
 </style>

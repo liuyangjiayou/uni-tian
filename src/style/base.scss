@@ -1,8 +1,10 @@
 /* 清除全局默认样式(如果有用到地方需就在这个地方补一下)*/
 /* 清除全局默认样式(如果有用到地方需就在这个地方补一下)*/
 html, body, div, ul, li{
+  font-family: "PingFang SC";
   margin: 0;
   padding: 0;
+  color: #333333;
 }
 
 ul, ol, li{
@@ -22,7 +24,7 @@ ul, ol, li{
   flex-direction: row;
 }
 
-@each $size in 0, 1, 2, 3 {
+@each $size in 0, 1, 2, 3, none {
   .flex-#{$size} {
     flex: $size;
   }
@@ -72,45 +74,49 @@ ul, ol, li{
   justify-content: space-around;
 }
 
+.text-underline {
+  text-decoration: underline;
+}
+
 /*  -- 内外边距 -- */
 @each $name in m, mt, mr, mb, ml, mx, my {
-  @each $size in -40, -25, -20, -8, -5, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 18, 20, 25, 30, 33, 34, 35, 40, 45, 50, 60, 80, 90, 110, 260 {
+  @each $size in -40, -25, -20, -8, -5, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 18, 20, 22, 24, 25, 28, 30, 33, 34, 35, 40, 45, 50, 60, 80, 90, 110, 260 {
     .#{$name}#{$size} {
-      @if $name == mt { margin-top: #{$size}px; }
-      @else if $name == mr { margin-right: #{$size}px; }
-      @else if $name == mb { margin-bottom: #{$size}px; }
-      @else if $name == ml { margin-left: #{$size}px; }
-      @else if $name == mx { margin-left: #{$size}px; margin-right: #{$size}px; }
-      @else if $name == my { margin-top: #{$size}px; margin-bottom: #{$size}px; }
+      @if $name == mt { margin-top: #{$size}rpx; }
+      @else if $name == mr { margin-right: #{$size}rpx; }
+      @else if $name == mb { margin-bottom: #{$size}rpx; }
+      @else if $name == ml { margin-left: #{$size}rpx; }
+      @else if $name == mx { margin-left: #{$size}rpx; margin-right: #{$size}rpx; }
+      @else if $name == my { margin-top: #{$size}rpx; margin-bottom: #{$size}rpx; }
       @else { margin: #{$size}px; }
     }
   }
 }
 
 @each $name in p, pt, pr, pb, pl, px, py {
-  @each $size in 0, 4, 5, 6, 8, 10, 12, 15, 16, 18, 20, 22, 25, 30, 35, 40, 45, 50, 100 {
+  @each $size in 0, 4, 5, 6, 8, 10, 12, 15, 16, 18, 20, 22, 24, 25, 30, 35, 40, 45, 50, 100 {
     .#{$name}#{$size} {
-      @if $name == pt { padding-top: #{$size}px; }
-      @else if $name == pr { padding-right: #{$size}px; }
-      @else if $name == pb { padding-bottom: #{$size}px; }
-      @else if $name == pl { padding-left: #{$size}px; }
-      @else if $name == px { padding-left: #{$size}px; padding-right: #{$size}px; }
-      @else if $name == py { padding-top: #{$size}px; padding-bottom: #{$size}px; }
-      @else { padding: #{$size}px; }
+      @if $name == pt { padding-top: #{$size}rpx; }
+      @else if $name == pr { padding-right: #{$size}rpx; }
+      @else if $name == pb { padding-bottom: #{$size}rpx; }
+      @else if $name == pl { padding-left: #{$size}rpx; }
+      @else if $name == px { padding-left: #{$size}rpx; padding-right: #{$size}rpx; }
+      @else if $name == py { padding-top: #{$size}rpx; padding-bottom: #{$size}rpx; }
+      @else { padding: #{$size}rpx; }
     }
   }
 }
 
 /*  -- 字体相关 -- */
-@each $size in 0, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40, 44{
+@each $size in 0, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 40, 44{
   .fs#{$size} {
-    font-size: #{$size}px;
+    font-size: #{$size}rpx;
   }
 }
 
 @each $lh in 20, 22, 24, 36, 40, 45, 48, 64 {
   .lh#{$lh} {
-    line-height: #{$lh}px;
+    line-height: #{$lh}rpx;
   }
 }
 
@@ -152,8 +158,8 @@ ul, ol, li{
   font-weight: 800;
 }
 
-$color-border-1: #e0e0e0;
-$color-border-2: #e0e0e0;
+$color-border-1: #ece6ea;
+$color-border-2: #a4a4a4;
 /*  -- 边框 -- */
 @each $name in b, bl, br, bb, bt, bx, by {
   @each $color in 1, 2 {
@@ -224,12 +230,12 @@ $color-border-2: #e0e0e0;
   .#{$position} { position: $position; }
 }
 
-@each $type in inline, inline-block, block, none {
+@each $type in inline, inline-flex, inline-block, block, none {
   .#{$type} { display: $type; }
 }
 // width height size
 @each $name in 'width', 'height', 'swidth', 'sheight' {
-  @each $size in 20, 25 , 110, 120, 140, 200, 300, 320, 330 {
+  @each $size in 20, 25 , 30, 40, 50, 110, 120, 140, 200, 300, 320, 330 {
     .#{$name}#{$size} {
       @if $name == 'swidth' {
         width: #{$size}#{'%'} !important;
@@ -238,9 +244,49 @@ $color-border-2: #e0e0e0;
         height: #{$size}#{'%'} !important;
         box-sizing: border-box;
       }@else{
-        #{$name}: #{$size}px !important;
+        #{$name}: #{$size}rpx !important;
         box-sizing: border-box;
       }
     }
   }
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+.bg-gray {
+  background-color: #f4f4f4;
+}
+.text-color-gray {
+  color: #696969;
+}
+.text-color-gray2 {
+  color: #b8b8b8;
+}
+.text-color-gray3 {
+  color: #8b98a2;
+}
+.text-color-gray4 {
+  color: #5c5b5b;
+}
+.text-color-white {
+  color: #ffffff;
+}
+.text-color-blue {
+  color: #2a8cd0;
+}
+.text-color-blue2 {
+  color: #5f90a3;
+}
+.text-color-red {
+  color: #f44746;
+}
+.text-color-yellow {
+  color: #fb8945;
+}
+.shadow1 {
+  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+}
+.shadow2 {
+  box-shadow: 0px -2px 4px 0px rgb(64 60 67 / 16%);
 }

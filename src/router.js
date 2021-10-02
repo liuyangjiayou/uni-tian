@@ -20,8 +20,41 @@ const router = createRouter({
         path: '/pages/run/run',
         name: 'run',
     },{
-        path: '/pages/join/index',
-        name: 'join',
+        path: '/pages/sport/index',
+        name: 'sport',
+    },{
+        path: '/pages/sport/matchs',
+        name: 'sport-matches',
+    },{
+        path: '/pages/dynamic/index',
+        name: 'dynamic',
+    },{
+        path: '/pages/dynamic/detail',
+        name: 'dynamic-detail',
+    },{
+        path: '/pages/rule/index',
+        name: 'match-rule',
+    },{
+        path: '/pages/rule/detail',
+        name: 'rule-detail',
+    },{
+        path: '/pages/process/index',
+        name: 'process',
+    },{
+        path: '/pages/like/index',
+        name: 'likes',
+    },{
+        path: '/pages/sport/rank',
+        name: 'rank',
+    },{
+        path: '/pages/info/score',
+        name: 'score',
+    },{
+        path: '/pages/like/list',
+        name: 'like-list',
+    },{
+        path: '/pages/like/detail',
+        name: 'like-detail',
     },{
         path: '/',
         redirect: { name: 'index' },

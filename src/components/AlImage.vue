@@ -1,5 +1,5 @@
 <template>
-  <image :src="src" :mode="mode" :style="{ width, height }" />
+  <img :src="src" :mode="mode" :style="{ width, height, borderRadius: round }" />
 </template>
 
 <script>
@@ -14,6 +14,10 @@ export default {
       type: String,
       default: '120rpx',
     },
+    round: {
+      type: String,
+      default: '0',
+    },
     src: {
       type: String,
       default: '/static/logo.png',
@@ -21,11 +25,10 @@ export default {
     mode: {
       type: String,
       default: 'aspectFill',
-    }
+    },
   },
 }
 </script>
 
 <style scoped>
-
 </style>

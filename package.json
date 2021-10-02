@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@dcloudio/uni-app-plus": "^2.0.0-32220210818002",
+    "@dcloudio/uni-cli-i18n": "^2.0.0-32920210927002",
     "@dcloudio/uni-h5": "^2.0.0-32220210818002",
     "@dcloudio/uni-helper-json": "*",
     "@dcloudio/uni-i18n": "^2.0.0-32220210818002",
