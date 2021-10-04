@@ -49,3 +49,28 @@ export function h5login(data) {
         data,
     })
 }
+
+// 获取赛事动态
+export function getDynamic(data) {
+    return http({
+        url: '/news/list',
+        data,
+    })
+}
+
+// 获取赛事详情
+export function getDynamicDetail(data) {
+    return http({
+        url: '/news/info',
+        data,
+    })
+}
+
+// 比赛进程列表
+export function getProcess(data) {
+    return http({
+        url: '/pro/sch/list',
+        data,
+    })
+}
+

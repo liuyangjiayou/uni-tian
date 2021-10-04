@@ -1,5 +1,3 @@
-import {getInfo} from "../api";
-
 export const launchOrload = {
     created() {
         if (getApp().globalData.onLaunchEnd) {

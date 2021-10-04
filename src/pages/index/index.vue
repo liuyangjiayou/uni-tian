@@ -76,6 +76,10 @@ export default {
     },
     // 我的个人信息
     handlerInfo () {
+      // 验证授权
+      if (!this.token) {
+        return this.authorDialogVisibility = true;
+      }
       this.$Router.push({ path: `/pages/info/info`, query: { id: 123 } })
     },
   }

@@ -46,7 +46,7 @@
 		{
 			"path": "pages/dynamic/detail",
 			"style": {
-				"navigationBarTitleText": "新闻详情"
+				"navigationBarTitleText": "赛事详情"
 			}
 		},
 		{

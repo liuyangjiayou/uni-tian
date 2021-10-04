@@ -1,37 +1,34 @@
 <template>
   <view-container :head="false">
-    <view class="process-wrap">
-      <view class="pro-title flex align-center justify-center fs36 text-bold text-color-white">市级比赛</view>
+    <view v-for="item in list" :key="item.type_name" class="process-wrap mb28">
+      <view class="pro-title flex align-center justify-center fs36 text-bold text-color-white">{{ item.type_name }}</view>
       <view class="pro-body shadow1">
-        <view class="fs30 mt40">足球颠球比赛初赛</view>
-        <view class="fs24 minute mt22 text-color-gray">2021-09-08 -- 2021-9-12</view>
-
-        <view class="fs30 mt40">足球颠球比赛初赛</view>
-        <view class="fs24 minute mt22 text-color-gray">2021-09-08 -- 2021-9-12</view>
-
-        <view class="fs30 mt40">足球颠球比赛初赛</view>
-        <view class="fs24 minute mt22 text-color-gray">2021-09-08 -- 2021-9-12</view>
-      </view>
-    </view>
-    <view class="process-wrap mt28">
-      <view class="pro-title flex align-center justify-center fs36 text-bold text-color-white">省级比赛</view>
-      <view class="pro-body shadow1">
-        <view class="fs30 mt40">足球颠球比赛初赛</view>
-        <view class="fs24 minute mt22 text-color-gray">2021-09-08 -- 2021-9-12</view>
-
-        <view class="fs30 mt40">足球颠球比赛初赛</view>
-        <view class="fs24 minute mt22 text-color-gray">2021-09-08 -- 2021-9-12</view>
-
-        <view class="fs30 mt40">足球颠球比赛初赛</view>
-        <view class="fs24 minute mt22 text-color-gray">2021-09-08 -- 2021-9-12</view>
+        <view v-for="child in item.type_list" :key="pro_name">
+          <view class="fs30 mt40">{{ child.pro_name }}</view>
+          <view class="fs24 minute mt22 text-color-gray">{{ child.sch_s_time }}{{  child.sch_e_time ? ` -- ${child.sch_e_time}` : '' }}</view>
+        </view>
       </view>
     </view>
   </view-container>
 </template>
 
 <script>
+import {getProcess} from "../../api";
 export default {
-name: "index"
+  name: "index",
+  data(){
+    return {
+      list: [],
+    }
+  },
+  onLoad(){
+    const { pid } = this.$Route.query
+    getProcess({
+      pid: pid || ''
+    }).then(res => {
+      this.list = res
+    })
+  }
 }
 </script>
 

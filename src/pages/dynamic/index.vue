@@ -1,12 +1,12 @@
 <template>
   <view-container :head="false">
-    <view v-for="(item, index) in list" :key="index" class="flex mb60">
+    <view v-for="(item, index) in list" :key="index" class="flex mb60" @click="$Router.push({path: '/pages/dynamic/detail', query: { id: item.id } })">
       <view class="flex-1 mr20 flex flex-column justify-between">
-        <view class="fs34" @click="$Router.push({name: 'dynamic-detail'})">{{item.title}}</view>
-        <view class="fs26 text-color-gray">{{item.time}}</view>
+        <view class="fs34">{{item.title}}</view>
+        <view class="fs26 text-color-gray">{{item.publish_time}}</view>
       </view>
-      <view v-if="item.src" class="relative fs0">
-        <al-image round="10rpx" width="245rpx" height="180rpx" :src="item.src" />
+      <view v-if="item.cover_url" class="relative fs0">
+        <al-image round="10rpx" width="245rpx" height="180rpx" :src="item.cover_url" />
         <view v-if="item.isLive" class="image-txt" :style="{ borderRadius: `10rpx 0 28rpx 0` }">实时</view>
       </view>
     </view>
@@ -14,75 +14,84 @@
 </template>
 
 <script>
-import { random } from '@/utils';
+import { getDynamic } from '@/api'
 export default {
   name: "list",
   data() {
     return {
       list: [],
+      page: 1,
+      pagesize: 20,
       loadTxt: '',
       contentH: 800,
     };
   },
   // 触底触发
   onReachBottom() {
-    this.getList();
+    this.page++
+    this.getList({
+      page: this.page,
+      pagesize: 10,
+    });
   },
   // 下拉刷新
   onPullDownRefresh(){
-    setTimeout(()=>{
-      this.getList();
-    },800);
-  },
-  created() {
     this.getList();
   },
+  created() {
+    this.getList({
+      page: 1,
+      pagesize: 10,
+    });
+  },
   methods: {
-    getList() {
-      this.list = this.list.concat([
-        {
-          title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-          src: `/static/test/img/${random(0,3)}.jpg`,
-          time: random(15, 60) + '分钟前',
-          isLive: true,
-        },{
-          title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-          src: `/static/test/img/${random(0,3)}.jpg`,
-          time: random(15, 60) + '分钟前',
-          isLive: true,
-        },
-        {
-          title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-          src: `/static/test/img/${random(0,3)}.jpg`,
-          time: random(15, 60) + '分钟前',
-          isLive: true,
-        },
-        {
-          title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-          src: `/static/test/img/${random(0,3)}.jpg`,
-          time: random(15, 60) + '分钟前',
-          isLive: true,
-        },
-        {
-          title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-          src: `/static/test/img/${random(0,3)}.jpg`,
-          time: random(15, 60) + '分钟前',
-          isLive: true,
-        },
-        {
-          title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-          src: `/static/test/img/${random(0,3)}.jpg`,
-          time: random(15, 60) + '分钟前',
-          isLive: true,
-        },
-        {
-          title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-          src: `/static/test/img/${random(0,3)}.jpg`,
-          time: random(15, 60) + '分钟前',
-          isLive: true,
-        },
-
-      ]);
+    getList(data) {
+      getDynamic(data).then(res => {
+        this.list = this.list.concat(res.list)
+      })
+      // this.list = this.list.concat([
+      //   {
+      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
+      //     src: `/static/test/img/${random(0,3)}.jpg`,
+      //     time: random(15, 60) + '分钟前',
+      //     isLive: true,
+      //   },{
+      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
+      //     src: `/static/test/img/${random(0,3)}.jpg`,
+      //     time: random(15, 60) + '分钟前',
+      //     isLive: true,
+      //   },
+      //   {
+      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
+      //     src: `/static/test/img/${random(0,3)}.jpg`,
+      //     time: random(15, 60) + '分钟前',
+      //     isLive: true,
+      //   },
+      //   {
+      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
+      //     src: `/static/test/img/${random(0,3)}.jpg`,
+      //     time: random(15, 60) + '分钟前',
+      //     isLive: true,
+      //   },
+      //   {
+      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
+      //     src: `/static/test/img/${random(0,3)}.jpg`,
+      //     time: random(15, 60) + '分钟前',
+      //     isLive: true,
+      //   },
+      //   {
+      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
+      //     src: `/static/test/img/${random(0,3)}.jpg`,
+      //     time: random(15, 60) + '分钟前',
+      //     isLive: true,
+      //   },
+      //   {
+      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
+      //     src: `/static/test/img/${random(0,3)}.jpg`,
+      //     time: random(15, 60) + '分钟前',
+      //     isLive: true,
+      //   },
+      // ]);
     },
   },
 }
