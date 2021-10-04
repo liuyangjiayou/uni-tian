@@ -76,7 +76,7 @@ export default {
     },
     // 我的个人信息
     handlerInfo () {
-      this.$Router.push({ path: `/pages/info/info`, query: { id: 123 } })
+      this.$Router.push({ path: `/pages/info/score`, query: { id: 123 } })
     },
   }
 }

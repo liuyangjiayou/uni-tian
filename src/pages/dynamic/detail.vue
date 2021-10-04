@@ -1,7 +1,7 @@
 <template>
   <view-container src="/static/images/bg1.png" :back="false" customClass="dynamic-detail shadow2">
     <view class="fs34 my34">河北省第十五界运动会闭幕</view>
-    <view class="mb40">
+    <view class="mb34">
       <al-image width="24rpx" height="24rpx" src="/static/images/sc.png" @click.native="toProvin" />
       <span class="text-color-gray fs26 ml28">30分钟前</span>
     </view>

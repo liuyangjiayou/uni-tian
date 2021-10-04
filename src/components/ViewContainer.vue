@@ -79,6 +79,7 @@ export default {
     position: relative;
     background: #ffffff;
     padding: 30rpx 30rpx;
+    overflow: hidden;
   }
   .web-body.pt0 {
     padding-top: 0;
