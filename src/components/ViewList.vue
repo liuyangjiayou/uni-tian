@@ -11,8 +11,8 @@
         <view class="fs22 text-color-gray mt10">{{item.desc}}</view>
         <view class="fs22 text-color-gray3 b2-1 inline-block p5 my10">编号：{{item.number}}</view>
         <view class="flex align-center justify-between">
-          <span class="text-color-blue fs30 mr10">{{item.count}}</span>
-          <span class="text-color-gray4 flex-1 fs22">当前票数</span>
+          <text class="text-color-blue fs30 mr10">{{item.count}}</text>
+          <text class="text-color-gray4 flex-1 fs22">当前票数</text>
           <view class="button-score">投票</view>
         </view>
       </view>

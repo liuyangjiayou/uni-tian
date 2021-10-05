@@ -2,7 +2,7 @@
   <view-container back title="成绩查询">
     <view class="flex align-center">
       <al-image width="75rpx" height="75rpx" round="50%" src="/static/test/user.png"/>
-      <span class="fs28 ml20 text-bold">账号昵称</span>
+      <text class="fs28 ml20 text-bold">账号昵称</text>
     </view>
     <view v-for="index in 3" :key="index" class="score-wrap mt28 shadow1">
       <view class="view-title my30">健步走</view>
