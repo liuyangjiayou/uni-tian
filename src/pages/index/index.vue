@@ -1,23 +1,43 @@
 <template>
-	<view-container src="/static/images/ss.png" :back="false">
+	<view-container :back="false" title="赛事" title-align="justify-center">
     <template #header>
+      <!-- 轮播图   -->
+      {{ banner.length }}
+      <swiper
+          v-if="banner.length"
+          class="swiper"
+          :style="{ height: '382rpx'}"
+          indicator-dots
+          autoplay
+          circular
+          :interval="3000"
+          :duration="500"
+      >
+        <swiper-item v-for="(item, index) in banner" :key="index"><al-image width="100%" height="100%" :src="item.image" /></swiper-item>
+      </swiper>
       <!--  页面导航  -->
-      <view class="flex align-center mt34 mb14">
-        <icon-button class="flex flex-1 justify-center" fs="fs24 mt14" title="比赛规则" src="/static/images/ss1.png"  @handlerClick="$Router.push({name:'match-rule'})" />
-        <icon-button class="flex flex-1 justify-center" fs="fs24 mt14" title="赛事进程" src="/static/images/ss2.png"  @handlerClick="$Router.push({name:'process'})" />
-        <icon-button class="flex flex-1 justify-center" fs="fs24 mt14" title="赛事动态" src="/static/images/ss3.png"  @handlerClick="$Router.push({name:'dynamic'})" />
-        <icon-button class="flex flex-1 justify-center" fs="fs24 mt14" title="点赞投票" src="/static/images/ss4.png"  @handlerClick="$Router.push({name:'likes'})" />
-        <icon-button class="flex flex-1 justify-center" fs="fs24 mt14" title="成绩查询" src="/static/images/ss5.png" @handlerClick="handlerInfo" />
+      <view v-if="nav.length" class="flex align-center mt34 mb14">
+        <icon-button
+            v-for="(item, index) in nav"
+            :key="index"
+            class="flex flex-1 justify-center"
+            fs="fs24 mt14"
+            :title="item.title"
+            :src="item.image"
+            @handlerClick="handlerClick(item)" />
       </view>
     </template>
 
     <!-- 项目分类   -->
     <view
-        v-for="(item, index) in classList"
-        :key="index"
+        v-for="(item, index) in pro_list"
         class="sport-item"
-        :style="{backgroundImage: `url(${require('@/static/images/sport/sport'+item.index+'.png')})`}"
-        @click="handlerClick(item)">{{item.name}}</view>
+        @click="handlerSport(item)"
+        :key="index"
+    >
+      <view class="z1">{{ item.pro_name }}</view>
+      <al-image class="absolute z0" width="690rpx" height="228rpx" :src="item.pro_thumb"/>
+    </view>
     <authorization v-if="authorDialogVisibility" @close="authorDialogVisibility = false" />
 	</view-container>
 </template>
@@ -25,33 +45,24 @@
 <script>
 import { launchOrload} from "../../utils/mixins";
 import { mapGetters } from 'vuex';
+import { index } from '@/api';
 export default {
   mixins: [launchOrload],
   data() {
     return {
       authorDialogVisibility: false,
-      classList: [
-        {index: 4, name: '集体跳绳'},
-        {index: 6, name: '冰球射门'},
-        {index: 7, name: '大众轮滑'},
-        {index: 8, name: '足球颠球'},
-        {index: 9, name: '定点投篮'},
-
-        {index: 10, name: '兵乓球'},
-        {index: 11, name: '花式大白键'},
-        {index: 5, name: '桌上冰壶'},
-        {index: 12, name: '广播体操'},
-        {index: 3, name: '太极拳'},
-
-        {index: 1, name: '八段锦'},
-        {index: 2, name: '广场舞'},
-        {index: 13, name: '健步走'},
-        {index: 14, name: '冰雪大挑战'},
-        {index: 15, name: '自由式轮滑'},
-      ]
+      banner: [],
+      nav: [],
+      pro_list: [],
     }
   },
-  onLoad() {},
+  onLoad() {
+    index().then(res => {
+      this.pro_list = res.pro_list;
+      this.nav = res.nav;
+      this.banner = res.banner;
+    });
+  },
   computed: {
     ...mapGetters(['token']),
   },
@@ -65,14 +76,21 @@ export default {
       this.$Router.push({ path: `/pages/${type}/${type}`})
     },
     handlerClick(item) {
-      if (item.index === 13) {
-        this.$Router.push({path: '/pages/run/run'});
-      } else {
-        this.$Router.push({path: '/pages/sport/index', query: {id: item.index, sport: item.name}});
-      }
+      const navPath = {
+        1: '/pages/rule/index',
+        2: '/pages/process/index',
+        3: '/pages/dynamic/index',
+        4: '/pages/like/index',
+        5: '/pages/info/score',
+      };
+      this.$Router.push({path: navPath[item.id]});
     },
-    handlerSport() {
-      this.$Router.push({ name: `sport`, params: { id: 2, title: '冰球射门' }})
+    handlerSport(item) {
+      if (parseInt(item.pro_type) === 3) {
+        // item.jump_url
+      } else {
+        this.$Router.push({ path: `/pages/sport/index`, query: { id: item.id, sport: item.pro_name }})
+      }
     },
     // 我的个人信息
     handlerInfo () {

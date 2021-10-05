@@ -81,3 +81,50 @@ export function getClick(data) {
     })
 }
 
+// 首页
+export const index = function (data) {
+    return http({
+        url: '/index',
+        data,
+    })
+};
+
+// 比赛规则
+export const rule = {
+    list: function (data) {
+        return http({
+            url: '/pro/rule/list',
+            data,
+        })
+    },
+    detail: function (data) {
+        return http({
+            url: '/pro/rule/desc',
+            data,
+        })
+    },
+};
+// 点赞投票
+export const like = {
+    sport: function (data) {
+        return http({
+            url: '/pro/click/list',
+            data,
+        })
+    },
+};
+// 小游戏
+export const game = {
+    list: function (data) {
+        return http({
+            url: '/small/game/list',
+            data,
+        })
+    },
+    detail: function (data) {
+        return http({
+            url: '/small/game/desc',
+            data,
+        })
+    },
+};

@@ -14,9 +14,6 @@ const router = createRouter({
         name: 'index',
         aliasPath: '/'
     },{
-        path: '/pages/info/info',
-        name: 'info',
-    },{
         path: '/pages/run/run',
         name: 'run',
     },{
@@ -55,6 +52,12 @@ const router = createRouter({
     },{
         path: '/pages/like/detail',
         name: 'like-detail',
+    },{
+        path: '/pages/game/list',
+        name: 'games',
+    },{
+        path: '/pages/game/detail',
+        name: 'game-detail',
     },{
         path: '/',
         redirect: { name: 'index' },

@@ -1,22 +1,22 @@
 <template>
-  <view-container :head="false">
+  <view-container back title="比赛规则">
     <view
         v-for="(item, index) in list"
         :key="index"
         class="sport-wrap"
-        :style="{backgroundImage: `url(${require('@/static/images/sport/'+item.index+'.png')})`}"
         @click="viewDetail(item)"
     >
-        <view class="text-bold fs32">{{ item.title }}</view>
-        <view class="fs24 mt20">点击查看比赛规则</view>
-        <al-image class="sport-icon" width="62rpx" height="59rpx" :src="require('@/static/images/sport/'+item.index+'_icon.png')" />
+      <view class="text-bold fs32 z1">{{ item.pro_name }}</view>
+      <view class="fs24 mt20 z1">点击查看比赛规则</view>
+      <al-image class="image-bg z0" width="677rpx" height="222rpx" :src="item.pro_thumb"/>
     </view>
   </view-container>
 </template>
 
 <script>
+import { rule } from '@/api';
 export default {
-name: "index",
+  name: "index",
   data() {
     return {
       list: [
@@ -43,9 +43,15 @@ name: "index",
       ],
     };
   },
+  onLoad() {
+    rule.list().then(res => {
+      console.log(res);
+      this.list = res;
+    });
+  },
   methods: {
     viewDetail(sport) {
-      this.$Router.push({ name: 'rule-detail' });
+      this.$Router.push({ path: '/pages/rule/detail', query: { id: sport.id } });
     },
   },
 }

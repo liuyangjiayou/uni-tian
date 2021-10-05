@@ -1,5 +1,5 @@
 <template>
-  <view-container :head="false">
+  <view-container back title="比赛进程">
     <view v-for="item in list" :key="item.type_name" class="process-wrap mb28">
       <view class="pro-title flex align-center justify-center fs36 text-bold text-color-white">{{ item.type_name }}</view>
       <view class="pro-body shadow1">

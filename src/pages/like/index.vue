@@ -1,19 +1,36 @@
 <template>
-  <view-container src-height="274rpx" src="/static/images/tp.jpg" :back="false">
-    <view class="sport-item" :style="{backgroundImage: `url(${require('@/static/images/sport/sport3.png')})`}" @click="click(3)">太极拳</view>
-    <view class="sport-item" :style="{backgroundImage: `url(${require('@/static/images/sport/sport1.png')})`}" @click="click(1)">八段锦</view>
-    <view class="sport-item" :style="{backgroundImage: `url(${require('@/static/images/sport/sport2.png')})`}" @click="click(2)">广场舞</view>
-    <view class="sport-item" :style="{backgroundImage: `url(${require('@/static/images/sport/sport12.png')})`}" @click="click(12)">广播体操</view>
-    <view class="sport-item" :style="{backgroundImage: `url(${require('@/static/images/sport/sport4.png')})`}" @click="click(4)">集体跳绳</view>
+  <view-container src-height="274rpx" :src="banner.image" back :title="banner.title">
+    <view
+        v-for="(item, index) in list"
+        class="sport-item"
+        @click="click(item)"
+        :key="index"
+    >
+      <view class="z1">{{ item.pro_name }}</view>
+      <al-image class="absolute z0" width="690rpx" height="228rpx" :src="item.pro_thumb"/>
+    </view>
   </view-container>
 </template>
 
 <script>
+import { like } from '@/api';
 export default {
   name: "index",
+  data() {
+    return {
+      list: [],
+      banner: {},
+    };
+  },
+  onLoad() {
+    like.sport().then(res => {
+      this.list = res.list;
+      this.banner = res?.banner?.[0];
+    });
+  },
   methods: {
-    click(index) {
-      this.$Router.push({path: '/pages/like/list', query: {sport:index}});
+    click(item) {
+      this.$Router.push({path: '/pages/like/list', query: {sport:item.id}});
     },
   },
 }

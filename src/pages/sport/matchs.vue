@@ -1,5 +1,5 @@
 <template>
-  <view-container :head="false" custom-class="pt0">
+  <view-container back :title="query.title" custom-class="pt0">
     <view class="flex align-center bg-white pt20">
       <uni-search-bar :radius="100" v-model="value" placeholder="输入关键词" @confirm="getData(1)" class="flex-1 fs26" />
       <view class="fs28" @click.native="open">筛选</view>
@@ -38,6 +38,7 @@ export default {
   name: "SportMatches",
   data() {
     return {
+      query: {},
       page: 0, // 请求参数
       imgArr: [],
       scrollTop: 0,
@@ -57,7 +58,8 @@ export default {
   onPullDownRefresh(){
     this.getList();
   },
-  created() {
+  onLoad() {
+    this.query = this.$Route.query;
     this.getList();
   },
   methods: {

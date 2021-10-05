@@ -1,9 +1,24 @@
 <script>
-import { getToken, h5login } from "./api";
+  import { getToken, h5login } from "./api";
   import store from './store'
+  import Vue from 'vue';
   export default {
 		onLaunch: function() {
 			console.log('App Launch')
+      // 获取导航栏高度
+      uni.getSystemInfo({
+        success: function(e) {
+          Vue.prototype.statusBar = e.statusBarHeight
+          console.log(e.statusBarHeight)
+
+          // #ifdef MP-WEIXIN
+          let custom = wx.getMenuButtonBoundingClientRect()
+          console.log(custom)
+          Vue.prototype.customBar = custom.bottom + custom.top - e.statusBarHeight
+          console.log(Vue.prototype.customBar);
+          // #endif
+        }
+      });
       // #ifdef MP-WEIXIN
       uni.login({
         success(res) {

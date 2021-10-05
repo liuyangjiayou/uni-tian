@@ -1,19 +1,26 @@
-<template>
-  <view-container :head="false">
+{<template>
+  <view-container back :title="info.pro_name">
     <view class="art-title fs34 text-bold">
-      <span>桌上冰壶</span>
+      <span>{{info.pro_name}}</span>
     </view>
-    <view class="dynamic-detail-content">
-      <p>1.参赛人数：5人</p>
-      <p>2.报名方式：团体报名</p>
-      <p>3.比赛方式及规则：比赛方式及规则比赛方式，及规则比赛方式及规。则比赛方式及规？则比赛方式及规则！比赛方式及规则比赛方式，及规则比赛方式及规。则比赛方式及规？则比赛方式及规则！比赛方式及规则比赛方式，及规则比赛方式及规。则比赛方式及规？则比赛方式及规则！</p>
-    </view>
+    <view class="dynamic-detail-content" v-html="info.pro_rule" />
   </view-container>
 </template>
 
 <script>
+import { rule } from '@/api';
 export default {
   name: "detail",
+  data() {
+    return {
+      info: {},
+    };
+  },
+  onLoad() {
+    rule.detail({id: this.$Route.query.id}).then(res => {
+      this.info = res;
+    });
+  },
 }
 </script>
 

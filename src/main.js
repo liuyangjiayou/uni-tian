@@ -10,6 +10,7 @@ import Authorization from '../src/components/Authorization';
 import Divider from '../src/components/Divider';
 import ViewContainer from "./components/ViewContainer";
 import ViewList from "./components/ViewList";
+
 Vue.use(router);
 
 // 全局图片组件
