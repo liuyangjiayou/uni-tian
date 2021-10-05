@@ -17,27 +17,27 @@
         <view class="fs32 text-bold">这里是视频名称，这里是视频名称</view>
         <view class="mt30 flex align-center fs0">
           <al-image width="100rpx" height="33rpx" src="/static/images/team.png" />
-          <span class="text-underline fs24 ml16">这里是队伍名称</span>
+          <text class="text-underline fs24 ml16">这里是队伍名称</text>
         </view>
         <view class="mt10 flex align-center fs0">
           <al-image width="100rpx" height="33rpx" src="/static/images/company.png" />
-          <span class="text-underline fs24 ml16">这里是单位名称</span>
+          <text class="text-underline fs24 ml16">这里是单位名称</text>
         </view>
       </view>
       <view class="b1-1 flex flex-column">
         <view class="flex-1 flex justify-center align-center px20">
           <al-image width="27rpx" height="31rpx" src="/static/images/count.png" />
           <view class="flex flex-1 flex-column ml22 align-center">
-            <span class="text-color-red fs24 text-bold">2055</span>
-            <span class="fs20">当前票数</span>
+            <text class="text-color-red fs24 text-bold">2055</text>
+            <text class="fs20">当前票数</text>
           </view>
         </view>
         <divider height="1rpx" />
         <view class="flex-1 flex justify-center align-center px20">
           <al-image width="23rpx" height="25rpx" src="/static/images/number.png" />
           <view class="flex flex-1 flex-column ml22 align-center">
-            <span class="text-color-yellow fs24 text-bold">0058</span>
-            <span class="fs20">编号</span>
+            <text class="text-color-yellow fs24 text-bold">0058</text>
+            <text class="fs20">编号</text>
           </view>
         </view>
       </view>

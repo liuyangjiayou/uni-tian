@@ -88,6 +88,8 @@ export default {
     handlerSport(item) {
       if (parseInt(item.pro_type) === 3) {
         // item.jump_url
+      } else if (parseInt(item.pro_type) === 4) {
+        this.$Router.push({ path: `/pages/game/list`, query: { id: item.id, title: item.pro_name }})
       } else {
         this.$Router.push({ path: `/pages/sport/index`, query: { id: item.id, sport: item.pro_name }})
       }

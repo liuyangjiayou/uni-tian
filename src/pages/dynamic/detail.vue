@@ -3,7 +3,7 @@
     <view class="fs34 my34">{{ details.title }}</view>
     <view class="mb40">
       <al-image width="24rpx" height="24rpx" src="/static/images/sc.png" @click.native="toProvin" />
-      <span class="text-color-gray fs26 ml28">{{ details.publish_time }}</span>
+      <text class="text-color-gray fs26 ml28">{{ details.publish_time }}</text>
     </view>
     <divider height="1rpx" />
     <view class="dynamic-detail-content">

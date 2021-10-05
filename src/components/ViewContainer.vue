@@ -1,14 +1,28 @@
 <template>
 <view>
   <view v-if="head || src || $slots.header" class="web-header fs0">
-    <view v-if="head" :class="['border-box flex align-center px20', background ? 'title-wrap' : 'title-wrap2']" :style="[titleStyle]">
-      <al-image v-if="back" class="mr20" width="20rpx" height="35rpx" src="/static/images/back.png" @click.native="backFn" />
-      <view :class="['flex flex-1 fs30', titleAlign]">{{title}}</view>
-      <button v-if="share" data-name="shareBtn" open-type="share">
-        <al-image class="mr20" width="36rpx" height="36rpx" src="/static/images/share.png" />
-      </button>
+    <view v-if="head" :style="[headStyle]">
+      <view :class="['border-box flex align-center px20', 'title-wrap2']" :style="[titleStyle]">
+        <al-image v-if="back" class="mr20" width="20rpx" height="35rpx" src="/static/images/back.png" @click.native="backFn" />
+        <view :class="['flex flex-1 fs30', titleAlign]">{{title}}</view>
+        <button v-if="share" data-name="shareBtn" open-type="share">
+          <al-image class="mr20" width="36rpx" height="36rpx" src="/static/images/share.png" />
+        </button>
+      </view>
     </view>
     <view v-if="src"><al-image width="100%" :height="srcHeight" :src="src" /></view>
+    <swiper
+        v-if="banner.length"
+        class="swiper"
+        :style="{ height: srcHeight }"
+        indicator-dots
+        autoplay
+        circular
+        :interval="3000"
+        :duration="500"
+    >
+      <swiper-item v-for="(item, index) in banner" :key="index"><al-image width="100%" height="100%" :src="item[field]" /></swiper-item>
+    </swiper>
     <slot name="header" />
   </view>
   <view :class="['web-body', customClass]" :style="[comStyle]">
@@ -34,7 +48,7 @@ export default {
     // 是否分享
     share: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     // 标题
     title: {
@@ -76,6 +90,15 @@ export default {
       type: String,
       default: '',
     },
+    // 轮播图
+    banner: {
+      type: Array,
+      default: [],
+    },
+    field: {
+      type: String,
+      default: 'image',
+    },
   },
   data() {
     return {
@@ -87,6 +110,12 @@ export default {
     comStyle() {
       return {
         ...this.bodyStyle,
+      };
+    },
+    headStyle() {
+      return {
+        height: this.customBarHeight + 'px',
+        ...(this.background ? {} : {}),
       };
     },
     titleStyle() {
@@ -121,6 +150,9 @@ export default {
   }
   .title-wrap2 {
     width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 10;
   }
   .web-body {
     position: relative;

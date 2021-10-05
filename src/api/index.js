@@ -128,3 +128,28 @@ export const game = {
         })
     },
 };
+// 排行榜
+export const ranks = {
+    // 1 2 投票点赞类项目，云上评审类项目
+    '1': function (data) {
+        return http({
+            url: '/pro/rank/scores',
+            data,
+        })
+    },
+    // 健步走
+    '3': function (data) {
+        return http({
+            url: '/pro/rank/scores',
+            data,
+        })
+    },
+    // 小游戏
+    '4': function (data) {
+        return http({
+            url: '/pro/rank/scores',
+            data,
+        })
+    },
+};
+ranks['2'] = ranks['1'];

@@ -1,5 +1,5 @@
 <template>
-  <view-container src-height="337rpx" src="/static/images/bg7.png" :back="true" title="冰雪大挑战">
+  <view-container src-height="337rpx":banner="banner" :back="true" :title="query.title">
     <!-- 项目分类   -->
     <view
         v-for="(item, index) in list"
@@ -21,13 +21,16 @@ export default {
   mixins: [ShareMixin],
   data() {
     return {
+      query: {},
       list: [],
+      banner: [],
     }
   },
   onLoad() {
-    console.log('game onLoad', this.customBar);
+    this.query = this.$Route.query;
     game.list().then(res => {
-      this.list = res;
+      this.list = res.list;
+      this.banner = res.banner;
     });
   },
   methods: {

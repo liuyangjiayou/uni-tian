@@ -1,61 +1,48 @@
 <template>
-  <view-container src="/static/images/bg4.png" back title="排行榜" customClass="dynamic-detail shadow2">
-    <view class="rank-title text-color-blue text-bold fs26">陆地冰球射门</view>
+  <view-container :src="banner.image" back :title="banner.title" customClass="dynamic-detail shadow2">
+    <view class="rank-title text-color-blue text-bold fs26">{{project_name}}</view>
     <view>
       <view class="flex fs24 mt50 pb8" style="color: #b1b1b1;">
         <span class="flex-1">排名</span>
-        <span class="flex-2">队伍名</span>
-        <span class="flex-3">单位名</span>
+        <span class="flex-3">队伍名</span>
+        <span class="flex-2">单位名</span>
         <span class="flex-1">分数</span>
       </view>
       <view v-for="(item, index) in list" :key="index" class="flex py12 align-center">
-        <span :class="['flex-1 text-cut fs0' ]"><i :class="['team-index fs24', `team-${index+1}`]">{{item.index}}</i></span>
-        <span class="flex-2 text-cut fs24">{{item.team}}</span>
-        <span class="flex-3 text-cut fs24">{{item.company}}</span>
-        <span class="flex-1 text-cut fs24">{{item.score}}</span>
+        <span :class="['flex-1 text-cut fs0' ]"><i :class="'team-index fs24' + ' team-'+ (item.rownum === 'null' || !item.rownum ? item.num_tmp : item.rownum)">
+          {{item.rownum === "null" || !item.rownum ? item.num_tmp : item.rownum}}
+        </i></span>
+        <span class="flex-3 text-cut fs24">{{item.ranks_name}}</span>
+        <span class="flex-2 text-cut fs24">{{item.ranks_org_name}}</span>
+        <span class="flex-1 text-cut fs24">{{item.rank_score}}</span>
       </view>
     </view>
   </view-container>
 </template>
 
 <script>
+import { ranks } from '@/api';
 export default {
   name: "rank",
   data() {
     return {
-      list: [
-        {
-          index: 1,
-          team: '队伍名字1',
-          company: '单位名字1单位名字3',
-          score: 32654,
-        },
-        {
-          index: 2,
-          team: '队伍名字2',
-          company: '单位名字2单位名字3',
-          score: 32654,
-        },
-        {
-          index: 3,
-          team: '队伍名字3',
-          company: '单位名字3单位名字3',
-          score: 32654,
-        },
-        {
-          index: 4,
-          team: '队伍名字4',
-          company: '单位名字4',
-          score: 32654,
-        },
-        {
-          index: 5,
-          team: '队伍名字5',
-          company: '单位名字5',
-          score: 32654,
-        },
-      ],
+      list: [],
+      banner: {},
+      project_name: '',
+      query: {},
     };
+  },
+  onLoad() {
+    this.query = this.$Route.query;
+    if (!['1', '2', '3', '4'].includes(this.query.type?.toString())) {
+      this.list = [];
+      return;
+    }
+    ranks[this.query.type.toString()]({project_id: this.query.id}).then(res => {
+      this.list = res.list;
+      this.banner = res.banner;
+      this.project_name = res.project_name;
+    });
   },
 }
 </script>

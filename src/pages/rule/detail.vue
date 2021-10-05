@@ -1,7 +1,7 @@
 {<template>
   <view-container back :title="info.pro_name">
     <view class="art-title fs34 text-bold">
-      <span>{{info.pro_name}}</span>
+      <text>{{info.pro_name}}</text>
     </view>
     <view class="dynamic-detail-content" v-html="info.pro_rule" />
   </view-container>
@@ -30,11 +30,11 @@ export default {
   background: url("~@/static/images/bg2.png") center top no-repeat;
   background-size: 220rpx 24rpx;
   text-align: center;
-  span {
+  text {
     position: relative;
     padding: 0 35rpx;
   }
-  span:before, span:after {
+  text:before, text:after {
     content: '';
     position: absolute;
     top: 0;
@@ -45,11 +45,11 @@ export default {
     height: 22rpx;
     background-size: 100% 100%;
   }
-  span:before {
+  text:before {
     left: 0;
     background-image: url("~@/static/images/right.png");
   }
-  span:after {
+  text:after {
     right: 0;
     background-image: url("~@/static/images/left.png");
   }

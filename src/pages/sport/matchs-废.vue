@@ -9,13 +9,13 @@
         <view class="flex justify-end">
           <al-image width="50rpx" height="50rpx" src="/static/test/icon1.png" class="ml20" @click.native="close" />
         </view>
-        <view class="city-title"><span class="mr20">—</span>石家庄市<span class="ml20">—</span></view>
+        <view class="city-title"><text class="mr20">—</text>石家庄市<text class="ml20">—</text></view>
         <view class="city-list">
-          <span :class="['city-item', value2 === '桥西去' ? 'active' : '']" @click.native="setValue2('桥西去')">桥西去</span>
-          <span :class="['city-item', value2 === '桥西去' ? 'active' : '']" @click.native="setValue2('新华区')">新华区</span>
-          <span class="city-item" @click.native="setValue2('石家庄市')">桥西去</span>
-          <span class="city-item" @click.native="setValue2('石家庄市')">新华区</span>
-          <span class="city-item" @click.native="setValue2('石家庄市')">桥西去</span>
+          <text :class="['city-item', value2 === '桥西去' ? 'active' : '']" @click.native="setValue2('桥西去')">桥西去</text>
+          <text :class="['city-item', value2 === '桥西去' ? 'active' : '']" @click.native="setValue2('新华区')">新华区</text>
+          <text class="city-item" @click.native="setValue2('石家庄市')">桥西去</text>
+          <text class="city-item" @click.native="setValue2('石家庄市')">新华区</text>
+          <text class="city-item" @click.native="setValue2('石家庄市')">桥西去</text>
         </view>
         <divider height="1rpx" />
         <view class="city-title"><span class="mr20">—</span>石家庄市<span class="ml20">—</span></view>
