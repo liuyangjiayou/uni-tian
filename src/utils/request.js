@@ -6,8 +6,11 @@ export default function (options) {
     });
     return new Promise((resolve, reject) => {
         const baseUrl = 'https://atestydh.zhyell.com/api';
-        const header = {}
+        const header = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
         if (store.getters.token) {
+            header.Authorization = `Bearer ${store.getters.token}`
             header.Authorization = `Bearer ${store.getters.token}`
         }
         uni.request({

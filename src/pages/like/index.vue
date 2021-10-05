@@ -24,13 +24,14 @@ export default {
   },
   onLoad() {
     like.sport().then(res => {
+      console.log(res);
       this.list = res.list;
       this.banner = res?.banner?.[0];
     });
   },
   methods: {
     click(item) {
-      this.$Router.push({path: '/pages/like/list', query: {sport:item.id}});
+      this.$Router.push({path: '/pages/like/list', query: { sport: item.id }});
     },
   },
 }

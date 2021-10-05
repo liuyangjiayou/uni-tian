@@ -1,5 +1,5 @@
 <template>
-  <view-container src-height="259rpx" :src="`/static/images/sport/sport12img.png`" back title="广播体操"  custom-class="pt0">
+  <view-container src-height="259rpx" :src="info.pro_thumb" back :title="info.pro_name"  custom-class="pt0">
     <template #header>
       <view class="bg-gray flex justify-center align-center px40">
         <!-- 自定义Placeholder -->
@@ -7,21 +7,32 @@
       </view>
     </template>
     <view class="flex justify-between align-center py18 bb1-1 fs30 text-bold">
-      <view :class="['flex-1 height40 lh40 text-center', tab === 1 ? 'active-tab' : '']" @click="setTab(1)">作品展示</view>
-      <view :class="['flex-1 height40 lh40 text-center', tab === 2 ? 'active-tab' : '']" @click="setTab(2)" class="bl1-1">人气排行</view>
+      <view :class="['flex-1 height40 lh40 text-center', form.sort === 0 ? 'active-tab' : '']" @click="setTab(0)">作品展示</view>
+      <view :class="['flex-1 height40 lh40 text-center', form.sort === 1 ? 'active-tab' : '']" @click="setTab(1)" class="bl1-1">人气排行</view>
     </view>
     <view-list :list="list" @play="play"/>
   </view-container>
 </template>
 
 <script>
+import { like } from '@/api';
+const createForm = function () {
+  return {
+    sort: 0,
+    limit: 20,
+    page: 1,
+    type: 1,
+    data: '',
+  }
+}
 export default {
 name: "list",
   data() {
     return {
       searchValue: '',
-      tab: 1,
       list: [],
+      info: {},
+      form: createForm(),
       query: {
         sport: '',
       },
@@ -29,63 +40,44 @@ name: "list",
   },
   onLoad() {
     this.query = this.$Route.query;
-    console.log('this.$Route.query', this.$Route.query);
+    this.getList();
   },
   // 触底触发
   onReachBottom() {
-    this.getList();
+    this.getList(true);
   },
   // 下拉刷新
   onPullDownRefresh(){
     this.getList();
   },
-  created() {
-    console.log('this.query', this.query);
-    this.getList();
-  },
   methods: {
     search() {
       console.log('searchValue', this.searchValue);
+      this.form.data = this.searchValue;
+      this.form.page = 1;
       this.getList();
     },
     setTab(val) {
-      this.tab = val;
+      this.form = createForm()
+      this.form.data = this.searchValue;
+      this.form.sort = val;
+      this.form.page = 1;
       this.getList();
     },
-    getList() {
-      console.log(this.tab, this.searchValue);
-      this.list = this.list.concat([
-        {
-          src: '/static/test/01.png',
-          title: '太极拳专区2',
-          desc: '队伍名收费2442的',
-          count: 12655,
-          number: '222233',
-          city: '石家庄工会',
-          id: 1,
-        },
-        {
-          src: '/static/test/02.png',
-          title: '太极拳专区3',
-          desc: '队伍名收费收费的232',
-          count: 12655,
-          number: '222233',
-          city: '石家庄工会',
-          id: 2,
-        },
-        {
-          src: '/static/test/01.png',
-          title: '太极拳专22',
-          desc: '队伍名收费收费的099',
-          count: 12655,
-          number: '222233',
-          city: '石家庄工会',
-          id: 3,
-        },
-      ]);
+    // type有为需要concat链接
+    getList(type) {
+      if (type) {
+        this.form.page++
+      }
+      like.small({
+        id: this.query.sport,
+        ...this.form
+      }).then(res => {
+        this.list = type ? this.list.concat(res.pro_list.list) : res.pro_list.list
+        this.info = res;
+      })
     },
     play(item) {
-      console.log('播放', item.id);
       if (Number(item.id)) {
         this.$Router.push({path: '/pages/like/detail', query: {id: Number(item.id)}});
       }

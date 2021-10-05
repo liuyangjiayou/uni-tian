@@ -4,7 +4,7 @@
       <view class="fs0">
         <video
             id="myVideo"
-            src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20200317.mp4"
+            :src="info.ranks_video_thumb"
             enable-danmu
             danmu-btn
             controls
@@ -14,30 +14,30 @@
     </template>
     <view class="flex pt40 mb28">
       <view class="flex-1">
-        <view class="fs32 text-bold">这里是视频名称，这里是视频名称</view>
+        <view class="fs32 text-bold">{{ info.ranks_video_name }}</view>
         <view class="mt30 flex align-center fs0">
           <al-image width="100rpx" height="33rpx" src="/static/images/team.png" />
-          <text class="text-underline fs24 ml16">这里是队伍名称</text>
+          <span class="text-underline fs24 ml16">{{ info.ranks_name }}</span>
         </view>
         <view class="mt10 flex align-center fs0">
           <al-image width="100rpx" height="33rpx" src="/static/images/company.png" />
-          <text class="text-underline fs24 ml16">这里是单位名称</text>
+          <span class="text-underline fs24 ml16">{{ info.ranks_org_name }}</span>
         </view>
       </view>
       <view class="b1-1 flex flex-column">
         <view class="flex-1 flex justify-center align-center px20">
           <al-image width="27rpx" height="31rpx" src="/static/images/count.png" />
           <view class="flex flex-1 flex-column ml22 align-center">
-            <text class="text-color-red fs24 text-bold">2055</text>
-            <text class="fs20">当前票数</text>
+            <span class="text-color-red fs24 text-bold">{{ info.give_up_num }}</span>
+            <span class="fs20">当前票数</span>
           </view>
         </view>
         <divider height="1rpx" />
         <view class="flex-1 flex justify-center align-center px20">
           <al-image width="23rpx" height="25rpx" src="/static/images/number.png" />
           <view class="flex flex-1 flex-column ml22 align-center">
-            <text class="text-color-yellow fs24 text-bold">0058</text>
-            <text class="fs20">编号</text>
+            <span class="text-color-yellow fs24 text-bold">{{ info.id }}</span>
+            <span class="fs20">编号</span>
           </view>
         </view>
       </view>
@@ -46,15 +46,17 @@
     <view class="text-center pt30">
       <view class="view-title">为您推荐</view>
     </view>
-    <view-list :list="list" />
+    <view-list :list="info.rec_list" @play="play" />
   </view-container>
 </template>
 
 <script>
+import { like } from '@/api';
 export default {
   name: "detail",
   data() {
     return {
+      info: {},
       list: [
         {
           src: '/static/test/01.png',
@@ -77,6 +79,23 @@ export default {
       ]
     };
   },
+  onLoad(){
+    like.details({
+      id: this.$Route.query.id
+    }).then(res => {
+      this.info = res;
+      console.log(res)
+    })
+  },
+  methods: {
+    play(item){
+      like.details({
+        id: item.id
+      }).then(res => {
+        this.info = res;
+      })
+    }
+  }
 }
 </script>
 

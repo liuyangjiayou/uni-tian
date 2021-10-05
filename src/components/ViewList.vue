@@ -2,16 +2,16 @@
   <view class="video-list">
     <view v-for="(item, index) in list" :key="index" class="video-item shadow1">
       <view class="fs0 relative" @click="play(item)">
-        <al-image width="100%" height="226rpx" :src="item.src" />
+        <al-image width="100%" height="226rpx" :src="item.ranks_video" />
         <al-image width="53rpx" height="53rpx" src="/static/images/play.png" class="video-play" />
-        <view class="video-tag fs24">{{item.city}}</view>
+        <view class="video-tag fs24">{{item.org_name}}</view>
       </view>
       <view class="px24 pb20">
-        <view class="fs26 mt20">{{item.title}}</view>
-        <view class="fs22 text-color-gray mt10">{{item.desc}}</view>
-        <view class="fs22 text-color-gray3 b2-1 inline-block p5 my10">编号：{{item.number}}</view>
+        <view class="fs26 mt20">{{item.ranks_video_name}}</view>
+        <view class="fs22 text-color-gray mt10">{{item.ranks_name}}</view>
+        <view class="fs22 text-color-gray3 b2-1 inline-block p5 my10">编号：{{item.id}}</view>
         <view class="flex align-center justify-between">
-          <text class="text-color-blue fs30 mr10">{{item.count}}</text>
+          <text class="text-color-blue fs30 mr10">{{item.rank_score || item.count}}</text>
           <text class="text-color-gray4 flex-1 fs22">当前票数</text>
           <view class="button-score">投票</view>
         </view>

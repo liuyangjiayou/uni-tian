@@ -1,8 +1,8 @@
 <template>
-  <view-container src="/static/images/img1.png" back :title="query.sport">
+  <view-container :src="info.pro_thumb" back :title="info.pro_name">
     <view class="flex justify-between align-center pb35">
       <view>
-        <view class="view-title">{{ query.sport }}{{ query.id }}</view>
+        <view class="view-title">{{ info.pro_name }}</view>
         <view class="view-tag-gray fs22 ml30 mt8">冰球技术术语</view>
       </view>
       <view class="flex-none flex">
@@ -12,7 +12,7 @@
     </view>
     <divider height="1rpx" />
     <view class="mt30">简介</view>
-    <view class="my30 fs26">这里是简介，冰球的基本技术之一，射门技术的练习...这里是简介，冰球的基本技术之一，射门技术的练习...这里是简介，冰球的基本技术之一，射门技术的练习...</view>
+    <rich-text :nodes="info.pro_desc"></rich-text>
     <divider height="1rpx" />
     <view class="flex justify-center py30">
       <al-image width="335rpx" height="171rpx" src="/static/images/sheng.png" @click.native="toProvin" />
@@ -20,32 +20,39 @@
     </view>
     <divider height="1rpx" />
     <view class="my30">赛事回放</view>
-    <view class="flex justify-between">
-      <view>
-        <al-image width="335rpx" height="180rpx" src="/static/test/img1.png" />
-        <view class="fs24">新乐市工会</view>
-      </view>
-      <view>
-        <al-image width="335rpx" height="180rpx" src="/static/test/img1.png" />
-        <view class="fs24">新乐市工会</view>
+    <view class="">
+      <view v-for="item in info.pro_list" :key="item.id" class="item-image">
+        <al-image width="335rpx" height="180rpx" :src="item.ranks_video" />
+        <view class="fs24">{{ item.org_name }}</view>
       </view>
     </view>
   </view-container>
 </template>
 
 <script>
+import { like } from '@/api';
 export default {
 name: "index",
   data() {
     return {
       query: {},
+      info: {},
     };
   },
   onLoad() {
     this.query = this.$Route.query;
-  },
-  created() {
-    console.log('$Route', this.$Route);
+    like.small({
+      id: this.$Route.query.id
+    }).then(res => {
+      this.info = res;
+      this.info.pro_desc = this.info.pro_desc
+          .replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+          .replace(/<p([\s\w"=\/\.:;]+)((?:(class="[^"]+")))/ig, '<p')
+          .replace(/<p>/ig, '<p style="line-height: 1.5; text-indent: 20px" class="p_class">')
+          .replace(/<span([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<span')
+          .replace(/<span([\s\w"=\/\.:;]+)((?:(class="[^"]+")))/ig, '<span')
+          .replace(/<span>/ig, '<span style="font-size: 14px">')
+    })
   },
   methods: {
     toProvin() {
@@ -59,5 +66,9 @@ name: "index",
 </script>
 
 <style scoped>
-
+.item-image{
+  display: inline-block;
+  margin-right: 14rpx;
+  margin-bottom: 15rpx;
+}
 </style>

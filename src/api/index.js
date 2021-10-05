@@ -112,7 +112,22 @@ export const like = {
             data,
         })
     },
+    // 点赞项目列表 或者 首页项目详情
+    small: function (data) {
+        return http({
+            url: '/pro/desc',
+            data,
+        })
+    },
+    // 点赞项目详情
+    details: function (data) {
+        return http({
+            url: '/pro/video/desc',
+            data,
+        })
+    },
 };
+
 // 小游戏
 export const game = {
     list: function (data) {
