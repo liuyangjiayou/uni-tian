@@ -1,5 +1,5 @@
 <template>
-  <view-container :head="false">
+  <view-container back title="比赛进程" >
     <view class="process-wrap">
       <view class="pro-title flex align-center justify-center fs36 text-bold text-color-white">市级比赛</view>
       <view class="pro-body shadow1">

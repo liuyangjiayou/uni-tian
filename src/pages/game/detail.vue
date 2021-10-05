@@ -1,6 +1,6 @@
 <template>
   <view>
-    <view-container src-height="274rpx" src="/static/images/bg7.png" :back="false">
+    <view-container src-height="274rpx" src="/static/images/bg7.png" share back title="冰雪大作战">
       <view class="flex align-center mt10">
         <al-image width="40rpx" height="31rpx" :src="require('@/static/images/game.png')" />
         <span class="ml25 fs32 text-bold">游戏介绍</span>

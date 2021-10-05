@@ -1,5 +1,5 @@
 <template>
-  <view-container src="/static/images/bg4.png" :back="false" customClass="dynamic-detail shadow2">
+  <view-container src="/static/images/bg4.png" back title="排行榜" customClass="dynamic-detail shadow2">
     <view class="rank-title text-color-blue text-bold fs26">陆地冰球射门</view>
     <view>
       <view class="flex fs24 mt50 pb8" style="color: #b1b1b1;">

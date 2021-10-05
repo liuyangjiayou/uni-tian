@@ -1,5 +1,5 @@
 <template>
-  <view-container src="/static/images/img1.png" :back="false">
+  <view-container src="/static/images/img1.png" back :title="query.sport">
     <view class="flex justify-between align-center pb35">
       <view>
         <view class="view-title">{{ query.sport }}{{ query.id }}</view>
@@ -49,10 +49,10 @@ name: "index",
   },
   methods: {
     toProvin() {
-      this.$Router.push({name: 'sport-matches'});
+      this.$Router.push({path: '/pages/sport/matchs', query: {title: '省级比赛'}});
     },
     toCity() {
-      console.log('市级比赛');
+      this.$Router.push({path: '/pages/sport/matchs', query: {title: '市级比赛'}});
     },
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <view-container src-height="259rpx" :src="`/static/images/sport/sport${query.sport || 1}img.png`" :back="false"  custom-class="pt0">
+  <view-container src-height="259rpx" :src="`/static/images/sport/sport12img.png`" back title="广播体操"  custom-class="pt0">
     <template #header>
       <view class="bg-gray flex justify-center align-center px40">
         <!-- 自定义Placeholder -->
