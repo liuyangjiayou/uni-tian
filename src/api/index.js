@@ -73,4 +73,11 @@ export function getProcess(data) {
         data,
     })
 }
+// 比赛点赞专区
+export function getClick(data) {
+    return http({
+        url: '/pro/click/list',
+        data,
+    })
+}
 
