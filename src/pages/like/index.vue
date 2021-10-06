@@ -1,5 +1,5 @@
 <template>
-  <view-container src-height="274rpx" :src="banner.image" back :title="banner.title">
+  <view-container src-height="274rpx" :banner="banner" back :title="banner.title">
     <view
         v-for="(item, index) in list"
         class="sport-item"
@@ -19,14 +19,14 @@ export default {
   data() {
     return {
       list: [],
-      banner: {},
+      banner: [],
     };
   },
   onLoad() {
     like.sport().then(res => {
       console.log(res);
       this.list = res.list;
-      this.banner = res?.banner?.[0];
+      this.banner = res.banner;
     });
   },
   methods: {

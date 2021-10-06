@@ -49,7 +49,12 @@ export function h5login(data) {
         data,
     })
 }
-
+export function sendSms(data) {
+    return http({
+        url: '/sys/sendsms',
+        data,
+    })
+}
 // 获取赛事动态
 export function getDynamic(data) {
     return http({
@@ -88,7 +93,12 @@ export const index = function (data) {
         data,
     })
 };
-
+export const start = function (data) {
+    return http({
+        url: '/start',
+        data,
+    })
+};
 // 比赛规则
 export const rule = {
     list: function (data) {
@@ -146,25 +156,40 @@ export const game = {
 // 排行榜
 export const ranks = {
     // 1 2 投票点赞类项目，云上评审类项目
-    '1': function (data) {
+    '1': function (id) {
         return http({
             url: '/pro/rank/scores',
-            data,
+            data: { project_id: id },
         })
     },
     // 健步走
-    '3': function (data) {
+    '3': function () {
         return http({
-            url: '/pro/rank/scores',
-            data,
+            url: '/pro/rank/stepscores',
+            data: {},
         })
     },
     // 小游戏
-    '4': function (data) {
+    '4': function (id) {
         return http({
-            url: '/pro/rank/scores',
-            data,
+            url: '/pro/rank/gamescores',
+            data: { game_id: id },
         })
     },
 };
 ranks['2'] = ranks['1'];
+
+export const match = {
+    list: function (data) {
+        return http({
+            url: '/pro/video/list',
+            data,
+        })
+    },
+    tree: function () {
+        return http({
+            url: '/org/tree',
+            data: {},
+        })
+    },
+};

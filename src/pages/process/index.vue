@@ -24,7 +24,7 @@ export default {
   onLoad(){
     const { pid } = this.$Route.query
     getProcess({
-      pid: pid || ''
+      pro_id: pid || ''
     }).then(res => {
       this.list = res
     })

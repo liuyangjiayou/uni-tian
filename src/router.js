@@ -12,7 +12,7 @@ const router = createRouter({
     routes: [{
         path: '/pages/index/index',
         name: 'index',
-        aliasPath: '/'
+        aliasPath: '/index'
     },{
         path: '/pages/run/run',
         name: 'run',
@@ -21,6 +21,9 @@ const router = createRouter({
         name: 'sport',
     },{
         path: '/pages/sport/matchs',
+        name: 'sport-matches',
+    },{
+        path: '/pages/sport/matchs2',
         name: 'sport-matches',
     },{
         path: '/pages/dynamic/index',
@@ -59,8 +62,12 @@ const router = createRouter({
         path: '/pages/game/detail',
         name: 'game-detail',
     },{
+        path: '/pages/index/start',
+        name: 'start',
+        aliasPath: '/',
+    },{
         path: '/',
-        redirect: { name: 'index' },
+        redirect: { name: 'start' },
     }]
 });
 //全局路由前置守卫

@@ -1,35 +1,27 @@
 <template>
-  <view-container :head="false" :style="{paddingTop: 0}">
-    <view class="flex align-center sticky-top bg-white py20">
-      <uni-easyinput class="flex-1" v-model="value" placeholder="请输入内容" prefixIcon="search" confirmType="搜索" @iconClick="getData(0)" @confirm="getData(0)" />
-      <al-image width="50rpx" height="50rpx" src="/static/test/icon1.png" class="ml20" @click.native="open" />
+  <view-container back :title="query.title" custom-class="pt0">
+    <view class="flex align-center bg-white pt20">
+      <uni-search-bar :radius="100" v-model="form.search" placeholder="输入关键词" @confirm="getData(1)" class="flex-1 fs26" />
+      <view class="fs28" @click.native="open">筛选</view>
     </view>
     <uni-popup ref="popup" type="right">
-      <scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
-        <view class="flex justify-end">
-          <al-image width="50rpx" height="50rpx" src="/static/test/icon1.png" class="ml20" @click.native="close" />
+      <scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" :style="[{paddingTop: barH + 'px'}]">
+        <view class="flex justify-end pop-close" :style="[{top: barH + 'px'}]">
+          <al-image width="24rpx" height="24rpx" src="/static/images/close.png" class="ml20 mt10" @click.native="close" />
         </view>
-        <view class="city-title"><text class="mr20">—</text>石家庄市<text class="ml20">—</text></view>
-        <view class="city-list">
-          <text :class="['city-item', value2 === '桥西去' ? 'active' : '']" @click.native="setValue2('桥西去')">桥西去</text>
-          <text :class="['city-item', value2 === '桥西去' ? 'active' : '']" @click.native="setValue2('新华区')">新华区</text>
-          <text class="city-item" @click.native="setValue2('石家庄市')">桥西去</text>
-          <text class="city-item" @click.native="setValue2('石家庄市')">新华区</text>
-          <text class="city-item" @click.native="setValue2('石家庄市')">桥西去</text>
-        </view>
-        <divider height="1rpx" />
-        <view class="city-title"><span class="mr20">—</span>石家庄市<span class="ml20">—</span></view>
-        <view class="city-list">
-          <span class="city-item">桥西去</span>
-          <span class="city-item">新华区</span>
-          <span class="city-item">桥西去</span>
-          <span class="city-item">新华区</span>
-          <span class="city-item">桥西去</span>
-        </view>
-        <divider height="1rpx" />
+        <template v-for="(row, index) in tree">
+          <view :key="index + 'a'" :class="['city-title', index===0?'pt35':0]"><span class="mr20">—</span>{{row.title}}<span class="ml20">—</span></view>
+          <view :key="index + 'b'" class="city-list">
+            <text v-for="(item, index2) in row.childs"
+                  :key="index2"
+                  :class="['city-item fs28', form.orgId === item.id ? 'active' : '']"
+                  @click.native="() => setValue2(item.id)">{{item.title}}</text>
+          </view>
+          <divider :key="index + 'c'" height="1rpx" />
+        </template>
       </scroll-view>
     </uni-popup>
-    <view class="waterfall-box h-flex-x h-flex-2">
+    <view class="waterfall-box h-flex-x h-flex-2 view-list">
       <view class="mr20">
         <water-fall
             v-for="(item,index) in leftList"
@@ -58,19 +50,20 @@
 </template>
 
 <script>
-// import WaterFall from "./components/WaterFall";
+import { match } from '@/api';
 export default {
   name: "SportMatches",
-  components: {
-    WaterFall,
-  },
   data() {
     return {
+      query: {},
       page: 0, // 请求参数
       imgArr: [],
       scrollTop: 0,
-      value: '', // 搜索关键词
-      value2: '', // 筛选的值
+      form: {
+        search: '',
+        orgId: 0,
+      },
+      tree: [],
       // waterfall data
       leftHeight: 0,
       rightHeight: 0,
@@ -85,10 +78,12 @@ export default {
         rows:10,
         // 页码
         page:1,
-      }
+      },
+      barH: 0,
     };
   },
   onReady() {
+    this.barH = this.customBar;
     this.getList();
   },
   // 触底触发
@@ -106,6 +101,13 @@ export default {
       this.getList();
     },800);
   },
+  onLoad() {
+    console.log('onLoad match2');
+    this.query = this.$Route.query;
+    match.tree().then(res => {
+      this.tree = res;
+    });
+  },
   methods: {
     getData(page) {
       if (!isNaN(page)) this.page = Number(page);
@@ -118,8 +120,8 @@ export default {
     close() {
       this.$refs.popup.close()
     },
-    setValue2(title) {
-      this.value2 = this.value2 ? '' : title;
+    setValue2(id) {
+      this.form.orgId = this.form.orgId === id ? '' : id;
       this.$refs.popup.close();
       this.getData();
     },
@@ -152,52 +154,18 @@ export default {
     },
     // 获取数据
     getList() {
-      /*
-        无真实数据，当前由 setTimeout 模拟异步请求、
-        自行替换 请求方法将数据 传入 addList() 方法中
-        自行解决数据格式，自行修改组件内布局和内容绑定
-      */
       if (!this.ajax.load) {
         return;
       }
       this.ajax.load = false;
       this.ajax.loadTxt = '加载中';
-
-      setTimeout(() => {
-        // 生成随机数方法
-        let random = (min = 0, max) => {
-          return Math.floor(Math.random() * max) + min;
-        }
-        // 待选的图片数据
-        let imgs = [];
-        // 待选的标题数据
-        let titles = [
-          '桃花坞里桃花庵，桃花庵里桃花仙；',
-          '桃花仙人种桃树，又摘桃花卖酒钱。',
-          '酒醒只在花前坐，酒醉还来花下眠；半醒半醉日复日，花落花开年复年。',
-          '但愿老死花酒间，不愿鞠躬车马前；',
-          '车尘马足富者趣，酒盏花枝贫者缘。若将富贵比贫贱，',
-          '一在平地一在天；若将贫贱比车马，他得驱驰我得闲。',
-          '别人笑我太疯癫，我笑他人看不穿；不见五陵豪杰墓，无花无酒锄作田。'
-        ];
-
-        let res = [];
-        for (let i = 0; i < 10; i++) {
-          res.push({
-            url: `/static/test/img/${random(0,3)}.jpg`,
-            title: titles[random(0, titles.length)],
-            money: random(9, 9999),
-            label:'官方自营',
-            shop:'唐诗三百首旗舰店'
-          })
-        }
-        this.addList(res)
-      }, 1000);
+      console.log('getList');
+      match.list({...this.query}).then(res => {
+        this.addList(res.list);
+      });
 
     },
     addList(res) {
-      // 获取到的数据，请注意数据结构
-      console.log(res);
 
       if(!res || res.length < 1){
         this.ajax.loadTxt = '没有更多了';
@@ -303,14 +271,15 @@ export default {
   margin-right: -20rpx;
   .city-item {
     display: inline-block;
-    width: 145rpx;
+    min-width: 145rpx;
     height: 46rpx;
     line-height: 46rpx;
     text-align: center;
     background-color: #f6f6f6;
-    border-radius: 30rpx;
+    border-radius: 26rpx;
     margin-bottom: 20rpx;
     margin-right: 20rpx;
+    padding: 2rpx 20rpx;
     &.active {
       background-color: #22b7ef;
       color: white;
@@ -343,5 +312,12 @@ export default {
   }
 }
 
+.pop-close{
 
+  position: fixed;
+  height: 65rpx;
+  right: 47rpx;
+  left: 0;
+  background: #fff;
+}
 </style>

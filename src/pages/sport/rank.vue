@@ -34,11 +34,12 @@ export default {
   },
   onLoad() {
     this.query = this.$Route.query;
+    console.log(['1', '2', '3', '4'].includes(this.query.type?.toString()), this.query.type);
     if (!['1', '2', '3', '4'].includes(this.query.type?.toString())) {
       this.list = [];
       return;
     }
-    ranks[this.query.type.toString()]({project_id: this.query.id}).then(res => {
+    ranks[this.query.type.toString()](this.query.id).then(res => {
       this.list = res.list;
       this.banner = res.banner;
       this.project_name = res.project_name;

@@ -6,8 +6,8 @@
         <view class="view-tag-gray fs22 ml30 mt8">冰球技术术语</view>
       </view>
       <view class="flex-none flex">
-        <icon-button fs="fs24" src="/static/images/icon_sc.png" width="40rpx" height="40rpx" title="赛程" @handlerClick="$Router.push({name:'process'})" />
-        <icon-button fs="fs24" src="/static/images/icon_ph.png" width="40rpx" height="40rpx" title="排行" class="ml50" @handlerClick="$Router.push({name:'rank'})" />
+        <icon-button fs="fs24" src="/static/images/icon_sc.png" width="40rpx" height="40rpx" title="赛程" @handlerClick="click2" />
+        <icon-button fs="fs24" src="/static/images/icon_ph.png" width="40rpx" height="40rpx" title="排行" class="ml50" @handlerClick="click" />
       </view>
     </view>
     <divider height="1rpx" />
@@ -20,7 +20,7 @@
     </view>
     <divider height="1rpx" />
     <view class="my30">赛事回放</view>
-    <view class="">
+    <view class="mr-20">
       <view v-for="item in info.pro_list" :key="item.id" class="item-image">
         <al-image width="335rpx" height="180rpx" :src="item.ranks_video" />
         <view class="fs24">{{ item.org_name }}</view>
@@ -56,10 +56,16 @@ name: "index",
   },
   methods: {
     toProvin() {
-      this.$Router.push({path: '/pages/sport/matchs', query: {title: '省级比赛'}});
+      this.$Router.push({path: '/pages/sport/matchs2', query: {id: this.query.id, type: 2, title: '省级比赛'}});
     },
     toCity() {
-      this.$Router.push({path: '/pages/sport/matchs', query: {title: '市级比赛'}});
+      this.$Router.push({path: '/pages/sport/matchs2', query: {id: this.query.id, type: 1, title: '市级比赛'}});
+    },
+    click() {
+      this.$Router.push({ path: '/pages/sport/rank', query: {id:this.query.id, type:1} });
+    },
+    click2() {
+      this.$Router.push({ path: '/pages/process/index', query: {pid:this.query.id} });
     },
   },
 }

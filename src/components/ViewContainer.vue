@@ -28,12 +28,14 @@
   <view :class="['web-body', customClass]" :style="[comStyle]">
     <slot/>
   </view>
+  <authorization ref="auth" v-model="authorDialogVisibility"/>
 </view>
 </template>
 
 <script>
 export default {
   name: "ViewContainer",
+
   props: {
     // 是否显示头部-标题栏
     head: {
@@ -93,7 +95,7 @@ export default {
     // 轮播图
     banner: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     field: {
       type: String,
@@ -102,6 +104,7 @@ export default {
   },
   data() {
     return {
+      authorDialogVisibility: false,
       customBarHeight: 60,
       statusBarHeight: 20,
     };
@@ -114,6 +117,7 @@ export default {
     },
     headStyle() {
       return {
+        borderBottom: '2px solid #efefef',
         height: this.customBarHeight + 'px',
         ...(this.background ? {} : {}),
       };
@@ -133,6 +137,15 @@ export default {
   methods: {
     backFn() {
       this.$Router.back(1);
+    },
+    getAuth(visible, success, failure) {
+      if (this.$store.getters.token) {
+        typeof success === 'function' && success();
+        return;
+      }
+      this.authorDialogVisibility = true;
+      typeof success === 'function' && this.$refs.auth.$off('success').$on('success', success);
+      typeof failure === 'function' && this.$refs.auth.$off('failure').$on('failure', failure);
     },
   },
 }

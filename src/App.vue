@@ -9,13 +9,14 @@
       uni.getSystemInfo({
         success: function(e) {
           Vue.prototype.statusBar = e.statusBarHeight
-          console.log(e.statusBarHeight)
 
           // #ifdef MP-WEIXIN
           let custom = wx.getMenuButtonBoundingClientRect()
-          console.log(custom)
           Vue.prototype.customBar = custom.bottom + custom.top - e.statusBarHeight
-          console.log(Vue.prototype.customBar);
+          // #endif
+
+          // #ifdef H5
+          Vue.prototype.customBar = 40
           // #endif
         }
       });
@@ -47,6 +48,7 @@
       h5login({
         uid: 4
       }).then(res => {
+        console.log('onLaunchEnd h5login then');
         const { openid, token, user } = res;
         store.commit('SET_INFO', user)
         store.commit('SET_TOKEN', token)
@@ -56,6 +58,7 @@
           getApp().pageCallback();
         }
       }).catch(() => {
+        console.log('onLaunchEnd h5login catch');
         if (getApp().pageCallback) {
           getApp().pageCallback();
         }
@@ -67,7 +70,7 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
-		}
+		},
 	}
 </script>
 

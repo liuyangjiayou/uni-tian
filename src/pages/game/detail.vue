@@ -30,7 +30,7 @@
       </view>
       <divider height="1rpx" />
       <view class="flex pt40 pb30">
-        <view v-for="(item, index) in info.ranks_ranking" class="flex-1 flex flex-column align-center">
+        <view v-for="(item, index) in info.ranks_ranking" :key="index" class="flex-1 flex flex-column align-center">
           <view class="team-pic relative">
             <al-image width="100rpx" height="100rpx" :src="require('@/static/images/team-pic.png')" />
             <al-image width="46rpx" height="46rpx" :src="require('@/static/images/0'+ (index + 1) +'.png')" class="pic-icon" />
@@ -85,7 +85,7 @@ export default {
       this.show = !this.show;
     },
     click() {
-      this.$Router.push({ path: '/pages/sport/rank' });
+      this.$Router.push({ path: '/pages/sport/rank', query: {id:this.query.id, type:4} });
     },
     goMatch(val) {
       console.log(val);

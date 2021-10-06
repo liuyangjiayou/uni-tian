@@ -10,7 +10,8 @@ import Authorization from '../src/components/Authorization';
 import Divider from '../src/components/Divider';
 import ViewContainer from "./components/ViewContainer";
 import ViewList from "./components/ViewList";
-
+import CustomAudio from "./components/CustomAudio";
+import WaterFall from "./components/WaterFall";
 Vue.use(router);
 
 // 全局图片组件
@@ -27,8 +28,13 @@ Vue.component('divider', Divider);
 Vue.component('ViewContainer', ViewContainer);
 // 视频列表
 Vue.component('ViewList', ViewList);
+// audio
+Vue.component('CustomAudio', CustomAudio);
+// 瀑布流
+Vue.component('WaterFall', WaterFall);
 Vue.config.productionTip = false
 App.mpType = 'app'
+
 
 const app = new Vue({
   ...App,

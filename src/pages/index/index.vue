@@ -1,5 +1,5 @@
 <template>
-	<view-container :back="false" title="赛事" title-align="justify-center">
+	<view-container ref="container" :back="false" title="赛事" title-align="justify-center">
     <template #header>
       <!-- 轮播图   -->
       {{ banner.length }}
@@ -27,7 +27,6 @@
             @handlerClick="handlerClick(item)" />
       </view>
     </template>
-
     <!-- 项目分类   -->
     <view
         v-for="(item, index) in pro_list"
@@ -38,7 +37,6 @@
       <view class="z1">{{ item.pro_name }}</view>
       <al-image class="absolute z0" width="690rpx" height="228rpx" :src="item.pro_thumb"/>
     </view>
-    <authorization v-if="authorDialogVisibility" @close="authorDialogVisibility = false" />
 	</view-container>
 </template>
 
@@ -50,7 +48,6 @@ export default {
   mixins: [launchOrload],
   data() {
     return {
-      authorDialogVisibility: false,
       banner: [],
       nav: [],
       pro_list: [],
@@ -67,40 +64,39 @@ export default {
     ...mapGetters(['token']),
   },
   methods: {
-    // 健步走
-    handlerRun (type) {
-      // 验证授权
-      if (!this.token) {
-        return this.authorDialogVisibility = true;
-      }
-      this.$Router.push({ path: `/pages/${type}/${type}`})
-    },
     handlerClick(item) {
       const navPath = {
         1: '/pages/rule/index',
         2: '/pages/process/index',
         3: '/pages/dynamic/index',
         4: '/pages/like/index',
-        5: '/pages/info/score',
       };
-      this.$Router.push({path: navPath[item.id]});
+      // 成绩查询
+      if (item.id === 5) {
+        this.$refs.container.getAuth(true, () => {
+          this.$Router.push({path: '/pages/info/score'});
+        }, () => console.log('get token failure'));
+      } else if (navPath[item.id]) {
+        this.$Router.push({path: navPath[item.id]});
+      }
     },
     handlerSport(item) {
       if (parseInt(item.pro_type) === 3) {
-        // item.jump_url
+        this.$refs.container.getAuth(true, () => {
+          // #ifdef H5
+          location.href = item.jump_url;
+          // #endif
+          // #ifdef MP-WEIXIN
+          this.$Router.push({path: '/pages/run/run'});
+          // #endif
+        }, () => console.log('get token failure'));
       } else if (parseInt(item.pro_type) === 4) {
-        this.$Router.push({ path: `/pages/game/list`, query: { id: item.id, title: item.pro_name }})
+        this.$refs.container.getAuth(true, () => {
+          this.$Router.push({ path: `/pages/game/list`, query: { id: item.id, title: item.pro_name }});
+        }, () => console.log('get token failure'));
       } else {
         this.$Router.push({ path: `/pages/sport/index`, query: { id: item.id, sport: item.pro_name }})
       }
-    },
-    // 我的个人信息
-    handlerInfo () {
-      // 验证授权
-      if (!this.token) {
-        return this.authorDialogVisibility = true;
-      }
-      this.$Router.push({ path: `/pages/info/info`, query: { id: 123 } })
     },
   }
 }

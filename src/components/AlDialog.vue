@@ -1,9 +1,9 @@
 <template>
   <view v-if="value" class="flex align-center justify-center al-dialog">
-    <view class="content pb20 px20">
-      <view v-if="title" class="flex align-center justify-center title relative">
-        <text>{{ title }}</text>
-        <text class="close absolute" @click="close">x</text>
+    <view class="content pb20 px50">
+      <view v-if="title" class="flex align-center title relative">
+        <text class="flex-1 text-center pl22">{{ title }}</text>
+        <al-image width="44rpx" height="44rpx" src="/static/images/close2.png" @click.native="close" />
       </view>
       <slot name="content" />
     </view>
@@ -39,11 +39,13 @@ export default {
 <style lang="scss" scoped>
 .content{
   min-width: 400rpx;
+  max-width: 600rpx;
+  box-sizing: border-box;
   background: #fff;
   border-radius: 10rpx;
   overflow: hidden;
   .title{
-    height: 80rpx;
+    height: 125rpx;
     background: #fff;
   }
   .close{

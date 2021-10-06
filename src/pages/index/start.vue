@@ -1,0 +1,69 @@
+<template>
+  <view>
+    <al-image width="100%" height="100%" class="start" :src="info.start_the_thumb" />
+    <custom-audio ref="audio" loop autoplay :src="info.start_the_music" class="relative audio"/>
+    <al-image width="278rpx" height="79rpx" src="/static/images/enter.png" @click.native="enter" class="enter" />
+  </view>
+</template>
+
+<script>
+import { start } from '@/api';
+export default {
+  name: "start",
+  data() {
+    return {
+      audioAction: {
+        method: 'pause'
+      },
+      info: {
+        start_the_thumb: '',
+        start_the_music: '', //https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3
+      },
+    };
+  },
+  onLoad() {
+    start().then(res => {
+      this.info = res;
+    });
+  },
+  methods: {
+    enter() {
+      this.$refs.audio.pause();
+      this.$Router.push({name:'index'})
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.start {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.audio {
+  position: fixed;
+  top: 78rpx;
+  right: 78rpx;
+}
+// #ifdef MP_WEIXIN
+.audio {
+  position: fixed;
+  top: 170rpx;
+  right: 78rpx;
+}
+// #endif
+
+.enter{
+  display: block;
+  text-align: center;
+  position: fixed;
+  bottom: 126rpx;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+</style>
