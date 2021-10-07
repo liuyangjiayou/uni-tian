@@ -1,7 +1,7 @@
 <template>
   <view>
     <al-image width="100%" height="100%" class="start" :src="info.start_the_thumb" />
-    <custom-audio ref="audio" loop autoplay :src="info.start_the_music" class="relative audio"/>
+    <custom-audio v-if="info.start_the_music !== null && info.start_the_music" ref="audio" loop autoplay :src="info.start_the_music" class="relative audio"/>
     <al-image width="278rpx" height="79rpx" src="/static/images/enter.png" @click.native="enter" class="enter" />
   </view>
 </template>
@@ -16,19 +16,19 @@ export default {
         method: 'pause'
       },
       info: {
-        start_the_thumb: '',
-        start_the_music: '', //https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3
+        start_the_thumb: '/static/images/img1.png',
+        start_the_music: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3', //
       },
     };
   },
   onLoad() {
     start().then(res => {
-      this.info = res;
+      // this.info = res;
     });
   },
   methods: {
     enter() {
-      this.$refs.audio.pause();
+      this.$refs.audio && this.$refs.audio?.pause();
       this.$Router.push({name:'index'})
     },
   },

@@ -10,9 +10,15 @@ const router = createRouter({
         scrollBehavior: (to, from, savedPostion) => ({ x: 0, y: 0 }),
     },
     routes: [{
+        path: '/pages/index/start',
+        name: 'start',
+        aliasPath: '/',
+    },{
         path: '/pages/index/index',
         name: 'index',
-        aliasPath: '/index'
+    },{
+        path: '/pages/index/webview',
+        name: 'webview',
     },{
         path: '/pages/run/run',
         name: 'run',
@@ -61,10 +67,6 @@ const router = createRouter({
     },{
         path: '/pages/game/detail',
         name: 'game-detail',
-    },{
-        path: '/pages/index/start',
-        name: 'start',
-        aliasPath: '/',
     },{
         path: '/',
         redirect: { name: 'start' },

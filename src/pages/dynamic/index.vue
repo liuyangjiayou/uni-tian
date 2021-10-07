@@ -14,9 +14,11 @@
 </template>
 
 <script>
-import { getDynamic } from '@/api'
+import { getDynamic } from '@/api';
+import ShareMixin from "@/mixins/share";
 export default {
   name: "list",
+  mixins: [ShareMixin],
   data() {
     return {
       list: [],

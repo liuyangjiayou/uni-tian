@@ -1,7 +1,7 @@
 <template>
   <view-container src-height="259rpx" :src="info.pro_thumb" back :title="info.pro_name"  custom-class="pt0">
     <template #header>
-      <view class="bg-gray flex justify-center align-center px40">
+      <view class="bg-gray flex justify-center align-center px40 fixed"  :style="[{top: barH + 'px'}]">
         <!-- 自定义Placeholder -->
         <uni-search-bar :radius="100" v-model="searchValue" placeholder="输入关键词" @confirm="search" class="w-full fs26" />
       </view>
@@ -10,7 +10,7 @@
       <view :class="['flex-1 height40 lh40 text-center', form.sort === 0 ? 'active-tab' : '']" @click="setTab(0)">作品展示</view>
       <view :class="['flex-1 height40 lh40 text-center', form.sort === 1 ? 'active-tab' : '']" @click="setTab(1)" class="bl1-1">人气排行</view>
     </view>
-    <view-list :list="list" @play="play"/>
+    <view-list ref="list" :fetch="fetch" :params="params" @play="play" />
   </view-container>
 </template>
 
@@ -19,8 +19,6 @@ import { like } from '@/api';
 const createForm = function () {
   return {
     sort: 0,
-    limit: 20,
-    page: 1,
     type: 1,
     data: '',
   }
@@ -36,45 +34,52 @@ name: "list",
       query: {
         sport: '',
       },
+      params: {},
+      barH: 0,
     };
   },
   onLoad() {
+    this.barH = this.customBar;
     this.query = this.$Route.query;
-    this.getList();
+    this.params = {id: this.query.sport, ...this.form};
   },
   // 触底触发
+  // 触底触发
   onReachBottom() {
-    this.getList(true);
+    this.refresh();
   },
   // 下拉刷新
   onPullDownRefresh(){
-    this.getList();
+    this.refresh();
   },
   methods: {
+    refresh() {
+      this.$nextTick(() => {
+        this.$refs.list.refresh();
+      });
+    },
+    refreshPage() {
+      this.$set(this, 'params', { ...this.params, ...this.form });
+      this.$nextTick(() => {
+        this.$refs.list.refreshPage();
+      });
+    },
     search() {
       console.log('searchValue', this.searchValue);
       this.form.data = this.searchValue;
-      this.form.page = 1;
-      this.getList();
+      this.refreshPage();
     },
     setTab(val) {
       this.form = createForm()
       this.form.data = this.searchValue;
       this.form.sort = val;
-      this.form.page = 1;
-      this.getList();
+      this.refreshPage();
     },
     // type有为需要concat链接
-    getList(type) {
-      if (type) {
-        this.form.page++
-      }
-      like.small({
-        id: this.query.sport,
-        ...this.form
-      }).then(res => {
-        this.list = type ? this.list.concat(res.pro_list.list) : res.pro_list.list
+    fetch(params) {
+      return like.small(params).then(res => {
         this.info = res;
+        return Promise.resolve({list: res.pro_list.list || res.pro_list});
       })
     },
     play(item) {
@@ -100,5 +105,11 @@ name: "list",
     border-radius: 2rpx;
     background-color: #1eb9f2;
   }
+}
+.fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 10;
 }
 </style>

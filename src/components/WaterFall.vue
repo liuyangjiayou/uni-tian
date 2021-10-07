@@ -3,7 +3,7 @@
     <view class="fs0 relative" @click="play(params)">
       <image  mode="widthFix" @load="emitHeight" @error="emitHeight" :src="params.ranks_video_thumb" />
       <al-image width="53rpx" height="53rpx" src="/static/images/play.png" class="video-play" />
-      <view class="video-tag fs24">{{params.ranks_org_name}}</view>
+      <view class="video-tag fs24">{{params.ranks_org_name || params.org_name}}</view>
     </view>
     <view class="px24 pb20">
       <view class="fs26 mt20">{{params.ranks_video_name}}</view>
@@ -37,11 +37,6 @@ export default {
       default:-1
     }
   },
-  data() {
-    return {
-
-    };
-  },
   methods:{
     // 发出组件高度信息，在此处可以区分正确和错误的加载，给予错误的提示图片
     emitHeight(e){
@@ -53,7 +48,10 @@ export default {
     },
     onTap(){
       this.$emit("click",this.$props.index,this.$props.tag);
-    }
+    },
+    play() {
+      this.$emit('play', this.params);
+    },
   }
 }
 </script>

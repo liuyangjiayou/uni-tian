@@ -168,7 +168,7 @@ export default {
     },
     // 成功后的回调
     success() {
-      this.$emit('success', {});
+      this.$emit('success', {token: this.$store.getters.token});
     },
     // 失败后的回调
     failure() {

@@ -152,6 +152,12 @@ export const game = {
             data,
         })
     },
+    start: function (data) {
+        return http({
+            url: '/game/start',
+            data,
+        })
+    },
 };
 // 排行榜
 export const ranks = {

@@ -1,6 +1,6 @@
 <template>
   <view>
-    <view-container src-height="274rpx" :src="info.s_thumb" share back :title="info.s_name">
+    <view-container ref="container" src-height="274rpx" :src="info.s_thumb" share back :title="info.s_name">
       <view class="flex align-center mt10">
         <al-image width="40rpx" height="31rpx" :src="require('@/static/images/game.png')" />
         <text class="ml25 fs32 text-bold">游戏介绍</text>
@@ -66,6 +66,7 @@ import { game } from '@/api';
 import ShareMixin from "@/mixins/share";
 export default {
   name: "list",
+  mixins: [ShareMixin],
   data() {
     return {
       show: false,
@@ -88,9 +89,11 @@ export default {
       this.$Router.push({ path: '/pages/sport/rank', query: {id:this.query.id, type:4} });
     },
     goMatch(val) {
-      console.log(val);
-      // todo 报错 跳转外部链接
-      location.href = val === 1 ? this.info.s_url : this.info.s_lx_url;
+      this.$refs.container.getAuth(({token}) => {
+        game.start({game_id: this.query.id}).then(res => {
+          this.$Router.push({ path: '/pages/index/webview', query: {url: (val === 1 ? this.info.s_url : this.info.s_lx_url) } });
+        });
+      }, () => console.log('get token failure'));
     },
   },
 

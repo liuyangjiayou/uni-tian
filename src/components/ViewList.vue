@@ -1,22 +1,30 @@
 <template>
-  <view class="video-list">
-    <view v-for="(item, index) in list" :key="index" class="video-item shadow1">
-      <view class="fs0 relative" @click="play(item)">
-        <al-image width="100%" height="226rpx" :src="item.ranks_video" />
-        <al-image width="53rpx" height="53rpx" src="/static/images/play.png" class="video-play" />
-        <view class="video-tag fs24">{{item.org_name}}</view>
+  <view>
+    <view class="waterfall-box h-flex-x h-flex-2 view-list">
+      <view class="mr20">
+        <water-fall
+            v-for="(item,index) in leftList"
+            :key="index"
+            :params="item"
+            tag="left"
+            :index="index"
+            @height="onHeight"
+            @play="onClick"
+        ></water-fall>
       </view>
-      <view class="px24 pb20">
-        <view class="fs26 mt20">{{item.ranks_video_name}}</view>
-        <view class="fs22 text-color-gray mt10">{{item.ranks_name}}</view>
-        <view class="fs22 text-color-gray3 b2-1 inline-block p5 my10">编号：{{item.id}}</view>
-        <view class="flex align-center justify-between">
-          <text class="text-color-blue fs30 mr10">{{item.rank_score || item.count}}</text>
-          <text class="text-color-gray4 flex-1 fs22">当前票数</text>
-          <view class="button-score">投票</view>
-        </view>
+      <view>
+        <water-fall
+            v-for="(item,index) in rightList"
+            :key="index"
+            :params="item"
+            @height="onHeight"
+            @play="onClick"
+            tag="right"
+            :index="index"
+        ></water-fall>
       </view>
     </view>
+    <view v-if="fetch" class="load-txt">{{ajax.loadTxt}}</view>
   </view>
 </template>
 
@@ -24,15 +32,171 @@
 export default {
   name: "ViewList",
   props: {
+    fetch: {
+      type: Function,
+      default: undefined,
+    },
+    limit: {
+      type: Number,
+      default: 20,
+    },
+    params: {
+      type: Object,
+      default: () => ({}),
+    },
     list: {
       type: Array,
-      default: [],
+      default: () => ([]),
     },
+  },
+  data() {
+    return {
+      // waterfall data
+      leftHeight: 0,
+      rightHeight: 0,
+      leftList: [],
+      rightList: [],
+      ajax: {
+        // 是否可以加载
+        load: true,
+        // 加载中提示文字
+        loadTxt: '',
+        // 每页的请求条件
+        rows:10,
+        // 页码
+        page:1,
+      },
+    };
+  },
+  watch: {
+    list(val) {
+      this.getList();
+    },
+  },
+  mounted() {
+    this.barH = this.customBar;
+    this.getList();
   },
   methods: {
     play(item) {
       this.$emit('play', item);
     },
+    // 监听高度变化
+    onHeight(height, tag) {
+      if (tag == 'left') {
+        this.leftHeight += height;
+      } else {
+        this.rightHeight += height;
+      }
+    },
+    // 组件点击事件
+    onClick(params){
+      this.$emit('play', params);
+    },
+    refresh(a) {
+      this.getList();
+    },
+    refreshPage() {
+      this.leftHeight =  0;
+      this.rightHeight =  0;
+      this.leftList =  [];
+      this.rightList =  [];
+      this.ajax.page = 1;
+      this.getList();
+    },
+    // 获取数据
+    getList() {
+      if (typeof this.fetch === 'function') {
+        console.log(!this.ajax.load, '!this.ajax.load');
+        if (!this.ajax.load) {
+          return;
+        }
+        this.ajax.load = false;
+        this.ajax.loadTxt = '加载中';
+        this.fetch({...this.params, page: this.ajax.page || 1, limit: this.limit || 20}).then(res => {
+          this.addList(res.list);
+        });
+      } else {
+        this.ajax.load = true;
+        this.addList(this.list);
+      }
+    },
+    addList(res) {
+      if(!res || res.length < 1){
+        this.ajax.loadTxt = '没有更多了';
+        return;
+      }
+      // 左右列表高度的差
+      let differ = this.leftHeight - this.rightHeight;
+      // 计算差值，用于确定优先插入那一边
+      let differVal = 0;
+
+      // 初始化左右列表的数据
+      let i = differ > 0 ? 1 : 0;
+
+      let [left, right] = [
+        [],
+        []
+      ];
+
+
+      // 获取插入的方向
+      let getDirection = (index)=>{
+        /* 左侧高度大于右侧超过 600px 时，则前3条数据都插入到右边 */
+        if(differ>= 600 && index < 3){
+          differVal = 1;
+          return 'right';
+        }
+
+        /* 右侧高度大于左侧超过 600px 时，则前3条数据都插入到左边 */
+        if(differ <= -600 && index < 3){
+          differVal = -1;
+          return 'left';
+        }
+
+        /* 左侧高度大于右侧超过 350px 时，则前2条数据都插入到右边 */
+        if(differ >= 350 && index < 2){
+          return 'right';
+        }
+        /* 右侧高度大于左侧超过 350px 时，则前2条数据都插入到左边 */
+        if(differ <= -350 && index < 2){
+          differVal = -1;
+          return 'left';
+        }
+
+        /* 当前数据序号为偶数时，则插入到左边 */
+        if ((i+differVal) % 2 == 0) {
+          return 'left';
+        } else {
+          /* 当前数据序号为奇数时，则插入到右边 */
+          return 'right';
+        }
+      }
+
+      // 将数据源分为左右两个列表，容错差值请自行根据项目中的数据情况调节
+      res.forEach((item, index) => {
+        if(getDirection(index) == 'left'){
+          left.push(item);
+        }else{
+          right.push(item);
+        }
+        i++;
+      });
+
+      // 将左右列表的数据插入，第一页时则覆盖
+      if(this.ajax.page == 1){
+        this.leftList = left;
+        this.rightList = right;
+        uni.stopPullDownRefresh();
+      }else{
+        this.leftList = [...this.leftList, ...left];
+        this.rightList = [...this.rightList, ...right];
+      }
+
+      this.ajax.load = true;
+      this.ajax.loadTxt = '上拉加载更多';
+      this.ajax.page++;
+    }
   },
 }
 </script>
@@ -78,4 +242,30 @@ export default {
   color: #f55308;
   padding: 3rpx 10rpx;
 }
+
+
+.waterfall-box {
+  //padding: 20rpx 10rpx;
+  box-sizing: border-box;
+
+  >view {
+    //padding: 0 10rpx;
+  }
+}
+
+.h-flex-x {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+
+  &.h-flex-2 {
+    >view {
+      width: 50%;
+    }
+  }
+}
+
 </style>

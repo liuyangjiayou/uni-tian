@@ -46,7 +46,7 @@
     <view class="text-center pt30">
       <view class="view-title">为您推荐</view>
     </view>
-    <view-list :list="info.rec_list" @play="play" />
+    <view-list ref="list" :list="info.rec_list" @play="play" />
   </view-container>
 </template>
 
@@ -56,7 +56,9 @@ export default {
   name: "detail",
   data() {
     return {
-      info: {},
+      info: {
+        rec_list: [],
+      },
       list: [
         {
           src: '/static/test/01.png',
@@ -80,20 +82,24 @@ export default {
     };
   },
   onLoad(){
+
+  },
+  mounted() {
     like.details({
       id: this.$Route.query.id
     }).then(res => {
       this.info = res;
+      this.$set(this.info, 'rec_list', res.rec_list);
       console.log(res)
+      console.log(!this.info.rec_list, this.info.rec_list.length);
+      this.$refs.list.refresh(this.info.rec_list);
     })
   },
   methods: {
     play(item){
-      like.details({
-        id: item.id
-      }).then(res => {
-        this.info = res;
-      })
+      if (Number(item.id)) {
+        this.$Router.push({path: '/pages/like/detail', query: {id: Number(item.id)}});
+      }
     }
   }
 }

@@ -73,7 +73,7 @@ export default {
       };
       // 成绩查询
       if (item.id === 5) {
-        this.$refs.container.getAuth(true, () => {
+        this.$refs.container.getAuth(() => {
           this.$Router.push({path: '/pages/info/score'});
         }, () => console.log('get token failure'));
       } else if (navPath[item.id]) {
@@ -82,7 +82,7 @@ export default {
     },
     handlerSport(item) {
       if (parseInt(item.pro_type) === 3) {
-        this.$refs.container.getAuth(true, () => {
+        this.$refs.container.getAuth(() => {
           // #ifdef H5
           location.href = item.jump_url;
           // #endif
@@ -91,7 +91,7 @@ export default {
           // #endif
         }, () => console.log('get token failure'));
       } else if (parseInt(item.pro_type) === 4) {
-        this.$refs.container.getAuth(true, () => {
+        this.$refs.container.getAuth(() => {
           this.$Router.push({ path: `/pages/game/list`, query: { id: item.id, title: item.pro_name }});
         }, () => console.log('get token failure'));
       } else {

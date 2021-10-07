@@ -1,5 +1,5 @@
 <template>
-<!--  <view class="imt-audio">
+  <!--<view class="imt-audio">
     <view class="audio-wrapper">
       <view class="audio-number">{{format(current)}}</view>
       <slider class="audio-slider" :activeColor="color" block-size="16" :value="current" :max="duration" @changing="seek=true,current=$event.detail.value" @change="audio.seek($event.detail.value)"></slider>
@@ -10,8 +10,11 @@
       <view class="audio-control audio-control-switch" :class="{audioLoading:loading}" :style="{borderColor:color}" @click="audio.paused?play():audio.pause()">{{loading?'&#xe600;':(paused?'&#xe865;':'&#xe612;')}}</view>
       <view class="audio-control audio-control-next" v-if="control" :style="{borderColor:color}" @click="next">&#xe601;</view>
     </view>
+
   </view>-->
-  <al-image width="70rpx" height="70rpx" src="/static/images/music.png" @click.native="audio.paused?play():audio.pause()"/>
+  <view :class="['flex align-center justify-center fs0 ', paused ? 'audioPaused' : 'audioPlaying']" @click.native="paused?play():pause()">
+    <al-image width="72rpx" height="72rpx" src="/static/images/music.png"/>
+  </view>
 </template>
 
 <script>
@@ -55,6 +58,7 @@ export default {
     },
     //点击播放按钮
     play() {
+      console.log('play');
       this.audio.play();
       this.loading = true;
     },
@@ -66,6 +70,7 @@ export default {
   mounted() {
     if (this.src) {
       this.audio.src = this.src
+      // chrome浏览器不生效，chrome新特性 开发者不能利用手中权限去给用户造成噪音干扰
       this.autoplay && this.play()
     }
     this.audio.obeyMuteSwitch = false
@@ -102,6 +107,7 @@ export default {
     this.audio.onSeeked(() => {
       this.seek = false
     })
+    // i
   },
   beforeDestroy(){
     this.audio.destroy()
@@ -189,4 +195,20 @@ export default {
     transform: rotate(360deg);
   }
 }
+.audioPaused {
+  animation: none;
+  transform: rotate(0deg);
+}
+.audioPlaying {
+  animation: playing 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes playing {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 </style>
