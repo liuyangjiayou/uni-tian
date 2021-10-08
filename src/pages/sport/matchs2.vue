@@ -21,7 +21,7 @@
         </template>
       </scroll-view>
     </uni-popup>
-    <view-list ref="list" :fetch="fetch" :params="params" @play="play" />
+    <view-list ref="list" :fetch="fetch" :params="params" :vote="false" @play="play"  />
   </view-container>
 </template>
 
@@ -79,7 +79,7 @@ export default {
       });
     },
     refreshPage() {
-      this.$set(this, 'params', { ...this.params, data: JSON.stringify(this.form) });
+      this.params = { ...this.params, ...this.form };
       this.$nextTick(() => {
         this.$refs.list.refreshPage();
       });

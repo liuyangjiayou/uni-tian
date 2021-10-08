@@ -139,7 +139,6 @@ export default {
       this.$Router.back(1);
     },
     getAuth(success, failure) {
-      console.log('get token', this.$store.getters.token);
       if (this.$store.getters.token) {
         typeof success === 'function' && success({token: this.$store.getters.token});
         return;

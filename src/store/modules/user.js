@@ -1,6 +1,9 @@
+const defaultToken = uni.getStorageSync('token');
+
+
 const state = {
     info: {},
-    token: '',
+    token: defaultToken,
     openid: '',
 }
 
@@ -9,7 +12,13 @@ const mutations = {
         state.info = INFO
     },
     SET_TOKEN (state, token) {
-        state.token = token
+        state.token = token;
+        uni.setStorageSync('token', token);
+    },
+    CLEAR_TOKEN(state) {
+        state.token = '';
+        uni.removeStorageSync('token');
+        state.info = {};
     },
     SET_OPENID (state, OPENID) {
         state.openid = OPENID

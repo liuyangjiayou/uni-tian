@@ -3,7 +3,6 @@
     <view class="flex justify-between align-center pb35">
       <view>
         <view class="view-title">{{ info.pro_name }}</view>
-        <view class="view-tag-gray fs22 ml30 mt8">冰球技术术语</view>
       </view>
       <view class="flex-none flex">
         <icon-button fs="fs24" src="/static/images/icon_sc.png" width="40rpx" height="40rpx" title="赛程" @handlerClick="click2" />

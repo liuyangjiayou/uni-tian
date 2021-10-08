@@ -26,9 +26,6 @@ const router = createRouter({
         path: '/pages/sport/index',
         name: 'sport',
     },{
-        path: '/pages/sport/matchs',
-        name: 'sport-matches',
-    },{
         path: '/pages/sport/matchs2',
         name: 'sport-matches',
     },{

@@ -1,12 +1,14 @@
 <template>
   <view-container src-height="259rpx" :src="info.pro_thumb" back :title="info.pro_name"  custom-class="pt0">
     <template #header>
+      <view :style="[{height: '104rpx'}]">
       <view class="bg-gray flex justify-center align-center px40 fixed"  :style="[{top: barH + 'px'}]">
         <!-- 自定义Placeholder -->
         <uni-search-bar :radius="100" v-model="searchValue" placeholder="输入关键词" @confirm="search" class="w-full fs26" />
       </view>
+      </view>
     </template>
-    <view class="flex justify-between align-center py18 bb1-1 fs30 text-bold">
+    <view class="flex justify-between align-center py18 bb1-1 fs30 text-bold mb20">
       <view :class="['flex-1 height40 lh40 text-center', form.sort === 0 ? 'active-tab' : '']" @click="setTab(0)">作品展示</view>
       <view :class="['flex-1 height40 lh40 text-center', form.sort === 1 ? 'active-tab' : '']" @click="setTab(1)" class="bl1-1">人气排行</view>
     </view>

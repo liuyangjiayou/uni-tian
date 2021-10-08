@@ -34,6 +34,13 @@ export function getInfo(data) {
     })
 }
 
+// 获取个人信息
+export function getScore(data) {
+    return http({
+        url: '/user/scores',
+        data,
+    })
+}
 // 获取用户步数
 export function getRun(data) {
     return http({
@@ -186,10 +193,11 @@ export const ranks = {
 ranks['2'] = ranks['1'];
 
 export const match = {
-    list: function (data) {
+    list: function ({search, orgId, ...data}) {
+
         return http({
             url: '/pro/video/list',
-            data,
+            data: { ...data, 'data[search]': search || '', 'data[orgId]': orgId || '' },
         })
     },
     tree: function () {
@@ -198,4 +206,18 @@ export const match = {
             data: {},
         })
     },
+};
+
+export const voteFn = function (data) {
+    return http({
+        url: '/go/api/vote',
+        data,
+    })
+};
+
+export const settings = function (data) {
+    return http({
+        url: '/sys/getsetting',
+        data,
+    })
 };

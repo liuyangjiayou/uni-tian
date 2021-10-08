@@ -16,14 +16,14 @@ export default {
         method: 'pause'
       },
       info: {
-        start_the_thumb: '/static/images/img1.png',
-        start_the_music: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3', //
+        start_the_thumb: '',
+        start_the_music: '', // 测试 https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3
       },
     };
   },
   onLoad() {
     start().then(res => {
-      // this.info = res;
+      this.info = res;
     });
   },
   methods: {

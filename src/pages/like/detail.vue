@@ -43,7 +43,7 @@
       </view>
     </view>
     <divider height="1rpx" />
-    <view class="text-center pt30">
+    <view class="text-center pt30 mb20">
       <view class="view-title">为您推荐</view>
     </view>
     <view-list ref="list" :list="info.rec_list" @play="play" />

@@ -6,6 +6,7 @@
             v-for="(item,index) in leftList"
             :key="index"
             :params="item"
+            :vote="item.pro_type==1 || vote"
             tag="left"
             :index="index"
             @height="onHeight"
@@ -17,6 +18,7 @@
             v-for="(item,index) in rightList"
             :key="index"
             :params="item"
+            :vote="item.pro_type==1 || vote"
             @height="onHeight"
             @play="onClick"
             tag="right"
@@ -47,6 +49,10 @@ export default {
     list: {
       type: Array,
       default: () => ([]),
+    },
+    vote: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
