@@ -10,18 +10,21 @@
       <view class="fs22 text-color-gray mt10">{{params.ranks_name}}</view>
       <view class="fs22 text-color-gray3 b2-1 inline-block p5 mt10">编号：{{params.id}}</view>
       <view v-if="vote" class="flex align-center justify-between mt10">
-        <text class="text-color-blue fs30 mr10">{{params.rank_score || params.count}}</text>
-        <text class="text-color-gray4 flex-1 fs22">当前票数</text>
-        <view class="button-score" @click="voteSubmit">投票</view>
+        <view class="flex flex-column">
+          <text class="text-color-blue fs30 mr10">{{params.rank_score}}</text>
+          <text class="text-color-gray4 flex-1 fs22">当前票数</text>
+        </view>
+        <view class="button-score" @click="voteSubmit(params.id)">投票</view>
       </view>
     </view>
   </view>
 </template>
 
 <script>
-import { voteFn, settings  } from '@/api';
+import VoteMixins from '@/mixins/index';
 export default {
   name:"WaterFall",
+  mixins: [VoteMixins],
   props:{
     params:{
       type: Object,
@@ -56,29 +59,6 @@ export default {
     },
     play() {
       this.$emit('play', this.params);
-    },
-    async voteSubmit() {
-      const config = await settings();
-      const voteMax = config?.setting?.vote_num || 0;
-      const voteInfo = uni.getStorageSync('vote');
-      const ling = new Date(new Date().toLocaleDateString()).getTime(); // 今天零点
-      const currentCount = voteInfo?.time && voteInfo.time > ling ? (voteInfo?.count || 0) : 0;
-      console.log('已经投了', currentCount, '最大投票次数', voteMax);
-      if (currentCount >= voteMax) {
-        uni.showToast({title: `已达到最大投票次数${voteMax}次！`, icon: 'none'});
-        return;
-      }
-      uni.showLoading({title: '', mask: true});
-      voteFn({rank_id: this.params.id}).then(res => {
-        uni.setStorageSync('vote', {time: Date.now(), count: currentCount + 1});
-        console.log('投票成功，用掉次数', currentCount + 1);
-        uni.showToast({
-          title: '投票成功',
-          icon: 'success',
-        });
-      }).finally(() => {
-        uni.hideLoading();
-      });
     },
   }
 }

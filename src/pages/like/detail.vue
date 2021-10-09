@@ -17,19 +17,19 @@
         <view class="fs32 text-bold">{{ info.ranks_video_name }}</view>
         <view class="mt30 flex align-center fs0">
           <al-image width="100rpx" height="33rpx" src="/static/images/team.png" />
-          <span class="text-underline fs24 ml16">{{ info.ranks_name }}</span>
+          <span class="text-color-gray fs24 ml16">{{ info.ranks_name }}</span>
         </view>
         <view class="mt10 flex align-center fs0">
           <al-image width="100rpx" height="33rpx" src="/static/images/company.png" />
-          <span class="text-underline fs24 ml16">{{ info.ranks_org_name }}</span>
+          <span class="text-color-gray fs24 ml16">{{ info.ranks_org_name }}</span>
         </view>
       </view>
       <view class="b1-1 flex flex-column">
         <view class="flex-1 flex justify-center align-center px20">
           <al-image width="27rpx" height="31rpx" src="/static/images/count.png" />
           <view class="flex flex-1 flex-column ml22 align-center">
-            <span class="text-color-red fs24 text-bold">{{ info.give_up_num }}</span>
-            <span class="fs20">当前票数</span>
+            <span class="text-color-red fs24 text-bold">{{ info.rank_score }}</span>
+            <span class="fs20">{{info.pro_type === 1 ? '当前票数' : '当前分数'}}</span>
           </view>
         </view>
         <divider height="1rpx" />
@@ -40,6 +40,12 @@
             <span class="fs20">编号</span>
           </view>
         </view>
+        <template v-if="info.pro_type === 1">
+          <divider height="1rpx" />
+          <view class="flex-1 flex justify-center align-center lh24 fs24 px20  py16 ">
+            <view class="text-color-red text-bold" @click="voteSubmit2(info.id)">投票</view>
+          </view>
+        </template>
       </view>
     </view>
     <divider height="1rpx" />
@@ -52,8 +58,10 @@
 
 <script>
 import { like } from '@/api';
+import VoteMixins from "@/mixins";
 export default {
   name: "detail",
+  mixins: [VoteMixins],
   data() {
     return {
       info: {
@@ -100,7 +108,13 @@ export default {
       if (Number(item.id)) {
         this.$Router.push({path: '/pages/like/detail', query: {id: Number(item.id)}});
       }
-    }
+    },
+
+    voteSubmit2(id) {
+      this.voteSubmit(id).then(res => {
+        this.info.rank_score = this.info.rank_score + 1;
+      });
+    },
   }
 }
 </script>

@@ -13,17 +13,16 @@
     <view class="mt30">简介</view>
     <rich-text :nodes="info.pro_desc"></rich-text>
     <divider height="1rpx" />
-    <view class="flex justify-center py30">
-      <al-image width="335rpx" height="171rpx" src="/static/images/sheng.png" @click.native="toProvin" />
-      <al-image width="335rpx" height="171rpx" src="/static/images/shi.png" @click.native="toCity" class="ml20" />
-    </view>
-    <divider height="1rpx" />
+    <template v-if="query.pro_type == 2">
+      <view class="flex justify-start py30">
+  <!--      <al-image width="335rpx" height="171rpx" src="/static/images/sheng.png" @click.native="toProvin" class="mr20" />-->
+        <al-image width="335rpx" height="171rpx" src="/static/images/shi.png" @click.native="toCity" />
+      </view>
+      <divider height="1rpx" />
+    </template>
     <view class="my30">赛事回放</view>
     <view class="mr-20">
-      <view v-for="item in info.pro_list" :key="item.id" class="item-image">
-        <al-image width="335rpx" height="180rpx" :src="item.ranks_video" />
-        <view class="fs24">{{ item.org_name }}</view>
-      </view>
+      <view-list ref="list" :list="info.pro_list" @play="play" />
     </view>
   </view-container>
 </template>
@@ -66,6 +65,11 @@ name: "index",
     click2() {
       this.$Router.push({ path: '/pages/process/index', query: {pid:this.query.id} });
     },
+    play(item){
+      if (Number(item.id)) {
+        this.$Router.push({path: '/pages/like/detail', query: {id: Number(item.id)}});
+      }
+    }
   },
 }
 </script>

@@ -7,15 +7,17 @@
     </view>
     <divider height="1rpx" />
     <view class="dynamic-detail-content">
-      <rich-text :nodes="details.content"></rich-text>
+      <u-parse :content="details.content" />
     </view>
   </view-container>
 </template>
 
 <script>
 import { getDynamicDetail } from '@/api'
+import uParse from "@/components/u-parse/u-parse.vue"
 export default {
   name: "detail",
+  components: { uParse },
   data(){
     return {
       details: {}

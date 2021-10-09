@@ -2,10 +2,10 @@
   <view-container src-height="259rpx" :src="info.pro_thumb" back :title="info.pro_name"  custom-class="pt0">
     <template #header>
       <view :style="[{height: '104rpx'}]">
-      <view class="bg-gray flex justify-center align-center px40 fixed"  :style="[{top: barH + 'px'}]">
-        <!-- 自定义Placeholder -->
-        <uni-search-bar :radius="100" v-model="searchValue" placeholder="输入关键词" @confirm="search" class="w-full fs26" />
-      </view>
+        <view class="bg-gray flex justify-center align-center px40 " :style="[searchStyle]">
+          <!-- 自定义Placeholder -->
+          <uni-search-bar ref="search" :radius="100" v-model="searchValue" placeholder="输入关键词" @confirm="search"  @cancel="cancel" class="w-full fs26" />
+        </view>
       </view>
     </template>
     <view class="flex justify-between align-center py18 bb1-1 fs30 text-bold mb20">
@@ -25,6 +25,7 @@ const createForm = function () {
     data: '',
   }
 }
+let $vm ;
 export default {
 name: "list",
   data() {
@@ -38,12 +39,27 @@ name: "list",
       },
       params: {},
       barH: 0,
+      searchStyle: {},
     };
+  },
+  onPageScroll({scrollTop}) {
+  // todo 动画有延迟
+    if (scrollTop >= this.customBar) {
+      this.searchStyle = {
+        position: 'fixed',
+        left: 0,
+        right: 0,
+        zIndex: 10,
+        top: this.barH + 'px'};
+    } else {
+      this.searchStyle = {};
+    }
   },
   onLoad() {
     this.barH = this.customBar;
     this.query = this.$Route.query;
     this.params = {id: this.query.sport, ...this.form};
+    $vm = this;
   },
   // 触底触发
   // 触底触发
@@ -55,6 +71,10 @@ name: "list",
     this.refresh();
   },
   methods: {
+    cancel() {
+      this.form.data = '';
+      this.refreshPage();
+    },
     refresh() {
       this.$nextTick(() => {
         this.$refs.list.refresh();
@@ -80,7 +100,7 @@ name: "list",
     // type有为需要concat链接
     fetch(params) {
       return like.small(params).then(res => {
-        this.info = res;
+        $vm.info = res;
         return Promise.resolve({list: res.pro_list.list || res.pro_list});
       })
     },

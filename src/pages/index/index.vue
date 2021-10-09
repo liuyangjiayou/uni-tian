@@ -53,6 +53,9 @@ export default {
       pro_list: [],
     }
   },
+  onBackPress(e) {
+    return true;
+  },
   onLoad() {
     index().then(res => {
       this.pro_list = res.pro_list;
@@ -95,7 +98,7 @@ export default {
           this.$Router.push({ path: `/pages/game/list`, query: { id: item.id, title: item.pro_name }});
         }, () => console.log('get token failure'));
       } else {
-        this.$Router.push({ path: `/pages/sport/index`, query: { id: item.id, sport: item.pro_name }})
+        this.$Router.push({ path: `/pages/sport/index`, query: { id: item.id, pro_type: item.pro_type, sport: item.pro_name }})
       }
     },
   }

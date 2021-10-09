@@ -11,6 +11,7 @@
             :index="index"
             @height="onHeight"
             @play="onClick"
+            @add-vote="(item.pro_type==1 || vote) ? addVote(leftList, index) : null"
         ></water-fall>
       </view>
       <view>
@@ -21,6 +22,7 @@
             :vote="item.pro_type==1 || vote"
             @height="onHeight"
             @play="onClick"
+            @add-vote="(item.pro_type==1 || vote) ? addVote(rightList, index) : null"
             tag="right"
             :index="index"
         ></water-fall>
@@ -100,6 +102,7 @@ export default {
       this.$emit('play', params);
     },
     refresh(a) {
+      this.ajax.load = true;
       this.getList();
     },
     refreshPage() {
@@ -108,6 +111,7 @@ export default {
       this.leftList =  [];
       this.rightList =  [];
       this.ajax.page = 1;
+      this.ajax.load = true;
       this.getList();
     },
     // 获取数据
@@ -123,7 +127,7 @@ export default {
           this.addList(res.list);
         });
       } else {
-        this.ajax.load = true;
+        this.ajax.load = false;
         this.addList(this.list);
       }
     },
@@ -202,6 +206,14 @@ export default {
       this.ajax.load = true;
       this.ajax.loadTxt = '上拉加载更多';
       this.ajax.page++;
+    },
+    addVote(list, index) {
+      if (list[index].rank_score !== undefined && (Number(list[index].rank_score) || list[index].rank_score === 0)) {
+        this.$set(list[index], 'rank_score', Number(list[index].rank_score) + 1);
+      }
+      // if (list[index].count !== undefined && (Number(list[index].count) || list[index].count === 0)) {
+      //   this.$set(list[index], 'count', Number(list[index].count) + 1);
+      // }
     }
   },
 }

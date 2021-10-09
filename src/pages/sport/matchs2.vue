@@ -1,7 +1,7 @@
 <template>
   <view-container back :title="query.title" custom-class="pt0">
     <view class="flex align-center bg-white pt20">
-      <uni-search-bar :radius="100" v-model="form.search" placeholder="输入关键词" @confirm="refreshPage" class="flex-1 fs26" />
+      <uni-search-bar :radius="100" v-model="form.search" placeholder="输入关键词" @confirm="refreshPage" @cancel="cancel" class="flex-1 fs26" />
       <view class="fs28" @click.native="open">筛选</view>
     </view>
     <uni-popup ref="popup" type="right">
@@ -10,12 +10,13 @@
           <al-image width="24rpx" height="24rpx" src="/static/images/close.png" class="ml20 mt10" @click.native="close" />
         </view>
         <template v-for="(row, index) in tree">
-          <view :key="index + 'a'" :class="['city-title', index===0?'pt35':0]"><span class="mr20">—</span>{{row.title}}<span class="ml20">—</span></view>
+          <view :key="index + 'a'" :class="['city-title', form.orgId === row.id ? 'text-color-blue' : '', index===0?'pt35':0]" @click.native="() => setValue(row.id)">
+            <span class="mr20">—</span>{{row.title}}<span class="ml20">—</span></view>
           <view :key="index + 'b'" class="city-list">
             <text v-for="(item, index2) in row.childs"
                   :key="index2"
                   :class="['city-item fs28', form.orgId === item.id ? 'active' : '']"
-                  @click.native="() => setValue(item.id)">{{item.title + item.id}}</text>
+                  @click.native="() => setValue(item.id)">{{item.title}}</text>
           </view>
           <divider :key="index + 'c'" height="1rpx" />
         </template>
@@ -67,6 +68,11 @@ export default {
     close() {
       this.$refs.popup.close()
     },
+
+    cancel() {
+      this.$set(this.form, 'search', '');
+      this.refreshPage();
+    },
     setValue(id) {
       this.$set(this.form, 'orgId', this.form.orgId === id ? '' : id);
       this.$refs.popup.close();
@@ -80,12 +86,14 @@ export default {
     },
     refreshPage() {
       this.params = { ...this.params, ...this.form };
+      console.log('before $nextTick');
       this.$nextTick(() => {
         this.$refs.list.refreshPage();
       });
     },
     // 获取数据
     fetch(params) {
+      console.log({...params});
       return match.list(params);
     },
     play(item) {
@@ -113,6 +121,9 @@ export default {
   margin: 20rpx 0;
   span {
     color: #c3c3c3;
+  }
+  &.active {
+    color: #2a8cd0;
   }
 }
 .city-list {

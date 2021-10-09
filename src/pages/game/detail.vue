@@ -38,7 +38,7 @@
           <view class="fs30 mt10">{{item.ranks_name}}</view>
         </view>
       </view>
-      <template v-if="token">
+      <template v-if="showRank">
         <view class="flex justify-between mt10 mb20">
           <view class="flex align-center">
             <al-image width="35rpx" height="34rpx" :src="require('@/static/images/zudui.png')" />
@@ -73,13 +73,21 @@ export default {
       query: {},
       info: {},
       token: this.$store.getters.token,
+      showRank: false,
     };
   },
   onLoad() {
     this.query = this.$Route.query;
     game.detail({id: this.query.id}).then(res => {
-      this.info = res;
+      game.start({game_id: this.query.id}).then(res2 => {
+        this.showRank = true;
+      }).catch(res2 => {
+        this.showRank = false;
+      }).finally(() => {
+        this.info = res;
+      });
     });
+
   },
   methods: {
     moreFn() {
