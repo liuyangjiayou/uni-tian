@@ -4,7 +4,7 @@
       <view class="fs0">
         <video
             id="myVideo"
-            :src="info.ranks_video_thumb"
+            :src="info.ranks_video"
             enable-danmu
             danmu-btn
             controls
