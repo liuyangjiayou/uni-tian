@@ -64,6 +64,7 @@
         }
       })
       // #endif
+      // 判断是否跳转引导页
 		},
 		onShow: function() {
 			console.log('App Show')

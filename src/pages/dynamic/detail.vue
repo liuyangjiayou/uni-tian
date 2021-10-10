@@ -14,10 +14,12 @@
 
 <script>
 import { getDynamicDetail } from '@/api'
+import Share from '@/mixins/share';
 import uParse from "@/components/u-parse/u-parse.vue"
 export default {
   name: "detail",
   components: { uParse },
+  mixins: [Share],
   data(){
     return {
       details: {}
@@ -35,6 +37,7 @@ export default {
           .replace(/<img([\s\w"-=\/\.:;]+)((?:(alt="[^"]+")))/ig, '<img$1')
           .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="width: 100%;" $1');
       this.details = res.info;
+      this.shareInfo.title = this.details.title;
     })
   },
 }

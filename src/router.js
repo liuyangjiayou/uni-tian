@@ -10,9 +10,14 @@ const router = createRouter({
         scrollBehavior: (to, from, savedPostion) => ({ x: 0, y: 0 }),
     },
     routes: [{
+        path: '/pages/index/init',
+        name: 'init',
+    },{
+        path: '/pages/index/guide',
+        name: 'guide',
+    },{
         path: '/pages/index/start',
         name: 'start',
-        aliasPath: '/',
     },{
         path: '/pages/index/index',
         name: 'index',
@@ -66,7 +71,7 @@ const router = createRouter({
         name: 'game-detail',
     },{
         path: '/',
-        redirect: { name: 'start' },
+        redirect: { name: 'init' },
     }]
 });
 //全局路由前置守卫

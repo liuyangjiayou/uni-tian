@@ -54,6 +54,7 @@ export default {
     }
   },
   onBackPress(e) {
+    console.log(1234564);
     return true;
   },
   onLoad() {

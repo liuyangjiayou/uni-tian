@@ -31,7 +31,7 @@ export default {
   methods: {
     enter() {
       this.$refs.audio && this.$refs.audio?.pause();
-      this.$Router.push({name:'index'})
+      uni.reLaunch({url: 'pages/index/index'});
     },
   },
 }

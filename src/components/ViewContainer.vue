@@ -5,11 +5,6 @@
       <view :class="['border-box flex align-center px20', 'title-wrap2']" :style="[titleStyle]">
         <al-image v-if="back" class="mr20" width="20rpx" height="35rpx" src="/static/images/back.png" @click.native="backFn" />
         <view :class="['flex flex-1 fs30', titleAlign]">{{title}}</view>
-        <!-- #ifdef H5-->
-        <button v-if="share" data-name="shareBtn" open-type="share">
-          <al-image class="mr20" width="36rpx" height="36rpx" src="/static/images/share.png" />
-        </button>
-        <!-- #endif-->
       </view>
     </view>
     <view v-if="src"><al-image width="100%" :height="srcHeight" :src="src" /></view>

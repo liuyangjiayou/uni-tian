@@ -85,6 +85,7 @@ export default {
         this.showRank = false;
       }).finally(() => {
         this.info = res;
+        this.shareInfo.title = this.info.s_name;
       });
     });
 

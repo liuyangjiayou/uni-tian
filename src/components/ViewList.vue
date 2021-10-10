@@ -228,7 +228,7 @@ export default {
 .video-item {
   margin-top: 26rpx;
   float: left;
-  width: calc(50% - 20rpx);
+  width: 100%;
   margin-right: 20rpx;
   border-radius: 16rpx;
   overflow: hidden;
