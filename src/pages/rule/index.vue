@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     viewDetail(sport) {
+      console.log(sport.id);
       this.$Router.push({ path: '/pages/rule/detail', query: { id: sport.id } });
     },
   },

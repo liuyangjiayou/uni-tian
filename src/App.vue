@@ -44,27 +44,6 @@
         }
       })
       // #endif
-      // #ifdef H5
-      h5login({
-        uid: 4
-      }).then(res => {
-        console.log('onLaunchEnd h5login then');
-        const { openid, token, user } = res;
-        store.commit('SET_INFO', user)
-        store.commit('SET_TOKEN', token)
-        store.commit('SET_OPENID', openid)
-        getApp().globalData.onLaunchEnd = true;
-        if (getApp().pageCallback) {
-          getApp().pageCallback();
-        }
-      }).catch(() => {
-        console.log('onLaunchEnd h5login catch');
-        if (getApp().pageCallback) {
-          getApp().pageCallback();
-        }
-      })
-      // #endif
-      // 判断是否跳转引导页
 		},
 		onShow: function() {
 			console.log('App Show')

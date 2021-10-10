@@ -87,6 +87,7 @@ export default {
     handlerSport(item) {
       if (parseInt(item.pro_type) === 3) {
         this.$refs.container.getAuth(() => {
+<<<<<<< Updated upstream
           check().then(res => {
             // #ifdef H5
             location.href = item.jump_url;
@@ -95,6 +96,15 @@ export default {
             this.$Router.push({path: '/pages/run/run'});
             // #endif
           })
+=======
+          console.log(item.jump_url);
+          // #ifdef H5
+          location.href = item.jump_url;
+          // #endif
+          // #ifdef MP-WEIXIN
+          this.$Router.push({path: '/pages/run/run'});
+          // #endif
+>>>>>>> Stashed changes
         }, () => console.log('get token failure'));
       } else if (parseInt(item.pro_type) === 4) {
         this.$refs.container.getAuth(() => {
