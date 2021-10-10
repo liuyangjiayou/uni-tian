@@ -35,6 +35,10 @@ export default {
   },
   methods: {
     handlerSport(item) {
+      if (item.is_open === 1) {
+        uni.showToast({title: `该游戏暂未开放！`, icon: 'none'});
+        return;
+      }
       this.$Router.push({ path: '/pages/game/detail', query: {id:item.id} });
     },
   },

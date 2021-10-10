@@ -12,6 +12,7 @@ import ViewContainer from "./components/ViewContainer";
 import ViewList from "./components/ViewList";
 import CustomAudio from "./components/CustomAudio";
 import WaterFall from "./components/WaterFall";
+import EasySelect from "./components/EasySelect";
 Vue.use(router);
 
 // 全局图片组件
@@ -32,6 +33,8 @@ Vue.component('ViewList', ViewList);
 Vue.component('CustomAudio', CustomAudio);
 // 瀑布流
 Vue.component('WaterFall', WaterFall);
+// 下拉选择框
+Vue.component('EasySelect', EasySelect);
 Vue.config.productionTip = false
 App.mpType = 'app'
 

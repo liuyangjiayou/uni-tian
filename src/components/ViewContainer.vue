@@ -32,7 +32,6 @@
 <script>
 export default {
   name: "ViewContainer",
-
   props: {
     // 是否显示头部-标题栏
     head: {

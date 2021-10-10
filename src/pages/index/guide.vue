@@ -1,12 +1,9 @@
 <template>
   <view class="relative">
     <swiper
-      :current.sync="current"
       class="swiper"
       :style="{ height: '100vh'}"
       indicator-dots
-      :interval="3000"
-      :duration="500"
       @change="change"
   >
     <swiper-item v-for="(item, index) in imgs" :key="index"><al-image width="100%" height="100%" :src="item" /></swiper-item>

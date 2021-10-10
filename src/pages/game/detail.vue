@@ -98,9 +98,11 @@ export default {
       this.$Router.push({ path: '/pages/sport/rank', query: {id:this.query.id, type:4} });
     },
     goMatch(val) {
+      const url = val === 1 ? this.info.s_url : this.info.s_lx_url;
       this.$refs.container.getAuth(({token}) => {
         game.start({game_id: this.query.id}).then(res => {
-          this.$Router.push({ path: '/pages/index/webview', query: {url: (val === 1 ? this.info.s_url : this.info.s_lx_url) } });
+          console.log('跳转地址：', url + '?token=' + token);
+          this.$Router.push({ path: '/pages/index/webview', query: {url: url + '?token=' + token } });
         });
       }, () => console.log('get token failure'));
     },

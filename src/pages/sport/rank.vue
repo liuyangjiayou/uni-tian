@@ -1,6 +1,8 @@
 <template>
-  <view-container :src="banner.image" back :title="banner.title" customClass="dynamic-detail shadow2">
-    <view class="rank-title text-color-blue text-bold fs26">{{project_name}}</view>
+  <view-container :src="banner.image" back :title="project_name" customClass="dynamic-detail shadow2">
+    <view v-if="orgs.length" class="rank-title text-color-blue text-bold fs26">
+      <easy-select class="flex justify-center" size="mini" :options="orgs" :value="org_name" @selectOne="selectOne" />
+    </view>
     <view>
       <view class="flex fs24 mt50 pb8" style="color: #b1b1b1;">
         <span class="flex-1">排名</span>
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import { ranks } from '@/api';
+import { ranks, orgs } from '@/api';
 export default {
   name: "rank",
   data() {
@@ -30,20 +32,39 @@ export default {
       banner: {},
       project_name: '',
       query: {},
+      orgs: [],
+      org_id: '',
+      org_name: '',
     };
   },
-  onLoad() {
+  async onLoad() {
     this.query = this.$Route.query;
-    console.log(['1', '2', '3', '4'].includes(this.query.type?.toString()), this.query.type);
-    if (!['1', '2', '3', '4'].includes(this.query.type?.toString())) {
-      this.list = [];
-      return;
+    if (this.query.type == 2) {
+      const res = await orgs();
+      const list = res.list.map(item => ({ value: item.id, label: item.org_name }));
+      this.orgs = list;
+      this.org_id = this.orgs?.[0]?.value || '';
+      this.org_name = this.orgs?.[0]?.label || '';
     }
-    ranks[this.query.type.toString()](this.query.id).then(res => {
-      this.list = res.list;
-      this.banner = res.banner;
-      this.project_name = res.project_name;
-    });
+    this.getList();
+  },
+  methods: {
+    selectOne(options) {
+      this.org_name = options.label;
+      this.org_id = options.value;
+      this.getList();
+    },
+    getList() {
+      const data = {};
+      if (this.query.type == 2) {
+        data.org_id = this.org_id;
+      }
+      ranks[this.query.type.toString()]?.(this.query.id, data).then(res => {
+        this.list = res.list;
+        this.banner = res.banner;
+        this.project_name = res.project_name;
+      });
+    },
   },
 }
 </script>

@@ -43,7 +43,7 @@
 <script>
 import { launchOrload} from "../../utils/mixins";
 import { mapGetters } from 'vuex';
-import { index } from '@/api';
+import { index, check } from '@/api';
 export default {
   mixins: [launchOrload],
   data() {
@@ -87,12 +87,14 @@ export default {
     handlerSport(item) {
       if (parseInt(item.pro_type) === 3) {
         this.$refs.container.getAuth(() => {
-          // #ifdef H5
-          location.href = item.jump_url;
-          // #endif
-          // #ifdef MP-WEIXIN
-          this.$Router.push({path: '/pages/run/run'});
-          // #endif
+          check().then(res => {
+            // #ifdef H5
+            location.href = item.jump_url;
+            // #endif
+            // #ifdef MP-WEIXIN
+            this.$Router.push({path: '/pages/run/run'});
+            // #endif
+          })
         }, () => console.log('get token failure'));
       } else if (parseInt(item.pro_type) === 4) {
         this.$refs.container.getAuth(() => {

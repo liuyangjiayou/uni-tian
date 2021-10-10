@@ -111,7 +111,7 @@ export default {
                   this.type = 2;
                 } else {
                   this.type = 1;
-                  this.$emit('success', {});
+                  this.$emit('success', {token: data.token});
                   this.handlerClose();
                 }
               });
@@ -137,7 +137,7 @@ export default {
               this.type = 2;
             } else {
               this.type = 1;
-              this.$emit('success', {});
+              this.$emit('success', {token: data.token});
               this.handlerClose();
             }
           })

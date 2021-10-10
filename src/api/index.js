@@ -100,6 +100,12 @@ export const index = function (data) {
         data,
     })
 };
+export const check = function (data) {
+    return http({
+        url: '/step/startjbz',
+        data,
+    })
+};
 export const start = function (data) {
     return http({
         url: '/start',
@@ -175,6 +181,12 @@ export const ranks = {
             data: { project_id: id },
         })
     },
+    '2': function (id, data) {
+        return http({
+            url: '/pro/rank/scores',
+            data: { project_id: id, ...data },
+        })
+    },
     // 健步走
     '3': function () {
         return http({
@@ -190,8 +202,13 @@ export const ranks = {
         })
     },
 };
-ranks['2'] = ranks['1'];
 
+export const orgs = function (data) {
+    return http({
+        url: '/pro/rank/org',
+        data,
+    })
+};
 export const match = {
     list: function ({search, orgId, ...data}) {
 
