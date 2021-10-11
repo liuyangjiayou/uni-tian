@@ -32,7 +32,7 @@ export default {
                     encryptedData,
                     iv,
                   }).then(res => {
-                      this.src = decodeURIComponent(`https://testh5ydh.zhyell.com/jbz/index.html?token=${this.$store.getters.token}&time=${+new Date()}`)
+                      this.src = decodeURIComponent(`${res.h5}?token=${this.$store.getters.token}&time=${+new Date()}`)
                   })
                 }
               })
