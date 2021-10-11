@@ -50,7 +50,7 @@
         </view>
         <divider height="1rpx" />
         <view v-for="(item, index) in info.my_rank" :key="index" class="flex align-center mt35">
-          <al-image width="150rpx" height="150rpx" :src="item.avatar || require('@/static/images/tu.png')" />
+          <al-image v-if="item.avatar" width="150rpx" height="150rpx" :src="item.avatar" />
           <view class="flex fs30 flex-1 ml30 flex-column">
             <text>名称：{{item.user_name}}</text>
             <text class="mt10">成绩：<text class="text-bold" style="color: #fa8f06">{{item.score}}</text></text>

@@ -60,7 +60,7 @@ name: "index",
       this.$Router.push({path: '/pages/sport/matchs2', query: {id: this.query.id, type: 1, title: '市级比赛'}});
     },
     click() {
-      this.$Router.push({ path: '/pages/sport/rank', query: {id:this.query.id, type:1} });
+      this.$Router.push({ path: '/pages/sport/rank', query: {id:this.query.id, type:this.query.pro_type} });
     },
     click2() {
       this.$Router.push({ path: '/pages/process/index', query: {pid:this.query.id} });

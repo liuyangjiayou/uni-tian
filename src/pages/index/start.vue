@@ -26,6 +26,7 @@ export default {
     this.barH = this.customBar;
     start().then(res => {
       this.info = res;
+      // if(!this.info.start_the_thumb) this.info.start_the_thumb = '/static/images/start.png';
     });
   },
   methods: {

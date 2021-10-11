@@ -104,6 +104,7 @@ export default {
                 nickname: nickName,
                 avatar: avatarUrl,
               }).then(data => {
+                console.log('authorization', data);
                 this.$store.commit('SET_INFO', data.user);
                 this.$store.commit('SET_TOKEN', data.token);
                 const { phone } = data.user;
@@ -168,10 +169,12 @@ export default {
     },
     // 成功后的回调
     success() {
+      this.handlerClose();
       this.$emit('success', {token: this.$store.getters.token});
     },
     // 失败后的回调
     failure() {
+      this.handlerClose();
       this.$emit('failure', {});
     },
     getCode() {

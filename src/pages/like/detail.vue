@@ -67,26 +67,6 @@ export default {
       info: {
         rec_list: [],
       },
-      list: [
-        {
-          src: '/static/test/01.png',
-          title: '太极拳专22',
-          desc: '队伍名收费收费的099',
-          count: 12655,
-          number: '222233',
-          city: '石家庄工会',
-          id: 3,
-        },
-        {
-          src: '/static/test/01.png',
-          title: '太极拳专22',
-          desc: '队伍名收费收费的099',
-          count: 12655,
-          number: '222233',
-          city: '石家庄工会',
-          id: 3,
-        },
-      ]
     };
   },
   onLoad(){

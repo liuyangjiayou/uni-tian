@@ -51,49 +51,6 @@ export default {
       getDynamic(data).then(res => {
         this.list = this.list.concat(res.list)
       })
-      // this.list = this.list.concat([
-      //   {
-      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-      //     src: `/static/test/img/${random(0,3)}.jpg`,
-      //     time: random(15, 60) + '分钟前',
-      //     isLive: true,
-      //   },{
-      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-      //     src: `/static/test/img/${random(0,3)}.jpg`,
-      //     time: random(15, 60) + '分钟前',
-      //     isLive: true,
-      //   },
-      //   {
-      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-      //     src: `/static/test/img/${random(0,3)}.jpg`,
-      //     time: random(15, 60) + '分钟前',
-      //     isLive: true,
-      //   },
-      //   {
-      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-      //     src: `/static/test/img/${random(0,3)}.jpg`,
-      //     time: random(15, 60) + '分钟前',
-      //     isLive: true,
-      //   },
-      //   {
-      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-      //     src: `/static/test/img/${random(0,3)}.jpg`,
-      //     time: random(15, 60) + '分钟前',
-      //     isLive: true,
-      //   },
-      //   {
-      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-      //     src: `/static/test/img/${random(0,3)}.jpg`,
-      //     time: random(15, 60) + '分钟前',
-      //     isLive: true,
-      //   },
-      //   {
-      //     title: '河北健儿闪耀陕西 第十四届全运会燕赵荣' + random(15, 60),
-      //     src: `/static/test/img/${random(0,3)}.jpg`,
-      //     time: random(15, 60) + '分钟前',
-      //     isLive: true,
-      //   },
-      // ]);
     },
   },
 }

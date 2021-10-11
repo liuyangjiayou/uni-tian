@@ -21,8 +21,8 @@ export default {
     return {
       current: 0,
       imgs: [
-          '/static/images/bg4.png',
-          '/static/images/bg1.png',
+          '/static/images/shi.png',
+          '/static/images/sheng.png',
       ],
       show: false,
     };

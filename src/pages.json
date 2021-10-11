@@ -10,7 +10,7 @@
 		{
 			"path": "pages/index/init",
 			"style": {
-				"navigationBarTitleText": "初始页"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
@@ -133,8 +133,8 @@
 		"current": 0,
 		"list": [{
 			"name": "score",
-			"path": "/pages/info/score",
-			"query": ""
+			"path": "/pages/like/detail",
+			"query": "id=77"
 		},
 		{
 			"name": "rank",

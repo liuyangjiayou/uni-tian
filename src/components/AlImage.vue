@@ -1,5 +1,5 @@
 <template>
-  <img :src="src" :mode="mode" :style="{ width, height, borderRadius: round }" />
+  <image :src="src" :mode="mode" :style="{ width, height, borderRadius: round }" />
 </template>
 
 <script>

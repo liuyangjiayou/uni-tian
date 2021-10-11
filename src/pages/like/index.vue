@@ -1,5 +1,5 @@
 <template>
-  <view-container src-height="274rpx" :banner="banner" back :title="banner.title">
+  <view-container src-height="274rpx" :banner="banner" back title="点赞投票">
     <view
         v-for="(item, index) in list"
         class="sport-item"

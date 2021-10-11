@@ -11,8 +11,8 @@
         <span class="flex-1">分数</span>
       </view>
       <view v-for="(item, index) in list" :key="index" class="flex py12 align-center">
-        <span :class="['flex-1 text-cut fs0' ]"><i :class="'team-index fs24' + ' team-'+ (item.rownum === 'null' || !item.rownum ? item.num_tmp : item.rownum)">
-          {{item.rownum === "null" || !item.rownum ? item.num_tmp : item.rownum}}
+        <span :class="['flex-1 text-cut fs0' ]"><i :class="'team-index fs24' + ' team-'+ (item.rownum)">
+          {{item.rownum}}
         </i></span>
         <span class="flex-3 text-cut fs24">{{item.ranks_name}}</span>
         <span class="flex-2 text-cut fs24">{{item.ranks_org_name}}</span>

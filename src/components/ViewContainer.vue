@@ -2,10 +2,10 @@
 <view>
   <view v-if="head || src || $slots.header" class="web-header fs0">
     <view v-if="head" :style="[headStyle]">
-      <view :class="['border-box flex align-center px20', 'title-wrap2']" :style="[titleStyle]">
-        <al-image v-if="back" class="mr20" width="20rpx" height="35rpx" src="/static/images/back.png" @click.native="backFn" />
-        <view :class="['flex flex-1 fs30', titleAlign]">{{title}}</view>
-      </view>
+      <cover-view :class="['border-box flex align-center px20', 'title-wrap2']" :style="[titleStyle]">
+        <cover-image v-if="back" src="/static/images/back.png" class="pr20" :mode="mode" :style="{ width: '20rpx', height: '35rpx' }" @click.native="backFn" ></cover-image>
+        <cover-view :class="['flex flex-1 fs30', titleAlign]" @click.native="back ? backFn() : null">{{title}}</cover-view>
+      </cover-view>
     </view>
     <view v-if="src"><al-image width="100%" :height="srcHeight" :src="src" /></view>
     <swiper
@@ -113,7 +113,7 @@ export default {
     },
     headStyle() {
       return {
-        borderBottom: '2px solid #efefef',
+        // borderBottom: '2px solid #efefef',
         height: this.customBarHeight + 'px',
         ...(this.background ? {} : {}),
       };
@@ -162,6 +162,7 @@ export default {
     position: fixed;
     top: 0;
     z-index: 200;
+    border-bottom: 2px solid rgb(239, 239, 239);
   }
   .web-body {
     position: relative;

@@ -11,7 +11,7 @@
         <template v-for="(row1, index3) in row.score_info">
           <view :key="index3 + 'a'" class="flex justify-between px24">
             <view class="fs26">{{ row.project.pro_type === 4 ? row1.s_name : row1.ranks_name }}</view>
-            <view class="fs24">排名：{{row1.rownum === "null" || !row1.rownum ? row1.num_tmp : row1.rownum}}</view>
+            <view class="fs24">排名：{{row1.rownum}}</view>
           </view>
           <view :key="index3 + 'b'" class="flex justify-between align-center mt14 px24 mb30">
             <view class="flex flex-column justify-between">
@@ -47,13 +47,14 @@ export default {
   data() {
     return {
       list: [],
+      user: {},
     };
   },
-  computed: {
-    user() {
-      return this.$store.getters.user;
-    },
-  },
+  // computed: {
+  //   user() {
+  //     return this.$store.getters.user;
+  //   },
+  // },
   mounted() {
     this.$refs.container.getAuth(() => {
       getScore().then(res => {
@@ -64,6 +65,7 @@ export default {
           }
           return {...item, score_info };
         });
+        this.user = res.user;
       });
     }, () => console.log('get token failure'));
   },
