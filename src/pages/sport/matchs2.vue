@@ -5,15 +5,20 @@
       <view class="fs28" @click.native="open">筛选</view>
     </view>
     <uni-popup ref="popup" type="right">
-      <scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" :style="[{paddingTop: barH + 'px'}]">
+      <scroll-view :scroll-y="true" scroll-with-animation="true" :scroll-into-view="viewId" class="scroll-Y" :style="[{paddingTop: barH + 'px'}]" @scroll="scroll">
+<!--      <scroll-view :scroll-top="scrollTop"   :scroll-y="true" class="scroll-Y" :style="[{paddingTop: barH + 'px'}]" @scroll="scroll">-->
         <view class="flex justify-end pop-close" :style="[{top: barH + 'px'}]">
           <al-image width="24rpx" height="24rpx" src="/static/images/close.png" class="ml20 mt10" @click.native="close" />
         </view>
         <template v-for="(row, index) in tree">
-          <view :key="index + 'a'" :class="['city-title', form.orgId === row.id ? 'text-color-blue' : '', index===0?'pt35':0]" @click.native="() => setValue(row.id)">
+          <view :key="index + 'a'"
+                :class="['city-title', form.orgId === row.id ? 'text-color-blue' : '', index===0?'pt35':0]"
+                :id="'view' + row.id"
+                @click.native="() => setValue(row.id)">
             <span class="mr20">—</span>{{row.title}}<span class="ml20">—</span></view>
           <view :key="index + 'b'" class="city-list">
             <text v-for="(item, index2) in row.childs"
+                  :id="'view' + item.id"
                   :key="index2"
                   :class="['city-item fs28', form.orgId === item.id ? 'active' : '']"
                   @click.native="() => setValue(item.id)">{{item.title}}</text>
@@ -42,6 +47,7 @@ export default {
       },
       tree: [],
       barH: 0,
+      viewid: '',
     };
   },
   onLoad() {
@@ -63,6 +69,10 @@ export default {
   },
   methods: {
     open(){
+      this.$nextTick(() => {
+        this.viewId = 'view' + this.form.orgId;
+        this.scrollTop = this.scrollTop2;
+      });
       this.$refs.popup.open();
     },
     close() {
@@ -100,6 +110,11 @@ export default {
       if (Number(item.id)) {
         this.$Router.push({path: '/pages/like/detail', query: {id: Number(item.id)}});
       }
+    },
+    scroll (e) {
+      //记录scroll  位置
+      this.scrollTop2 = e.detail.scrollTop
+
     },
   }
 }

@@ -99,12 +99,19 @@ export default {
     },
     goMatch(val) {
       const url = val === 1 ? this.info.s_url : this.info.s_lx_url;
-      this.$refs.container.getAuth(({token}) => {
-        game.start({game_id: this.query.id}).then(res => {
-          console.log('跳转地址：', url + '?token=' + token);
-          this.$Router.push({ path: '/pages/index/webview', query: {url: url + '?token=' + token } });
-        });
-      }, () => console.log('get token failure'));
+      if (val === 1) {
+        // 比赛模式
+        this.$refs.container.getAuth(({token}) => {
+          game.start({game_id: this.query.id}).then(res => {
+            console.log('跳转地址：', url + '?token=' + token);
+            this.$Router.push({ path: '/pages/index/webview', query: {url: url + '?token=' + token } });
+          });
+        }, () => console.log('get token failure'));
+      } else {
+        // 练习模式
+        this.$Router.push({ path: '/pages/index/webview', query: {url: url } });
+      }
+
     },
   },
 
