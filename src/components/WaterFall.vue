@@ -11,10 +11,14 @@
       <view class="fs22 text-color-gray3 b2-1 inline-block p5 mt10">编号：{{params.id}}</view>
       <view v-if="vote" class="flex align-center justify-between mt10">
         <view class="flex flex-column">
-          <text class="text-color-blue fs30 mr10">{{params.rank_score}}</text>
           <text class="text-color-gray4 flex-1 fs22">当前票数</text>
+          <text class="text-color-blue fs30 mr10">{{params.rank_score}}</text>
         </view>
         <view class="button-score" @click="voteSubmit(params.id)">投票</view>
+      </view>
+      <view v-else>
+        <text class="text-color-gray4 flex-1 fs22">当前分数</text>
+        <text class="text-color-blue fs30 mr10">{{params.rank_score}}</text>
       </view>
     </view>
   </view>

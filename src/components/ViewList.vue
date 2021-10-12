@@ -28,7 +28,8 @@
         ></water-fall>
       </view>
     </view>
-    <view v-if="fetch" class="load-txt">{{ajax.loadTxt}}</view>
+    <view v-if="ajax.loadTxt" class="load-txt">{{ajax.loadTxt}}</view>
+    <view v-if="!ajax.loadTxt && !leftList.length && !rightList.length" class="fs28 text-color-gray">暂无数据</view>
   </view>
 </template>
 
