@@ -73,6 +73,7 @@ export default {
         this.viewId = 'view' + this.form.orgId;
         this.scrollTop = this.scrollTop2;
       });
+      this.form.orgId = '';
       this.$refs.popup.open();
     },
     close() {
