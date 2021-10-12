@@ -22,7 +22,8 @@
     </template>
     <view class="my30">赛事回放</view>
     <view>
-      <view-list ref="list" :list="info.pro_list" @play="play" />
+      <view-list v-if="info.pro_list.length" ref="list" :list="info.pro_list" @play="play" />
+      <view v-else class="fs26 py20 text-center text-color-gray">暂无参加队伍</view>
     </view>
     <view v-if="show" class="video-wrap" :style="{top: barH + 'px'}" @click="() => {show = false}">
       <video id="myVideo" :src="src" enable-danmu danmu-btn controls @click.stop />
