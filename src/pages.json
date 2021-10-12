@@ -135,12 +135,21 @@
 			"name": "score",
 			"path": "/pages/like/detail",
 			"query": "id=77"
+		},{
+			"name": "game",
+			"path": "/pages/game/detail",
+			"query": "id=2"
 		},
 		{
 			"name": "rank",
 			"path": "/pages/sport/rank",
 			"query": "id=11&type=1"
-		}
+		},
+			{
+				"name": "sport",
+				"path": "/pages/sport/index",
+				"query": "id=2&pro_type=2&sport=%E9%99%86%E5%9C%B0%E5%86%B0%E7%90%83%E5%B0%84%E9%97%A8"
+			}
 		]
 	},
 	"globalStyle": {

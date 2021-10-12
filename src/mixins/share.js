@@ -21,13 +21,15 @@ export default{
             // content:this.shareInfo.content,
             success(res){
                 uni.showToast({
-                    title:'分享成功'
+                    title:'分享成功',
+                    duration: 3000, mask: true
                 })
             },
             fail(res){
                 uni.showToast({
                     title:'分享失败',
-                    icon:'none'
+                    icon:'none',
+                    duration: 3000, mask: true
                 })
             }
         }
@@ -41,13 +43,15 @@ export default{
             // content:this.shareInfo.content,
             success(res){
                 uni.showToast({
-                    title:'分享成功'
+                    title:'分享成功',
+                    duration: 3000, mask: true
                 })
             },
             fail(res){
                 uni.showToast({
                     title:'分享失败',
-                    icon:'none'
+                    icon:'none',
+                    duration: 3000, mask: true
                 })
             }
         }

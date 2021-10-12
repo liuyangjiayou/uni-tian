@@ -26,7 +26,7 @@ export default function (options) {
                 }
                 uni.showToast({
                     title: data.msg,
-                    duration: 2000
+                    duration: 3000, mask: true
                 });
                 reject({ data, statusCode, header, cookies})
             },

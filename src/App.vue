@@ -5,7 +5,7 @@
   export default {
 		onLaunch: function() {
 			console.log('App Launch')
-      // 获取导航栏高度
+          // 获取导航栏高度
       uni.getSystemInfo({
         success: function(e) {
           Vue.prototype.statusBar = e.statusBarHeight

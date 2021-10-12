@@ -29,11 +29,11 @@
         </view>
       </view>
       <divider height="1rpx" />
-      <view class="flex pt40 pb30">
-        <view v-for="(item, index) in info.ranks_ranking" :key="index" class="flex-1 flex flex-column align-center">
+      <view class="flex flex-wrap pt20 pb30">
+        <view v-for="(item, index) in info.ranks_ranking" :key="index" class="flex flex-column align-center mt20" style="width: 33%">
           <view class="team-pic relative">
             <al-image width="100rpx" height="100rpx" :src="require('@/static/images/team-pic.png')" />
-            <al-image width="46rpx" height="46rpx" :src="require('@/static/images/0'+ (index + 1) +'.png')" class="pic-icon" />
+            <al-image width="46rpx" height="46rpx" :src="require('@/static/images/0'+ (item.rownum) +'.png')" class="pic-icon" />
           </view>
           <view class="fs30 mt10">{{item.ranks_name}}</view>
         </view>

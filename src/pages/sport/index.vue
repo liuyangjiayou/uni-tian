@@ -15,15 +15,19 @@
     <divider height="1rpx" />
     <template v-if="query.pro_type == 2">
       <view class="flex justify-start py30">
-  <!--      <al-image width="335rpx" height="171rpx" src="/static/images/sheng.png" @click.native="toProvin" class="mr20" />-->
+        <al-image width="335rpx" height="171rpx" src="/static/images/sheng.png" @click.native="toProvin" class="mr20" />
         <al-image width="335rpx" height="171rpx" src="/static/images/shi.png" @click.native="toCity" />
       </view>
       <divider height="1rpx" />
     </template>
     <view class="my30">赛事回放</view>
-    <view class="mr-20">
+    <view>
       <view-list ref="list" :list="info.pro_list" @play="play" />
     </view>
+    <view v-if="show" class="video-wrap" :style="{top: barH + 'px'}" @click="() => {show = false}">
+      <video id="myVideo" :src="src" enable-danmu danmu-btn controls @click.stop />
+    </view>
+
   </view-container>
 </template>
 
@@ -33,11 +37,15 @@ export default {
 name: "index",
   data() {
     return {
+      show: false,
       query: {},
       info: {},
+      barH: 0,
+      src: 'https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20200317.mp4',
     };
   },
   onLoad() {
+    this.barH = this.customBar;
     this.query = this.$Route.query;
     like.small({
       id: this.$Route.query.id
@@ -54,7 +62,7 @@ name: "index",
   },
   methods: {
     toProvin() {
-      this.$Router.push({path: '/pages/sport/matchs2', query: {id: this.query.id, type: 2, title: '省级比赛'}});
+      this.show = true;
     },
     toCity() {
       this.$Router.push({path: '/pages/sport/matchs2', query: {id: this.query.id, type: 1, title: '市级比赛'}});
@@ -79,5 +87,16 @@ name: "index",
   display: inline-block;
   margin-right: 14rpx;
   margin-bottom: 15rpx;
+}
+.video-wrap {
+  background-color: rgba(0,0,0,0.4);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

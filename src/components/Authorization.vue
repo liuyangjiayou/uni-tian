@@ -182,7 +182,7 @@ export default {
         uni.showToast({
           icon: 'none',
           title: '请输入手机号码',
-          duration: 2000
+          duration: 3000, mask: true
         });
         return;
       }
@@ -198,7 +198,7 @@ export default {
         uni.showToast({
           icon: 'none',
           title: '发送失败！',
-          duration: 2000
+          duration: 3000, mask: true
         });
       });
     },
