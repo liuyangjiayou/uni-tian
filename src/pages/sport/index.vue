@@ -15,7 +15,7 @@
     <divider height="1rpx" />
     <template v-if="query.pro_type == 2">
       <view class="flex justify-start py30">
-        <al-image width="335rpx" height="171rpx" src="/static/images/sheng.png" @click.native="toProvin" class="mr20" />
+        <al-image v-if="info.province_video" width="335rpx" height="171rpx" src="/static/images/sheng.png" @click.native="toProvin" class="mr20" />
         <al-image width="335rpx" height="171rpx" src="/static/images/shi.png" @click.native="toCity" />
       </view>
       <divider height="1rpx" />
@@ -25,9 +25,9 @@
       <view-list v-if="info.pro_list.length" ref="list" :list="info.pro_list" @play="play" />
       <view v-else class="fs26 py20 text-center text-color-gray">暂无参加队伍</view>
     </view>
-    <view v-if="show" class="video-wrap" :style="{top: barH + 'px'}" @click="() => {show = false}">
+<!--    <view v-if="show" class="video-wrap" :style="{top: barH + 'px'}" @click="() => {show = false}">
       <video id="myVideo" :src="src" enable-danmu danmu-btn controls @click.stop />
-    </view>
+    </view>-->
 
   </view-container>
 </template>
@@ -63,7 +63,7 @@ name: "index",
   },
   methods: {
     toProvin() {
-      this.show = true;
+      this.$Router.push({path: '/pages/like/provin', query: {id: this.query.id}});
     },
     toCity() {
       this.$Router.push({path: '/pages/sport/matchs2', query: {id: this.query.id, type: 1, title: '市级比赛'}});

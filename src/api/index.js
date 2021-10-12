@@ -238,3 +238,10 @@ export const settings = function (data) {
         data,
     })
 };
+
+export const province = function (data) {
+    return http({
+        url: '/pro/video/province ',
+        data,
+    })
+};

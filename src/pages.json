@@ -110,6 +110,12 @@
 			}
 		},
 		{
+			"path": "pages/like/provin",
+			"style": {
+				"navigationBarTitleText": "省级比赛"
+			}
+		},
+		{
 			"path": "pages/game/list",
 			"style": {
 				"navigationBarTitleText": "冰雪大挑战"
@@ -149,6 +155,12 @@
 				"name": "sport",
 				"path": "/pages/sport/index",
 				"query": "id=2&pro_type=2&sport=%E9%99%86%E5%9C%B0%E5%86%B0%E7%90%83%E5%B0%84%E9%97%A8"
+			}
+		,
+			{
+				"name": "province",
+				"path": "/pages/like/provin",
+				"query": "id=2"
 			}
 		]
 	},

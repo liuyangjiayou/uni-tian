@@ -64,6 +64,9 @@ const router = createRouter({
         path: '/pages/like/detail',
         name: 'like-detail',
     },{
+        path: '/pages/like/provin',
+        name: 'like-provin',
+    },{
         path: '/pages/game/list',
         name: 'games',
     },{
