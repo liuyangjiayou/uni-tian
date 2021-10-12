@@ -13,7 +13,7 @@
           :interval="3000"
           :duration="500"
       >
-        <swiper-item v-for="(item, index) in banner" :key="index"><al-image width="100%" height="100%" :src="item.image" /></swiper-item>
+        <swiper-item v-for="(item, index) in banner" :key="index"><al-image width="100%" height="100%" :src="item.image" @click.native="handlerClickItem(item)" /></swiper-item>
       </swiper>
       <!--  页面导航  -->
       <view v-if="nav.length" class="flex align-center mt34 mb14">
@@ -54,7 +54,6 @@ export default {
     }
   },
   onBackPress(e) {
-    console.log(1234564);
     return true;
   },
   onLoad() {
@@ -68,6 +67,17 @@ export default {
     ...mapGetters(['token']),
   },
   methods: {
+    // 点击轮播图跳转
+    handlerClickItem(data) {
+      const url = data.url;
+      if (!url) return
+      if (url.indexOf('http') > -1) {
+        this.$Router.push({ path: '/pages/index/webView', query: { url: url } })
+      } else {
+        this.$Router.push({ path: url })
+      }
+    },
+
     handlerClick(item) {
       const navPath = {
         1: '/pages/rule/index',
