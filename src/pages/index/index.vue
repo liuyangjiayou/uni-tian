@@ -107,9 +107,7 @@ export default {
           });
         }, () => console.log('get token failure'));
       } else if (parseInt(item.pro_type) === 4) {
-        this.$refs.container.getAuth(() => {
-          this.$Router.push({ path: `/pages/game/list`, query: { id: item.id, title: item.pro_name }});
-        }, () => console.log('get token failure'));
+        this.$Router.push({ path: `/pages/game/list`, query: { id: item.id, title: item.pro_name }});
       } else {
         this.$Router.push({ path: `/pages/sport/index`, query: { id: item.id, pro_type: item.pro_type, sport: item.pro_name }})
       }

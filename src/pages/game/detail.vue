@@ -38,7 +38,7 @@
           <view class="fs30 mt10">{{item.ranks_name}}</view>
         </view>
       </view>
-      <template v-if="showRank">
+      <template v-if="info.my_rank && info.my_rank.length">
         <view class="flex justify-between mt10 mb20">
           <view class="flex align-center">
             <al-image width="35rpx" height="34rpx" :src="require('@/static/images/zudui.png')" />
@@ -78,17 +78,12 @@ export default {
   },
   onLoad() {
     this.query = this.$Route.query;
+  },
+  onShow(){
     game.detail({id: this.query.id}).then(res => {
-      game.start({game_id: this.query.id}).then(res2 => {
-        this.showRank = true;
-      }).catch(res2 => {
-        this.showRank = false;
-      }).finally(() => {
-        this.info = res;
-        this.shareInfo.title = this.info.s_name;
-      });
+      this.info = res;
+      this.shareInfo.title = this.info.s_name;
     });
-
   },
   methods: {
     moreFn() {
@@ -103,7 +98,6 @@ export default {
         // 比赛模式
         this.$refs.container.getAuth(({token}) => {
           game.start({game_id: this.query.id}).then(res => {
-            console.log('跳转地址：', url + '?token=' + token);
             this.$Router.push({ path: '/pages/index/webview', query: {url: url + '?token=' + token } });
           });
         }, () => console.log('get token failure'));

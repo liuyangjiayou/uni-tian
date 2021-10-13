@@ -1,5 +1,5 @@
 <template>
-  <view-container src-height="337rpx":banner="banner" :back="true" :title="query.title">
+  <view-container ref="container" src-height="337rpx" :banner="banner" :back="true" :title="query.title">
     <!-- 项目分类   -->
     <view
         v-for="(item, index) in list"
