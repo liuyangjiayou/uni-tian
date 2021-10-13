@@ -17,7 +17,7 @@
             <view class="flex flex-column justify-between">
               <view class="fs24">{{ row.project.pro_type === 4 ? (row1.ranks_name + " - ") : '' }}{{ row1.ranks_org_name }}</view>
             </view>
-            <view class="view-tag-blue">分数：{{ row1.rank_score }}</view>
+            <view class="view-tag-blue">{{ row.project.pro_type === 3 ? '步数' : '分数' }}：{{ row1.rank_score }}</view>
           </view>
         </template>
       </template>

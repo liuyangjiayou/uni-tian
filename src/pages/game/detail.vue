@@ -53,7 +53,7 @@
           <al-image v-if="item.avatar" width="150rpx" height="150rpx" :src="item.avatar" />
           <view class="flex fs30 flex-1 ml30 flex-column">
             <text>名称：{{item.user_name}}</text>
-            <text class="mt10">成绩：<text class="text-bold" style="color: #fa8f06">{{item.score}}</text></text>
+            <text class="mt10">成绩：<text class="text-bold" style="color: #fa8f06">{{item.max_score}}</text></text>
           </view>
         </view>
       </template>
