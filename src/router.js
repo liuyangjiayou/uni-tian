@@ -73,6 +73,9 @@ const router = createRouter({
         path: '/pages/game/detail',
         name: 'game-detail',
     },{
+        path: '/pages/map/index',
+        name: 'map',
+    },{
         path: '/',
         redirect: { name: 'init' },
     }]

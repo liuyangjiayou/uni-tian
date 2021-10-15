@@ -27,6 +27,7 @@
             @handlerClick="handlerClick(item)" />
       </view>
     </template>
+    <view @click="$Router.push({ name: 'map' })">地图dome111</view>
     <!-- 项目分类   -->
     <view
         v-for="(item, index) in pro_list"

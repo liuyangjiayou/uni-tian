@@ -245,3 +245,11 @@ export const province = function (data) {
         data,
     })
 };
+// 测算两个点的坐标
+export const distance = function (data) {
+    return http({
+        url: '/pro/video/province ',
+        method: 'GET',
+        data,
+    })
+};

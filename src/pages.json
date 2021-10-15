@@ -132,8 +132,13 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},
+		{
+			"path": "pages/map/index",
+			"style": {
+				"navigationBarTitleText": "地图dome"
+			}
 		}
-
 	],
 	"condition": {
 		"current": 0,
@@ -145,8 +150,7 @@
 			"name": "game",
 			"path": "/pages/game/detail",
 			"query": "id=2"
-		},
-		{
+		},{
 			"name": "rank",
 			"path": "/pages/sport/rank",
 			"query": "id=11&type=1"

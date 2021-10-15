@@ -5,7 +5,7 @@ export default function (options) {
         title: options.title ?? '加载中'
     });
     return new Promise((resolve, reject) => {
-        const baseUrl = 'https://atestydh.zhyell.com/api';
+        const baseUrl = 'https://aysydh.hebei.com.cn/api';
         const header = {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -16,7 +16,7 @@ export default function (options) {
         uni.request({
             url: `${baseUrl}${options.url}`,
             data: options.data ?? {},
-            method: 'POST',
+            method: options.method || 'POST',
             timeout: 60000,
             header,
             // 请求成功
