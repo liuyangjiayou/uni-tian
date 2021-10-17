@@ -132,6 +132,10 @@ export default {
   },
   methods: {
     backFn() {
+      if (this.$Route?.query?.is_share) {
+        this.$Router.replace({path: '/pages/index/index'});
+        return;
+      }
       this.$Router.back(1);
     },
     getAuth(success, failure) {

@@ -11,10 +11,24 @@ export default {
                 const currentCount = voteInfo?.time && voteInfo.time > ling ? (voteInfo?.count || 0) : 0;
                 console.log('已经投了', currentCount, '最大投票次数', voteMax);
                 if (currentCount >= voteMax) {
-                    uni.showToast({title: `已达到最大投票次数${voteMax}次！`, icon: 'none', duration: 3000, mask: true});
+                    // #ifdef MP_WEIXIN
+                    uni.showModal({
+                        title: '提示',
+                        content: `您可在冀云客户端再进行${voteMax}次投票！`,
+                        showCancel: false
+                    });
+                    // #endif
+                    // #ifdef H5
+                    uni.showModal({
+                        title: '提示',
+                        content: `您可在职工云上运动会小程序再进行${voteMax}次投票！`,
+                        showCancel: false
+                    });
+                    // #endif
+                    // uni.showToast({title: `已达到最大投票次数${voteMax}次！`, icon: 'none', duration: 3000, mask: true});
                     return;
                 }
-                uni.showLoading({title: '', mask: true});
+                // uni.showLoading({title: '', mask: true});
                 let type = 2;
                 // #ifdef MP_WEIXIN
                 type = 1;
@@ -26,11 +40,12 @@ export default {
                     uni.showToast({
                         title: '投票成功',
                         icon: 'success',
-                        duration: 3000, mask: true
+                        duration: 3000,
+                        mask: true
                     });
                     resolve(currentCount + 1);
                 }).finally(() => {
-                    uni.hideLoading();
+                    // uni.hideLoading();
                 });
             });
 

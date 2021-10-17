@@ -10,12 +10,21 @@ export default{
                 // desc:'',
                 // content:''
             },
+            queryString: '',
         };
+    },
+    onLoad() {
+        const query = this.$Route.query;
+        let qs = '?';
+        Object.keys(query).forEach(item => {
+            qs = qs + item + '=' + query[item] + '&';
+        });
+        this.queryString = qs + 'is_share=1';
     },
     onShareTimeline() {
         return {
             title:this.shareInfo.title,
-            path:this.$Route.path,
+            path:this.$Route.path + this.queryString,
             // imageUrl:this.shareInfo.imageUrl,
             // desc:this.shareInfo.desc,
             // content:this.shareInfo.content,
@@ -37,7 +46,7 @@ export default{
     onShareAppMessage(res) {
         return {
             title:this.shareInfo.title,
-            path:this.$Route.path,
+            path:this.$Route.path + this.queryString,
             // imageUrl:this.shareInfo.imageUrl,
             // desc:this.shareInfo.desc,
             // content:this.shareInfo.content,
