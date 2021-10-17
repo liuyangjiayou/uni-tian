@@ -1,11 +1,13 @@
 <template>
-  <view-container back title="比赛进程">
+  <view-container ref="container" back title="比赛进程">
     <view v-for="item in list" :key="item.type_name" class="process-wrap mb28">
       <view class="pro-title flex align-center justify-center fs36 text-bold text-color-white">{{ item.type_name }}</view>
       <view class="pro-body shadow1">
-        <view v-for="child in item.type_list" :key="pro_name">
-          <view class="fs30 mt40">{{ child.pro_name }}</view>
-          <view class="fs24 minute mt22 text-color-gray">{{ child.sch_s_time }}{{  child.sch_e_time ? ` -- ${child.sch_e_time}` : '' }}</view>
+        <view v-for="(child, index) in item.type_list" :key="index">
+          <view @click="handlerClick(child)">
+            <view class="fs30 mt40">{{ child.pro_name }}</view>
+            <view class="fs24 minute mt22 text-color-gray">{{ child.sch_s_time }}{{  child.sch_e_time ? ` -- ${child.sch_e_time}` : '' }}</view>
+          </view>
         </view>
       </view>
     </view>
@@ -13,7 +15,7 @@
 </template>
 
 <script>
-import {getProcess} from "../../api";
+import { getProcess, check } from "@/api";
 export default {
   name: "index",
   data(){
@@ -28,6 +30,27 @@ export default {
     }).then(res => {
       this.list = res
     })
+  },
+  methods: {
+    handlerClick(item) {
+      console.log(item, 123123);
+      if (parseInt(item.pro_type) === 3) {
+        this.$refs.container.getAuth(() => {
+          check().then(res => {
+            // #ifdef H5
+            location.href = item.jump_url;
+            // #endif
+            // #ifdef MP-WEIXIN
+            this.$Router.push({path: '/pages/run/run'});
+            // #endif
+          });
+        }, () => console.log('get token failure'));
+      } else if (parseInt(item.pro_type) === 4) {
+        this.$Router.push({ path: `/pages/game/list`, query: { id: item.sch_pro_id, title: item.pro_name }});
+      } else {
+        this.$Router.push({ path: `/pages/sport/index`, query: { id: item.sch_pro_id, pro_type: item.pro_type, sport: item.pro_name }})
+      }
+    }
   }
 }
 </script>

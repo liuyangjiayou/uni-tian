@@ -20,6 +20,7 @@ export default {
     uni.login({
       success: (res) => {
         const { code } = res;
+        console.log(code);
         uni.authorize({
           scope: 'scope.werun',
           success: (e) => {

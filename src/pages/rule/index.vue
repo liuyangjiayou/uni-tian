@@ -6,8 +6,8 @@
         class="sport-wrap"
         @click="viewDetail(item)"
     >
-      <view class="text-bold fs32 z1">{{ item.pro_name }}</view>
-      <view class="fs24 mt20 z1">点击查看比赛规则</view>
+<!--      <view class="text-bold fs32 z1">{{ item.pro_name }}</view>-->
+<!--      <view class="fs24 mt20 z1">点击查看比赛规则</view>-->
       <al-image class="image-bg z0" width="677rpx" height="222rpx" :src="item.pro_thumb"/>
     </view>
   </view-container>
@@ -45,13 +45,14 @@ export default {
   },
   onLoad() {
     rule.list().then(res => {
-      console.log(res);
       this.list = res;
     });
   },
   methods: {
+    handlerSport(item) {
+
+    },
     viewDetail(sport) {
-      console.log(sport.id);
       this.$Router.push({ path: '/pages/rule/detail', query: { id: sport.id } });
     },
   },

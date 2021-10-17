@@ -27,7 +27,6 @@
             @handlerClick="handlerClick(item)" />
       </view>
     </template>
-    <view @click="$Router.push({ name: 'map' })">地图dome111</view>
     <!-- 项目分类   -->
     <view
         v-for="(item, index) in pro_list"
@@ -66,6 +65,27 @@ export default {
   },
   computed: {
     ...mapGetters(['token']),
+  },
+  onShareAppMessage() {
+    uni.share({
+      provider: uni.getProvider({ service: 'share' }),
+      title: "'云'上运动会",
+      path:'/pages/index/index',
+      imageUrl: '',
+      desc: '',
+      content:'',
+      success(res){
+        uni.showToast({
+          title:'分享成功'
+        })
+      },
+      fail(res){
+        uni.showToast({
+          title:'分享失败',
+          icon:'none'
+        })
+      }
+    })
   },
   methods: {
     // 点击轮播图跳转

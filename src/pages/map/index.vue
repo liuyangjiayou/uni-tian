@@ -78,7 +78,7 @@ export default {
         latitude,
         longitude,
       });
-
+      console.log(this.polyline.points)
       this.covers = [{
         latitude,
         longitude,
