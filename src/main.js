@@ -6,6 +6,7 @@ import { router, RouterMount } from './router.js'
 import AlImage from '../src/components/AlImage';
 import IconButton from '../src/components/IconButton';
 import AlDialog from '../src/components/AlDialog';
+import AlertDialog from '../src/components/AlertDialog';
 import Authorization from '../src/components/Authorization';
 import Divider from '../src/components/Divider';
 import ViewContainer from "./components/ViewContainer";
@@ -21,6 +22,7 @@ Vue.component('al-image', AlImage);
 Vue.component('icon-button', IconButton);
 // 弹窗组件
 Vue.component('al-dialog', AlDialog);
+Vue.component('alert-dialog', AlertDialog);
 // 授权弹窗组件
 Vue.component('authorization', Authorization);
 // 分割线

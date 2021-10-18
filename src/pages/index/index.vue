@@ -120,10 +120,10 @@ export default {
         this.$refs.container.getAuth(() => {
           check().then(res => {
             // #ifdef H5
-            location.href = item.jump_url;
+            // location.href = item.jump_url;
             // #endif
             // #ifdef MP-WEIXIN
-            this.$Router.push({path: '/pages/run/run'});
+            this.$Router.push({path: '/pages/run/step'});
             // #endif
           });
         }, () => console.log('get token failure'));

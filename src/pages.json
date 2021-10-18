@@ -138,6 +138,12 @@
 			"style": {
 				"navigationBarTitleText": "地图dome"
 			}
+		},
+		{
+			"path": "pages/run/step",
+			"style": {
+				"navigationBarTitleText": "今日步数"
+			}
 		}
 	],
 	"condition": {
@@ -165,6 +171,10 @@
 				"name": "province",
 				"path": "/pages/like/provin",
 				"query": "id=2"
+			},
+			{
+				"name": "step",
+				"path": "/pages/run/step"
 			}
 		]
 	},
