@@ -148,7 +148,7 @@
 			"query": "id=77"
 		},{
 			"name": "game",
-			"path": "/pages/game/detail",
+			"path": "/pages/game/list",
 			"query": "id=2"
 		},{
 			"name": "rank",

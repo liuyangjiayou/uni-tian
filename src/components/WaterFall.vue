@@ -1,24 +1,24 @@
 <template>
   <view class="waterfall-item video-item shadow1" @tap="onTap">
     <view class="fs0 relative" @click="play(params)">
-      <image  mode="widthFix" @load="emitHeight" @error="emitHeight" :src="params.ranks_video_thumb" />
+      <image  mode="widthFix" @load="emitHeight" @error="emitHeight" :src="params[isUp ? 'ranks_video_thumb_up' : 'ranks_video_thumb']" />
       <al-image width="53rpx" height="53rpx" src="/static/images/play.png" class="video-play" />
       <view class="video-tag fs24">{{params.ranks_org_name || params.org_name}}</view>
     </view>
     <view class="px24 pb20">
-      <view class="fs26 mt20">{{params.ranks_video_name}}</view>
+      <view class="fs26 mt20">{{params[isUp? 'ranks_video_name_up':'ranks_video_name']}}</view>
       <view class="fs22 text-color-gray mt10">{{params.ranks_name}}</view>
       <view class="fs22 text-color-gray3 b2-1 inline-block p5 mt10">编号：{{params.id}}</view>
       <view v-if="vote" class="flex align-center justify-between mt10">
         <view class="flex flex-column">
           <text class="text-color-gray4 flex-1 fs22">当前票数</text>
-          <text class="text-color-blue fs30 mr10">{{params.rank_score}}</text>
+          <text class="text-color-blue fs30 ml10">{{params[isUp?'rank_score_up':'rank_score']}}</text>
         </view>
         <view class="button-score" @click="voteSubmit(params.id)">投票</view>
       </view>
       <view v-else>
         <text class="text-color-gray4 flex-1 fs22">当前分数</text>
-        <text class="text-color-blue fs30 mr10">{{params.rank_score}}</text>
+        <text class="text-color-blue fs30 ml10">{{params[isUp?'rank_score_up':'rank_score']}}</text>
       </view>
     </view>
   </view>
@@ -47,6 +47,10 @@ export default {
     vote: {
       type: Boolean,
       default: true,
+    },
+    isUp: {
+      type: Boolean,
+      default: false,
     },
   },
   methods:{

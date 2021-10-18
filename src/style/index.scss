@@ -84,3 +84,10 @@
     margin-top: 20rpx;
   }
 }
+.sport-item2 {
+  height: 240rpx;
+  @extend .sport-item;
+  & + .sport-item2{
+    margin-top: 0;
+  }
+}

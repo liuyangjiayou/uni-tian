@@ -245,6 +245,18 @@ export const province = function (data) {
         data,
     })
 };
+export const province_list = function (data) {
+    return http({
+        url: '/pro/video/list',
+        data: {
+            type: 2,
+            'data[search]': '',
+            'data[orgId]': '',
+            'data[isUp]': 1,
+            ...data,
+        },
+    })
+};
 // 测算两个点的坐标
 export const distance = function (data) {
     return http({

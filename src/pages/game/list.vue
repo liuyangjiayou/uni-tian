@@ -1,14 +1,20 @@
 <template>
-  <view-container ref="container" src-height="337rpx" :banner="banner" :back="true" :title="query.title">
+  <view-container ref="container" src-height="337rpx" :banner="banner" :back="true" custom-class="py0" :title="query.title">
     <!-- 项目分类   -->
-    <view
-        v-for="(item, index) in list"
-        class="sport-item"
-        @click="handlerSport(item)"
-        :key="index"
-    >
-      <view class="z1">{{ item.s_name }}</view>
-      <al-image class="absolute z0" width="690rpx" height="228rpx" :src="item.s_thumb"/>
+    <view class="flex flex-column" :style="[{height: 'calc(100vh - 337rpx - '+ barH +'px)'}]">
+      <view class="flex-1" />
+      <template v-for="(item, index) in list">
+        <view
+            :key="index + 'a'"
+            class="sport-item2 flex justify-center align-center flex-none"
+            @click="handlerSport(item)"
+            :key="index"
+        >
+          <view class="z1">{{ item.s_name }}</view>
+          <al-image class="absolute z0" width="609rpx" height="240rpx" :src="item.s_thumb"/>
+        </view>
+        <view :key="index + 'b'" class="flex-1" />
+      </template>
     </view>
   </view-container>
 </template>
@@ -24,10 +30,13 @@ export default {
       query: {},
       list: [],
       banner: [],
+      barH: 0,
+
     }
   },
   onLoad() {
     this.query = this.$Route.query;
+    this.barH = this.customBar;
     game.list().then(res => {
       this.list = res.list;
       this.banner = res.banner;

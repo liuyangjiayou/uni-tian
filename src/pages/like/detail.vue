@@ -4,17 +4,15 @@
       <view class="fs0">
         <video
             id="myVideo"
-            :src="info.ranks_video"
-            enable-danmu
-            danmu-btn
+            :src="info[is_up?'ranks_video_up':'ranks_video']"
             controls
             style="width: 100%;"
         />
       </view>
     </template>
     <view class="flex pt40 mb28">
-      <view class="flex-1">
-        <view class="fs32 text-bold">{{ info.ranks_video_name }}</view>
+      <view class="flex-1 mr10">
+        <view class="fs32 text-bold">{{ info[is_up?'ranks_video_name_up':'ranks_video_name'] }}</view>
         <view class="mt30 flex align-center fs0">
           <al-image width="100rpx" height="33rpx" src="/static/images/team.png" />
           <span class="text-color-gray fs24 ml16">{{ info.ranks_name }}</span>
@@ -28,7 +26,7 @@
         <view class="flex-1 flex justify-center align-center px20">
           <al-image width="27rpx" height="31rpx" src="/static/images/count.png" />
           <view class="flex flex-1 flex-column ml22 align-center">
-            <span class="text-color-red fs24 text-bold">{{ info.rank_score }}</span>
+            <span class="text-color-red fs24 text-bold">{{ info[is_up ? 'rank_score_up' : 'rank_score'] }}</span>
             <span class="fs20">{{info.pro_type === 1 ? '当前票数' : '当前分数'}}</span>
           </view>
         </view>
@@ -52,7 +50,7 @@
     <view class="text-center pt30 mb20">
       <view class="view-title">为您推荐</view>
     </view>
-    <view-list ref="list" :list="info.rec_list" @play="play" />
+    <view-list ref="list" :list="info.rec_list" :is-up="!!is_up" @play="play" />
   </view-container>
 </template>
 
@@ -67,14 +65,18 @@ export default {
       info: {
         rec_list: [],
       },
+      is_up: 0,
     };
   },
   onLoad(){
-
+    this.is_up = this.$Route.query.is_up || 0;
   },
   mounted() {
+    let data = {};
+    if (this.is_up) data.is_up = 1;
     like.details({
-      id: this.$Route.query.id
+      id: this.$Route.query.id,
+      ...data,
     }).then(res => {
       this.info = res;
       this.$set(this.info, 'rec_list', res.rec_list);

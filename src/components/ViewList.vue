@@ -9,6 +9,7 @@
             :vote="item.pro_type==1 || vote"
             tag="left"
             :index="index"
+            :is-up="isUp"
             @height="onHeight"
             @play="onClick"
             @add-vote="(item.pro_type==1 || vote) ? addVote(leftList, index) : null"
@@ -20,6 +21,7 @@
             :key="index"
             :params="item"
             :vote="item.pro_type==1 || vote"
+            :is-up="isUp"
             @height="onHeight"
             @play="onClick"
             @add-vote="(item.pro_type==1 || vote) ? addVote(rightList, index) : null"
@@ -28,7 +30,7 @@
         ></water-fall>
       </view>
     </view>
-    <view v-if="ajax.loadTxt" class="load-txt">{{ajax.loadTxt}}</view>
+    <view v-if="fetch && ajax.loadTxt" class="load-txt">{{ajax.loadTxt}}</view>
     <view v-if="!ajax.loadTxt && !leftList.length && !rightList.length" class="fs28 text-color-gray">暂无数据</view>
   </view>
 </template>
@@ -54,6 +56,10 @@ export default {
       default: () => ([]),
     },
     vote: {
+      type: Boolean,
+      default: false,
+    },
+    isUp: {
       type: Boolean,
       default: false,
     },
