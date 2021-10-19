@@ -1,30 +1,22 @@
 <template>
-  <view-container ref="container" src-height="337rpx" :banner="banner" :back="true" custom-class="py0" :title="query.title">
-    <!-- 项目分类   -->
-    <view class="flex flex-column" :style="[{height: 'calc(100vh - 337rpx - '+ barH +'px)'}]">
-      <view class="flex-1" />
-      <template v-for="(item, index) in list">
-        <view
-            :key="index + 'a'"
-            class="sport-item2 flex justify-center align-center flex-none"
-            @click="handlerSport(item)"
-            :key="index"
-        >
-          <view class="z1">{{ item.s_name }}</view>
-          <al-image class="absolute z0" width="609rpx" height="240rpx" :src="item.s_thumb"/>
-        </view>
-        <view :key="index + 'b'" class="flex-1" />
-      </template>
-    </view>
+  <view-container ref="container" src-height="337rpx" :banner="banner" :back="true" :title="query.title">
+    <!-- 项目分类   :style="[{height: 'calc(100vh - 337rpx - '+ barH +'px)'}]" -->
+      <view
+          v-for="(item, index) in list"
+          :key="index"
+          class="sport-item2 flex justify-center"
+          @click.native="handlerSport(item)"
+      >
+        <view class="z1">{{ item.s_name }}</view>
+        <al-image class="absolute z0" width="668rpx" height="376rpx" :src="item.s_thumb" @click.native="handlerSport(item)"/>
+      </view>
   </view-container>
 </template>
 
 <script>
 import { game } from '@/api';
-import ShareMixin from "@/mixins/share";
 export default {
   name: "list",
-  mixins: [ShareMixin],
   data() {
     return {
       query: {},
@@ -44,6 +36,7 @@ export default {
   },
   methods: {
     handlerSport(item) {
+      console.log('item', item);
       if (item.is_open === 1) {
         uni.showToast({title: `该游戏暂未开放！`, icon: 'none', duration: 3000, mask: true});
         return;

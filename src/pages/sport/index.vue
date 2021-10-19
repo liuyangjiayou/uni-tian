@@ -13,7 +13,7 @@
     <view class="mt30">简介</view>
     <rich-text :nodes="info.pro_desc"></rich-text>
     <divider height="1rpx" />
-    <template v-if="query.pro_type == 2">
+    <template v-if="query.pro_type == 2 || query.pro_type == 1">
       <view class="flex justify-start py30">
         <al-image v-if="info.province_video" width="335rpx" height="171rpx" src="/static/images/sheng.png" @click.native="toProvin" class="mr20" />
         <al-image width="335rpx" height="171rpx" src="/static/images/shi.png" @click.native="toCity" />

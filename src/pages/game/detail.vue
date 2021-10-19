@@ -29,7 +29,24 @@
         </view>
       </view>
       <divider height="1rpx" />
-      <view class="flex flex-wrap pt20 pb30">
+      <view class="mb30">
+        <view class="flex fs24 mt50 pb8" style="color: #b1b1b1;">
+          <view class="flex-1">排名</view>
+          <view class="flex-3">队伍名</view>
+          <view class="flex-2">单位名</view>
+          <view class="flex-1">分数</view>
+        </view>
+        <view v-for="(item, index) in info.ranks_ranking" :key="index" class="flex py12 align-center">
+          <view :class="['flex-1 text-cut fs0' ]">
+            <i :class="'team-index fs24' + ' team-'+ (item.rownum)">{{item.rownum}}</i>
+          </view>
+          <view class="flex-3 text-cut fs24">{{item.ranks_name}}</view>
+          <view class="flex-2 text-cut fs24">{{item.ranks_org_name}}</view>
+          <view class="flex-1 text-cut fs24">{{item.rank_score}}</view>
+        </view>
+      </view>
+<!--      <view class="flex flex-wrap pt20 pb30">
+
         <view v-for="(item, index) in info.ranks_ranking" :key="index" class="flex flex-column align-center mt20" style="width: 33%">
           <view class="team-pic relative">
             <al-image width="100rpx" height="100rpx" :src="require('@/static/images/team-pic.png')" />
@@ -37,7 +54,7 @@
           </view>
           <view class="fs30 mt10">{{item.ranks_name}}</view>
         </view>
-      </view>
+      </view>-->
       <template v-if="info.my_rank && info.my_rank.length">
         <view class="flex justify-between mt10 mb20">
           <view class="flex align-center">
@@ -81,8 +98,11 @@ export default {
   },
   onShow(){
     game.detail({id: this.query.id}).then(res => {
+      this.shareInfo = {
+        title: res.s_name,
+        imageUrl: res.s_thumb,
+      };
       this.info = res;
-      this.shareInfo.title = this.info.s_name;
     });
   },
   methods: {

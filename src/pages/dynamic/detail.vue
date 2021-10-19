@@ -22,13 +22,17 @@ export default {
   mixins: [Share],
   data(){
     return {
-      details: {}
+      details: {},
     }
   },
   onLoad(){
     getDynamicDetail({
       id: this.$Route.query.id
     }).then(res => {
+      this.shareInfo = {
+        title: res.info.title,
+        imageUrl: '/static/images/bg1.png',
+      };
       res.info.content = res.info.content.replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
           .replace(/<p>/ig, '<p style="font-size: 15px; line-height: 25px;">')
           .replace(/<img([\s\w"-=\/\.:;]+)((?:(height="[^"]+")))/ig, '<img$1')

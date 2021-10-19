@@ -23,7 +23,7 @@ export default{
     },
     onShareTimeline() {
         return {
-            title:this.shareInfo.title,
+            ...this.shareInfo,
             path:this.$Route.path + this.queryString,
             // imageUrl:this.shareInfo.imageUrl,
             // desc:this.shareInfo.desc,
@@ -45,7 +45,7 @@ export default{
     },
     onShareAppMessage(res) {
         return {
-            title:this.shareInfo.title,
+            ...this.shareInfo,
             path:this.$Route.path + this.queryString,
             // imageUrl:this.shareInfo.imageUrl,
             // desc:this.shareInfo.desc,

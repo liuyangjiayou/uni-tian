@@ -5,18 +5,18 @@
     </view>
     <view>
       <view class="flex fs24 mt50 pb8" style="color: #b1b1b1;">
-        <span class="flex-1">排名</span>
-        <span class="flex-3">队伍名</span>
-        <span class="flex-2">单位名</span>
-        <span class="flex-1">分数</span>
+        <view class="flex-1">排名</view>
+        <view class="flex-3">队伍名</view>
+        <view class="flex-2">单位名</view>
+        <view class="flex-1">分数</view>
       </view>
       <view v-for="(item, index) in list" :key="index" class="flex py12 align-center">
-        <span :class="['flex-1 text-cut fs0' ]"><i :class="'team-index fs24' + ' team-'+ (item.rownum)">
+        <view :class="['flex-1 text-cut fs0' ]"><i :class="'team-index fs24' + ' team-'+ (item.rownum)">
           {{item.rownum}}
-        </i></span>
-        <span class="flex-3 text-cut fs24">{{item.ranks_name}}</span>
-        <span class="flex-2 text-cut fs24">{{item.ranks_org_name}}</span>
-        <span class="flex-1 text-cut fs24">{{item.rank_score}}</span>
+        </i></view>
+        <view class="flex-3 text-cut fs24">{{item.ranks_name}}</view>
+        <view class="flex-2 text-cut fs24">{{item.ranks_org_name}}</view>
+        <view class="flex-1 text-cut fs24">{{item.rank_score}}</view>
       </view>
     </view>
   </view-container>
@@ -75,29 +75,6 @@ export default {
   background-size: 474rpx 45rpx;
   text-align: center;
 }
-.team-index {
-  height: 51rpx;
-  width: 51rpx;
-  text-align: center;
-  display: inline-block;
-  text-align: center;
-  line-height: 51rpx;
-  &.team-1 {
-    background: url("~@/static/images/team1.png") left center no-repeat;
-    background-size: 51rpx 51rpx;
-    font-size: 0;
 
-  }
-  &.team-2 {
-    background: url("~@/static/images/team2.png") left center no-repeat;
-    background-size: 51rpx 51rpx;
-    font-size: 0;
-  }
-  &.team-3 {
-    background: url("~@/static/images/team3.png") left center no-repeat;
-    background-size: 51rpx 51rpx;
-    font-size: 0;
-  }
-}
 
 </style>

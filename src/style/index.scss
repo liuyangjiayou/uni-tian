@@ -85,9 +85,34 @@
   }
 }
 .sport-item2 {
-  height: 240rpx;
+  height: 376rpx;
   @extend .sport-item;
   & + .sport-item2{
-    margin-top: 0;
+    margin-top: 30rpx;
+  }
+}
+
+.team-index {
+  height: 51rpx;
+  width: 51rpx;
+  text-align: center;
+  display: inline-block;
+  text-align: center;
+  line-height: 51rpx;
+  &.team-1 {
+    background: url("~@/static/images/team1.png") left center no-repeat;
+    background-size: 51rpx 51rpx;
+    font-size: 0;
+
+  }
+  &.team-2 {
+    background: url("~@/static/images/team2.png") left center no-repeat;
+    background-size: 51rpx 51rpx;
+    font-size: 0;
+  }
+  &.team-3 {
+    background: url("~@/static/images/team3.png") left center no-repeat;
+    background-size: 51rpx 51rpx;
+    font-size: 0;
   }
 }

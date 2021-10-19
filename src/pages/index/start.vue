@@ -1,8 +1,7 @@
 <template>
   <view>
     <al-image width="100%" height="100%" class="start" :src="info.start_the_thumb" />
-
-<!--    <custom-audio v-if="info.start_the_music !== 'null' && info.start_the_music" ref="audio" loop autoplay :src="info.start_the_music" :style="[{top: barH + 'px'}]" class="relative audio"/>-->
+    <custom-audio v-if="info.start_the_music !== 'null' && info.start_the_music" ref="audio" loop autoplay :src="info.start_the_music" :style="[{top: barH + 'px'}]" class="relative audio"/>
     <al-image width="278rpx" height="79rpx" src="/static/images/enter.png" @click.native="enter" class="enter" />
     <al-image width="72rpx" height="72rpx" src="/static/images/team-pic.png" class="logo" :style="[{top: barH + 'px'}]" />
   </view>

@@ -24,10 +24,15 @@ export default function (options) {
                 if (data.code === 0) {
                     return resolve(data.data);
                 }
-                uni.showToast({
-                    title: data.msg,
-                    duration: 3000, mask: true
-                });
+                setTimeout(() => {
+                    uni.showToast({
+                        title: data.msg,
+                        icon: 'error',
+                        duration: 3000,
+                        mask: true
+                    });
+                })
+
                 reject({ data, statusCode, header, cookies})
             },
             // 请求失败

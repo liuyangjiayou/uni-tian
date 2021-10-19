@@ -2,7 +2,6 @@
 	<view-container ref="container" :back="false" title="赛事" title-align="justify-center">
     <template #header>
       <!-- 轮播图   -->
-      {{ banner.length }}
       <swiper
           v-if="banner.length"
           class="swiper"
@@ -44,8 +43,9 @@
 import { launchOrload} from "../../utils/mixins";
 import { mapGetters } from 'vuex';
 import { index, check } from '@/api';
+import ShareMixin from "@/mixins/share";
 export default {
-  mixins: [launchOrload],
+  mixins: [launchOrload, ShareMixin],
   data() {
     return {
       banner: [],
@@ -58,6 +58,11 @@ export default {
   },
   onLoad() {
     index().then(res => {
+      this.shareInfo.title = '云上运动会';
+      if (res.banner?.length) {
+        this.shareInfo.imageUrl = res.banner[0].image;
+      }
+
       this.pro_list = res.pro_list;
       this.nav = res.nav;
       this.banner = res.banner;
@@ -65,27 +70,6 @@ export default {
   },
   computed: {
     ...mapGetters(['token']),
-  },
-  onShareAppMessage() {
-    uni.share({
-      provider: uni.getProvider({ service: 'share' }),
-      title: "'云'上运动会",
-      path:'/pages/index/index',
-      imageUrl: '',
-      desc: '',
-      content:'',
-      success(res){
-        uni.showToast({
-          title:'分享成功'
-        })
-      },
-      fail(res){
-        uni.showToast({
-          title:'分享失败',
-          icon:'none'
-        })
-      }
-    })
   },
   methods: {
     // 点击轮播图跳转

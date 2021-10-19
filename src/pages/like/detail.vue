@@ -57,9 +57,10 @@
 <script>
 import { like } from '@/api';
 import VoteMixins from "@/mixins";
+import ShareMixin from "@/mixins/share";
 export default {
   name: "detail",
-  mixins: [VoteMixins],
+  mixins: [VoteMixins, ShareMixin],
   data() {
     return {
       info: {
@@ -78,6 +79,10 @@ export default {
       id: this.$Route.query.id,
       ...data,
     }).then(res => {
+      this.shareInfo.title = res[this.is_up?'ranks_video_name_up':'ranks_video_name'];
+      if (res[this.is_up?'ranks_video_thumb_up':'ranks_video_thumb']) {
+        this.shareInfo.imageUrl = res[this.is_up?'ranks_video_thumb_up':'ranks_video_thumb'];
+      }
       this.info = res;
       this.$set(this.info, 'rec_list', res.rec_list);
       console.log(res)

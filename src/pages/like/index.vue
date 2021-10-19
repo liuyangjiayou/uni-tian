@@ -29,27 +29,6 @@ export default {
       this.banner = res.banner;
     });
   },
-  onShareAppMessage() {
-    uni.share({
-      provider: uni.getProvider({ service: 'share' }),
-      title: "'云'上运动会",
-      path:'/pages/like/index',
-      imageUrl: '',
-      desc: '',
-      content:'',
-      success(res){
-        uni.showToast({
-          title:'分享成功'
-        })
-      },
-      fail(res){
-        uni.showToast({
-          title:'分享失败',
-          icon:'none'
-        })
-      }
-    })
-  },
   methods: {
     click(item) {
       this.$Router.push({path: '/pages/like/list', query: { sport: item.id }});
