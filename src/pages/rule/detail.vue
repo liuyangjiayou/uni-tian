@@ -3,7 +3,15 @@
     <view class="art-title fs34 text-bold">
       <text>{{info.pro_name}}</text>
     </view>
-    <view class="dynamic-detail-content" v-html="info.pro_rule" />
+    <view v-if="info['gz_url']" class="fs0 mt10">
+      <video
+          id="myVideo"
+          :src="info['gz_url']"
+          controls
+          style="width: 100%;"
+      />
+    </view>
+    <rich-text :nodes="info.pro_rule"></rich-text>
   </view-container>
 </template>
 
@@ -19,7 +27,15 @@ export default {
   onLoad() {
     rule.detail({id: this.$Route.query.id}).then(res => {
       this.info = res;
-    });
+      this.info.pro_rule = this.info.pro_rule
+          .replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+          .replace(/<p([\s\w"=\/\.:;]+)((?:(class="[^"]+")))/ig, '<p')
+          .replace(/<p>/ig, '<p style="line-height: 1.5; text-indent: 20px" class="p_class">')
+          .replace(/<span([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<span')
+          .replace(/<span([\s\w"=\/\.:;]+)((?:(class="[^"]+")))/ig, '<span')
+          .replace(/<span>/ig, '<span style="font-size: 14px">')
+      console.log(this.info.pro_rule)
+    })
   },
 }
 </script>

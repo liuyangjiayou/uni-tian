@@ -265,3 +265,26 @@ export const distance = function (data) {
         data,
     })
 };
+
+// 获取答题
+export const getStepAnswer = function () {
+    return http({
+        url: '/geme/exam/list',
+        method: 'POST',
+        data: {
+            is_dk: 1
+        }
+    })
+};
+// 开始答题
+export const subAnswer = function ({ answer, test_id }) {
+    return http({
+        url: '/step/answer',
+        method: 'POST',
+        data: {
+            answer: answer,
+            test_id,
+        }
+    })
+};
+

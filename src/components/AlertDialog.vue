@@ -9,8 +9,8 @@
         <slot />
       </view>
       <view class="wrap-btn flex align-center">
-        <view class="prev flex align-center justify-center">{{ prev }}</view>
-        <view class="next flex align-center justify-center">{{ next }}</view>
+        <view class="prev flex align-center justify-center" @click="handlerSub">{{ prev }}</view>
+        <view class="next flex align-center justify-center" @click="handlerNext">{{ next }}</view>
       </view>
       <view class="close-image">
         <al-image width="48rpx" height="48rpx" src="/static/images/answer-close.png" @click.native="close" />
@@ -40,6 +40,13 @@ export default {
     close(){
       this.$emit('input', false)
       this.$emit('close')
+    },
+    handlerNext() {
+      this.$emit('input', false)
+      this.$emit('Next')
+    },
+    handlerSub() {
+      this.$emit('sub')
     }
   }
 }
