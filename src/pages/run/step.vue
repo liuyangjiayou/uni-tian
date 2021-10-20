@@ -1,5 +1,5 @@
 <template>
-  <view-container ref="container" back title="今日步数">
+  <view-container ref="container" back title="云端健步走1111">
     <view>
       <!-- 姓名 -->
       <view class="name-info flex align-center">
@@ -19,7 +19,7 @@
             <view class="day-text">累计打卡/天</view>
           </view>
           <view>
-            <button v-if="data.left_dk_times === 0" class="sign-btn flex align-center justify-center" @click="handlerStep">立即签到</button>
+            <button :class="['sign-btn flex align-center justify-center', data.left_dk_times === 0 ? 'disabled' : '']" @click="handlerStep">立即签到</button>
           </view>
         </view>
       </view>
@@ -40,20 +40,21 @@
         </view>
       </view>
     </view>
-    <alert-dialog v-model="dialogVisible" @sub="handlerSub" @next="handlerNext">
-      <view v-for="(item, index) in answerData" class="answer-content">
-        <view v-if="index === answerIndex" :key="`${item.id}_${+new Date()}`">
+    <alert-dialog v-model="dialogVisible" :prev="answerStatus === 1 ? '确定' : '下一题'" @sub="handlerSub" @next="handlerNext" @close="handlerClose">
+      <view v-for="(item, index) in answerData" class="answer-content" :key="`${item.id}_${+new Date()}`">
+        <view v-if="index === answerIndex">
           <view class="title flex justify-center align-center">
             <text>第</text>
             <text>{{ index+1 }}</text>
             <text>/{{ answerData.length }}题</text>
           </view>
           <view class="answer-text">
-            {{ item.item_nasme }}
+            {{ item.type === 1 ? '【单选】' : '【多选】' }} {{ item.item_nasme }}
           </view>
-          <view v-for="item2 in item.item_da" :key="item2.id" class="answer-list" @click="handlerClick(`${item2.id}`)">
+          <view v-for="item2 in item.item_da" :key="item2.id" class="answer-list" @click="handlerClick(`${item2.id}`, `${item.type}`)">
             <view :class="answerResult.includes(item2.id)? 'active' : ''" >{{ item2.id }}. {{ item2.name }}</view>
           </view>
+          <view v-if="answerTips" :class="['tips', answerTips.status === 1 ? 'error'  : '']">{{ answerTips.tips }}</view>
         </view>
       </view>
     </alert-dialog>
@@ -71,38 +72,48 @@ export default {
       data: {
         my_group: []
       },
+      anwsertime: 30,
+      cloneAnwsertime: 30,
       answerData: [],
       answerResult: [],
       answerIndex: 0,
+      answerStatus: 1,
+      answerTips: {
+        tips: '',
+        status: 0,
+      },
     }
   },
   onLoad(){
-    uni.login({
-      success: (res) => {
-        const { code } = res;
-        uni.authorize({
-          scope: 'scope.werun',
-          success: (e) => {
-            if (e.errMsg === 'authorize:ok') {
-              wx.getWeRunData({
-                success: (run) => {
-                  const { encryptedData, iv } = run;
-                  getRun({
-                    code,
-                    encryptedData,
-                    iv,
-                  }).then(res => {
-                    this.data = res
-                  })
-                }
-              })
-            }
-          }
-        })
-      }
-    });
+    this.loginStep()
   },
   methods: {
+    loginStep() {
+      uni.login({
+        success: (res) => {
+          const { code } = res;
+          uni.authorize({
+            scope: 'scope.werun',
+            success: (e) => {
+              if (e.errMsg === 'authorize:ok') {
+                wx.getWeRunData({
+                  success: (run) => {
+                    const { encryptedData, iv } = run;
+                    getRun({
+                      code,
+                      encryptedData,
+                      iv,
+                    }).then(res => {
+                      this.data = res
+                    })
+                  }
+                })
+              }
+            }
+          })
+        }
+      });
+    },
     // 下一题
     handlerSub() {
       if (!this.answerResult.toString()) {
@@ -111,33 +122,82 @@ export default {
           icon: 'none'
         })
       }
-      const answer = this.answerData[this.answerIndex]
-      subAnswer({
-        answer: answer.type === 1 ? this.answerResult.toString() : this.answerResult.join('|'),
-        test_id: answer.id,
-      }).then((res) => {
+      // 当前是确定的时候
+      if (this.answerStatus === 1) {
+        const answer = this.answerData[this.answerIndex]
+        subAnswer({
+          answer: answer.type === 1 ? this.answerResult.toString() : this.answerResult.join('|'),
+          test_id: answer.id,
+          type: 1,
+        }).then((res) => {
+          this.answerTips.tips = res.msg;
+          this.answerTips.status = res.status;
+          this.answerStatus = 2;
+        })
+        return
+      }
+
+      // 当前是下一题的时候
+      if (this.answerStatus !== 1) {
         this.answerResult = [];
+        this.answerTips = {
+          tips: '',
+          status: 0,
+        }
         if (this.answerData[this.answerIndex + 1]) {
+          this.answerStatus = 1;
           this.answerIndex++;
         }else {
           this.dialogVisible = false
           this.answerData = [];
           this.answerIndex = 0;
+          this.loginStep()
         }
-      })
+        return
+      }
     },
-    // 跳过
-    handlerNext() {
+    // 点击关闭的时候
+    handlerClose() {
+      // 当前是下一题的时候
+      this.answerTips = {
+        tips: '',
+        status: 0,
+      }
       this.dialogVisible = false
       this.answerData = [];
       this.answerIndex = 0;
+      this.answerResult = [];
+      this.answerStatus = 1
+      this.loginStep()
+    },
+    // 跳过
+    handlerNext() {
+      this.answerTips = {
+        tips: '',
+        status: 0,
+      }
+      this.answerResult = [];
+      if (this.answerData[this.answerIndex + 1]) {
+        this.answerIndex++;
+      }else {
+        this.dialogVisible = false
+        this.answerData = [];
+        this.answerIndex = 0;
+        this.loginStep()
+      }
+      this.answerStatus = 1
     },
     // 选择题
-    handlerClick(row) {
-      if(this.answerResult.includes(row)) {
-        this.answerResult = this.answerResult.filter(item => item !== row)
+    handlerClick(id, type) {
+      if (this.answerStatus !== 1) return
+      if (Number(type) === 1) {
+        this.answerResult = [id];
       } else {
-        this.answerResult.push(row);
+        if(this.answerResult.includes(id)) {
+          this.answerResult = this.answerResult.filter(item => item !== id)
+        } else {
+          this.answerResult.push(id);
+        }
       }
     },
     handlerRun(){
@@ -149,8 +209,11 @@ export default {
       // #endif
     },
     handlerStep(){
+      if (this.data.left_dk_times === 0) return false;
       getStepAnswer().then(res => {
-        this.answerData = res;
+        this.answerData = res.data;
+        this.anwsertime = res.anwsertime;
+        this.data.left_dk_times = this.data.left_dk_times--
       })
       this.dialogVisible = true
     }
@@ -202,6 +265,18 @@ export default {
   top: 290rpx;
   width: 100%;
 }
+.tips{
+  padding: 0 5rpx;
+  font-size: 24rpx;
+  line-height: 62rpx;
+  background: #e8f9ff;
+  color: #0087b8;
+  border-radius: 3rpx;
+}
+.tips.error{
+  background: #e9e9e9;
+  color: #000;
+}
 .step-sign .sign-btn{
   margin-left: 174rpx;
   width: 220rpx;
@@ -211,6 +286,9 @@ export default {
   color: #fff;
   background: #22b7ef;
   border-radius: 30rpx;
+}
+.step-sign .sign-btn.disabled{
+  background-color: #a0a0a0;
 }
 .step-sign .day, .day-text{
   color: #fff;

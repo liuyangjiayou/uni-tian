@@ -8,7 +8,7 @@
           @click.native="handlerSport(item)"
       >
         <view class="z1">{{ item.s_name }}</view>
-        <al-image class="absolute z0" width="668rpx" height="376rpx" :src="item.s_thumb" @click.native="handlerSport(item)"/>
+        <al-image class="absolute z0" width="667rpx" height="255rpx" round="24rpx" :src="item.s_thumb" @click.native="handlerSport(item)"/>
       </view>
   </view-container>
 </template>

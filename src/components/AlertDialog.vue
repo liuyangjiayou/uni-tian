@@ -9,7 +9,7 @@
         <slot />
       </view>
       <view class="wrap-btn flex align-center">
-        <view class="prev flex align-center justify-center" @click="handlerSub">{{ prev }}</view>
+        <view  class="prev flex align-center justify-center" @click="handlerSub">{{ prev }}</view>
         <view class="next flex align-center justify-center" @click="handlerNext">{{ next }}</view>
       </view>
       <view class="close-image">
@@ -29,12 +29,16 @@ export default {
     },
     prev: {
       type: String,
-      default: '下一题',
+      default: '确定',
     },
     next: {
       type: String,
       default: '跳过',
     },
+    subStatus: {
+      type: Number,
+      default: 1,
+    }
   },
   methods:{
     close(){
@@ -42,8 +46,7 @@ export default {
       this.$emit('close')
     },
     handlerNext() {
-      this.$emit('input', false)
-      this.$emit('Next')
+      this.$emit('next')
     },
     handlerSub() {
       this.$emit('sub')
@@ -71,7 +74,7 @@ export default {
 }
 .content{
   position: absolute;
-  top: 400rpx;
+  top: 350rpx;
   left: 50%;
   width: 490rpx;
   margin-left: -225rpx;
