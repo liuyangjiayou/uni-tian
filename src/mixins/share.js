@@ -29,17 +29,27 @@ export default{
             // desc:this.shareInfo.desc,
             // content:this.shareInfo.content,
             success(res){
-                uni.showToast({
-                    title:'分享成功',
-                    duration: 3000, mask: true
-                })
+                // uni.showToast({
+                //     title:'分享成功',
+                //     duration: 3000, mask: true
+                // })
+                uni.showModal({
+                    title: '提示',
+                    content: `分享成功！`,
+                    showCancel: false
+                });
             },
             fail(res){
-                uni.showToast({
-                    title:'分享失败',
-                    icon:'none',
-                    duration: 3000, mask: true
-                })
+                uni.showModal({
+                    title: '提示',
+                    content: `分享失败！`,
+                    showCancel: false
+                });
+                // uni.showToast({
+                //     title:'分享失败',
+                //     icon:'none',
+                //     duration: 3000, mask: true
+                // })
             }
         }
     },
@@ -51,17 +61,28 @@ export default{
             // desc:this.shareInfo.desc,
             // content:this.shareInfo.content,
             success(res){
-                uni.showToast({
-                    title:'分享成功',
-                    duration: 3000, mask: true
-                })
+                // uni.showToast({
+                //     title:'分享成功',
+                //     duration: 3000, mask: true
+                // })
+                uni.showModal({
+                    title: '提示',
+                    content: `分享成功！`,
+                    showCancel: false
+                });
+
             },
             fail(res){
-                uni.showToast({
-                    title:'分享失败',
-                    icon:'none',
-                    duration: 3000, mask: true
-                })
+                uni.showModal({
+                    title: '提示',
+                    content: `分享失败！`,
+                    showCancel: false
+                });
+                // uni.showToast({
+                //     title:'分享失败',
+                //     icon:'none',
+                //     duration: 3000, mask: true
+                // })
             }
         }
     }

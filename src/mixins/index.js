@@ -37,11 +37,10 @@ export default {
                     uni.setStorageSync('vote', {time: Date.now(), count: currentCount + 1});
                     console.log('投票成功，用掉次数', currentCount + 1);
                     this.$emit('add-vote');
-                    uni.showToast({
-                        title: '投票成功',
-                        icon: 'success',
-                        duration: 3000,
-                        mask: true
+                    uni.showModal({
+                        title: '提示',
+                        content: `投票成功！`,
+                        showCancel: false
                     });
                     resolve(currentCount + 1);
                 }).finally(() => {

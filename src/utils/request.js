@@ -25,11 +25,16 @@ export default function (options) {
                     return resolve(data.data);
                 }
                 setTimeout(() => {
-                    uni.showToast({
-                        title: data.msg,
-                        icon: 'error',
-                        duration: 3000,
-                        mask: true
+                    // uni.showToast({
+                    //     title: data.msg,
+                    //     icon: 'error',
+                    //     duration: 3000,
+                    //     mask: true
+                    // });
+                    uni.showModal({
+                        title: '提示',
+                        content: data.msg,
+                        showCancel: false
                     });
                 })
 

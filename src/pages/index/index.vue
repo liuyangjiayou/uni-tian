@@ -27,6 +27,7 @@
       </view>
     </template>
     <!-- 项目分类   -->
+    <official-account>1111</official-account>
     <view
         v-for="(item, index) in pro_list"
         class="sport-item"

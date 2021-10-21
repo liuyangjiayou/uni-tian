@@ -179,11 +179,16 @@ export default {
     },
     getCode() {
       if (!this.formData.phone) {
-        uni.showToast({
-          icon: 'none',
-          title: '请输入手机号码',
-          duration: 3000, mask: true
+        uni.showModal({
+          title: '提示',
+          content: `请输入手机号码！`,
+          showCancel: false
         });
+        // uni.showToast({
+        //   icon: 'none',
+        //   title: '请输入手机号码',
+        //   duration: 3000, mask: true
+        // });
         return;
       }
       if (this.send.dura > 0) return;
@@ -195,10 +200,15 @@ export default {
           this.send.dura = this.send.dura - 1;
         }, 1000);
       }).catch(() => {
-        uni.showToast({
-          icon: 'none',
-          title: '发送失败！',
-          duration: 3000, mask: true
+        // uni.showToast({
+        //   icon: 'none',
+        //   title: '发送失败！',
+        //   duration: 3000, mask: true
+        // });
+        uni.showModal({
+          title: '提示',
+          content: `发送失败！`,
+          showCancel: false
         });
       });
     },
