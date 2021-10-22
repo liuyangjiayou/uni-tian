@@ -59,7 +59,7 @@ export default {
   },
   onLoad() {
     index().then(res => {
-      this.shareInfo.title = '云上运动会';
+      this.shareInfo.title = '河北省职工“云”上运动会';
       if (res.banner?.length) {
         this.shareInfo.imageUrl = res.banner[0].image;
       }

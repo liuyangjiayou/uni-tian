@@ -21,7 +21,7 @@ export default {
                     // #ifdef H5
                     uni.showModal({
                         title: '提示',
-                        content: `您可在职工云上运动会小程序再进行${voteMax}次投票！`,
+                        content: `您可在职工“云”上运动会小程序再进行${voteMax}次投票！`,
                         showCancel: false
                     });
                     // #endif
