@@ -78,7 +78,7 @@
     "mp-qq" : {
         "usingComponents" : true
     }
-//	"h5" : {
-//		"publicPath" : "https://mydh.hebei.com.cn/h5/"
-//	}
+	//	"h5" : {
+	//		"publicPath" : "/h5/"
+	//	}
 }

@@ -1,5 +1,5 @@
 <template>
-  <view-container ref="container" back title="云端健步走1111">
+  <view-container ref="container" back title="云端健步走">
     <view>
       <!-- 姓名 -->
       <view class="name-info flex align-center">
@@ -9,9 +9,15 @@
       <!-- 步数信息 -->
       <view class="step-info">
         <al-image width="690rpx" height="418rpx" round="8" class="image" src="/static/images/run-bg.png" />
-        <view class="step flex align-end justify-center">
-          <text class="num">{{ data.step }}</text>
-          <text class="num-text">步</text>
+        <view class="step flex align-end justify-between">
+          <view class="flex flex-column align-center">
+            <text class="num">{{ data.step }}</text>
+            <text class="num-text">团队今日步数</text>
+          </view>
+          <view class="flex flex-column align-center">
+            <text class="num">{{ data.user_all_scores }}</text>
+            <text class="num-text">团队今日分数</text>
+          </view>
         </view>
         <view class="step-sign flex align-center justify-center">
           <view class="flex flex-column align-center">
@@ -19,9 +25,14 @@
             <view class="day-text">累计打卡/天</view>
           </view>
           <view>
-            <button :class="['sign-btn flex align-center justify-center', data.left_dk_times === 0 ? 'disabled' : '']" @click="handlerStep">立即签到</button>
+            <button :class="['sign-btn flex align-center justify-center', data.left_dk_times === 0 ? 'disabled' : 'active']" @click="handlerStep">立即签到</button>
           </view>
         </view>
+      </view>
+      <view class="notice">{{ data.jbz_bz }}</view>
+      <view class="change-btn flex align-center justify-center">
+        <view :class="['next-btn flex align-center justify-center', teamDataType === 1 ? 'active' : '']" @click="handlerTeamData(1)">队员今日步数</view>
+        <view :class="['next-btn flex align-center justify-center', teamDataType === 2 ? 'active' : '']" @click="handlerTeamData(2)">队员今日分数</view>
       </view>
       <!-- 队伍信息 -->
       <view class="team-info">
@@ -30,7 +41,7 @@
           <view v-for="item in data.my_group" class="team-person flex flex-column align-center">
             <al-image width="70rpx" height="70rpx" round="50%" :src="item.avatar" />
             <view class="name">{{ item.user_name }}</view>
-            <view class="step">{{ item.user_steps }}</view>
+            <view class="step">{{ teamDataType === 1 ? item.user_steps : item.user_scores }}</view>
           </view>
         </view>
       </view>
@@ -70,10 +81,12 @@ export default {
     return {
       dialogVisible: false,
       data: {
-        my_group: []
+        my_group: [],
+        left_dk_times: 0
       },
-      anwsertime: 30,
-      cloneAnwsertime: 30,
+      teamDataType: 1,
+      answertime: 30,
+      cloneanswertime: 30,
       answerData: [],
       answerResult: [],
       answerIndex: 0,
@@ -88,6 +101,11 @@ export default {
     this.loginStep()
   },
   methods: {
+    // 切换队伍信息
+    handlerTeamData(num) {
+      this.teamDataType = num;
+    },
+    // 重置步数
     loginStep() {
       uni.login({
         success: (res) => {
@@ -128,7 +146,7 @@ export default {
         subAnswer({
           answer: answer.type === 1 ? this.answerResult.toString() : this.answerResult.join('|'),
           test_id: answer.id,
-          type: 1,
+          type: 2,
         }).then((res) => {
           this.answerTips.tips = res.msg;
           this.answerTips.status = res.status;
@@ -212,7 +230,7 @@ export default {
       if (this.data.left_dk_times === 0) return false;
       getStepAnswer().then(res => {
         this.answerData = res.data;
-        this.anwsertime = res.anwsertime;
+        this.answertime = res.answertime;
         this.data.left_dk_times = this.data.left_dk_times--
       })
       this.dialogVisible = true
@@ -222,6 +240,25 @@ export default {
 </script>
 
 <style scoped>
+/* 注意 */
+.notice{
+  padding: 5rpx 15rpx;
+  font-size: 22rpx;
+}
+/* 切换按钮 */
+.change-btn .next-btn{
+  margin: 20rpx 40rpx 20rpx 0;
+  width: max-content;
+  padding: 10rpx 10rpx;
+  height: max-content;
+  line-height: max-content;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+  background: #e0e0e0;
+}
+.change-btn .next-btn.active{
+  background: #1eb9f2;
+}
 /* 姓名 */
 .name-info{
   margin-bottom: 36rpx;
@@ -230,7 +267,6 @@ export default {
 /* 步数 */
 .step-info{
   position: relative;
-  margin-bottom: 52rpx;
   width: 690rpx;
   height: 418rpx;
 }
@@ -244,19 +280,21 @@ export default {
   position: absolute;
   top: 94rpx;
   left: 0;
+  padding: 0 140rpx;
+  box-sizing: border-box;
   width: 100%;
   z-index: 1;
 }
 .step-info .num{
   font-weight: 700;
-  font-size: 76rpx;
+  font-size: 40rpx;
   color: #fff;
-  font-family: 'SimSun'
+  /*font-family: 'SimSun'*/
 }
 .step-info .num-text{
   margin-left: 16rpx;
   padding-bottom: 14rpx;
-  font-size: 34rpx;
+  font-size: 24rpx;
   color: #fff;
 }
 /* 累计天数 */
@@ -284,11 +322,13 @@ export default {
   line-height: 60rpx;
   font-size: 28rpx;
   color: #fff;
-  background: #22b7ef;
   border-radius: 30rpx;
 }
 .step-sign .sign-btn.disabled{
   background-color: #a0a0a0;
+}
+.step-sign .sign-btn.active{
+  background: #22b7ef;
 }
 .step-sign .day, .day-text{
   color: #fff;
@@ -301,7 +341,7 @@ export default {
 }
 /* 队伍信息 */
 .team-info{
-  padding: 0 0 67rpx;
+  padding: 0 0 30rpx;
   overflow: hidden;
   width: 690rpx;
   max-width: 690rpx;
@@ -332,7 +372,7 @@ export default {
 }
 /* 继续点亮 */
 .next-btn{
-  margin-top: 92rpx;
+  margin-top: 60rpx;
   width: 592rpx;
   height: 84rpx;
   background: #22b7ef;

@@ -8,7 +8,7 @@
             :params="item"
             :vote="item.pro_type==1 || vote"
             tag="left"
-            :index="index"
+            :index="index*2+1"
             :is-up="isUp"
             @height="onHeight"
             @play="onClick"
@@ -26,10 +26,11 @@
             @play="onClick"
             @add-vote="(item.pro_type==1 || vote) ? addVote(rightList, index) : null"
             tag="right"
-            :index="index"
+            :index="(index+1)*2"
         ></water-fall>
       </view>
     </view>
+    <view v-if="!this.list.length" class="empty">暂无数据</view>
     <view v-if="fetch && ajax.loadTxt" class="load-txt">{{ajax.loadTxt}}</view>
     <view v-if="!ajax.loadTxt && !leftList.length && !rightList.length" class="fs28 text-color-gray">暂无数据</view>
   </view>
@@ -131,6 +132,7 @@ export default {
         this.ajax.load = false;
         this.ajax.loadTxt = '加载中';
         this.fetch({...this.params, page: this.ajax.page || 1, limit: this.limit || 20}).then(res => {
+          console.log(res.list, 'liuyang')
           this.addList(res.list);
         });
       } else {
@@ -227,6 +229,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.empty{
+  margin-top: 60rpx;
+  text-align: center;
+}
 .video-list {
   margin-right: -20rpx;
   padding-bottom: 20rpx;

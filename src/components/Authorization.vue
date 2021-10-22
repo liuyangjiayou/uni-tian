@@ -218,7 +218,6 @@ export default {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .primary {
   background-color: #22b7ef; height: 80rpx; line-height: 80rpx; font-size: 30rpx;
