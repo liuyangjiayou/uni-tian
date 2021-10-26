@@ -1,6 +1,7 @@
 <template>
-  <view-container src="/static/images/bg1.png" back share title="新闻详情" customClass="dynamic-detail shadow2">
-    <view class="fs34 my34">{{ details.title }}</view>
+  <!--src="/static/images/bg1.png"-->
+  <view-container back share title="新闻详情" customClass="dynamic-detail shadow2">
+    <view class="fs44 pb34 pt50">{{ details.title }}</view>
     <view class="mb40">
       <al-image width="24rpx" height="24rpx" src="/static/images/sc.png" @click.native="toProvin" />
       <text class="text-color-gray fs26 ml28">{{ details.publish_time }}</text>
