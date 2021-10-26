@@ -28,13 +28,13 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "赛事"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/run/run",
 			"style": {
-				"navigationBarTitleText": "云端健步走"
+				"navigationBarTitleText": "'云'端健步走"
 			}
 		},
 		{

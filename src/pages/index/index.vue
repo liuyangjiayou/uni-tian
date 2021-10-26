@@ -1,5 +1,5 @@
 <template>
-	<view-container ref="container" :back="false" title="赛事" title-align="justify-center">
+	<view-container ref="container" :back="false" title-align="justify-center">
     <template #header>
       <!-- 轮播图   -->
       <swiper

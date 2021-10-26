@@ -1,5 +1,5 @@
 <template>
-  <view-container ref="container" back title="云端健步走">
+  <view-container ref="container" back title="'云'端健步走">
     <view>
       <!-- 姓名 -->
       <view class="name-info flex align-center">

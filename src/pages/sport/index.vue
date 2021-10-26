@@ -11,7 +11,13 @@
     </view>
     <divider height="1rpx" />
     <view class="mt30">简介</view>
-    <rich-text :nodes="info.pro_desc"></rich-text>
+    <view :class="[flag ? 'view-detail' : '']">
+      <rich-text :nodes="info.pro_desc"></rich-text>
+    </view>
+    <view class="more-info flex align-center flex-column mt10" @click="flag = !flag">
+      <view>{{flag?'收起':'查看更多'}}</view>
+      <al-image width="18rpx" height="19rpx" :src="require('@/static/images/more'+(flag?'':'1')+'.png')" />
+    </view>
     <divider height="1rpx" />
     <template v-if="query.pro_type == 2 || query.pro_type == 1">
       <view class="flex justify-start py30">
@@ -38,7 +44,8 @@ export default {
 name: "index",
   data() {
     return {
-      show: false,
+      show: true,
+      flag: false,
       query: {},
       info: {},
       barH: 0,
@@ -84,10 +91,17 @@ name: "index",
 </script>
 
 <style scoped>
+.more-info {
+  color: #f16702;
+}
 .item-image{
   display: inline-block;
   margin-right: 14rpx;
   margin-bottom: 15rpx;
+}
+.view-detail{
+  max-height: 200rpx;
+  overflow: hidden;
 }
 .video-wrap {
   background-color: rgba(0,0,0,0.4);
