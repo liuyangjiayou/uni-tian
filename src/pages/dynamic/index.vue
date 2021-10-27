@@ -1,6 +1,6 @@
 <template>
   <view-container back title="赛事动态">
-    <view v-for="(item, index) in list" :key="index" class="flex mb60" @click="$Router.push({path: '/pages/dynamic/detail', query: { id: item.id } })">
+    <view v-for="(item, index) in list" :key="index" class="flex mb60" @click="handlerView(item)">
       <view class="flex-1 mr20 flex flex-column justify-between">
         <view class="fs34">{{item.title}}</view>
         <view class="fs26 text-color-gray">{{item.publish_time}}</view>
@@ -45,6 +45,13 @@ export default {
     });
   },
   methods: {
+    handlerView(item) {
+      if (item.news_url) {
+        this.$Router.push({ path: '/pages/index/webview', query: {url: item.news_url } });
+      }else{
+        $Router.push({path: '/pages/dynamic/detail', query: { id: item.id } })
+      }
+    },
     getList(data) {
       getDynamic(data).then(res => {
         this.list = this.list.concat(res.list)

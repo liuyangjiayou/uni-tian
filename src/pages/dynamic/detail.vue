@@ -1,15 +1,17 @@
 <template>
   <!--src="/static/images/bg1.png"-->
   <view-container back share title="新闻详情" customClass="dynamic-detail shadow2">
-    <view class="fs44 pb34 pt50">{{ details.title }}</view>
-    <view class="mb40">
-      <al-image width="24rpx" height="24rpx" src="/static/images/sc.png" @click.native="toProvin" />
-      <text class="text-color-gray fs26 ml28">{{ details.publish_time }}</text>
-    </view>
-    <divider height="1rpx" />
-    <view class="dynamic-detail-content">
-      <u-parse :content="details.content" />
-    </view>
+   <view>
+     <view class="fs44 pb34 pt50">{{ details.title }}</view>
+     <view class="mb40">
+       <al-image width="24rpx" height="24rpx" src="/static/images/sc.png" @click.native="toProvin" />
+       <text class="text-color-gray fs26 ml28">{{ details.publish_time }}</text>
+     </view>
+     <divider height="1rpx" />
+     <view class="dynamic-detail-content">
+       <u-parse :content="details.content" />
+     </view>
+   </view>
   </view-container>
 </template>
 

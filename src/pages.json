@@ -64,7 +64,7 @@
 		{
 			"path": "pages/rule/index",
 			"style": {
-				"navigationBarTitleText": "比赛规则 项目列表"
+				"navigationBarTitleText": "比赛规则"
 			}
 		},
 		{
@@ -76,7 +76,7 @@
 		{
 			"path": "pages/process/index",
 			"style": {
-				"navigationBarTitleText": "比赛进程"
+				"navigationBarTitleText": "赛事进程"
 			}
 		},
 		{
@@ -179,7 +179,7 @@
 		]
 	},
 	"globalStyle": {
-		"navigationStyle": "custom",
+		"navigationStyle": "default",
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",

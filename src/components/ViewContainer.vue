@@ -1,12 +1,16 @@
 <template>
 <view>
   <view v-if="head || src || $slots.header" class="web-header fs0">
-    <view v-if="head" :style="[headStyle]">
-      <cover-view :class="['border-box flex align-center px20', 'title-wrap2']" :style="[titleStyle]">
-        <cover-image v-if="back" src="/static/images/back.png" class="pr20" :mode="mode" :style="{ width: '20rpx', height: '35rpx', padding: '0 10px 0 5px' }" @click.native="backFn" ></cover-image>
-        <cover-view :class="['flex flex-1 fs34', titleAlign]" @click.native="back ? backFn() : null">{{title}}</cover-view>
-      </cover-view>
-    </view>
+    <!--<view v-if="head" :style="[headStyle]">-->
+      <!--<cover-view :class="['border-box flex align-center px20', 'title-wrap2']" :style="[titleStyle]">-->
+      <!--  <cover-image v-if="back" src="/static/images/back.png" class="pr20" :mode="mode" :style="{ width: '20rpx', height: '35rpx', padding: '0 10px 0 5px' }" @click.native="backFn" ></cover-image>-->
+      <!--  <cover-view :class="['flex flex-1 fs34', titleAlign]" @click.native="back ? backFn() : null">{{title}}</cover-view>-->
+      <!--</cover-view>-->
+      <!--<view :class="['border-box flex align-center px20', 'title-wrap2']" :style="[titleStyle]">-->
+      <!--  <cover-image v-if="back" src="/static/images/back.png" class="pr20" :mode="mode" :style="{ width: '20rpx', height: '35rpx', padding: '5rpx 10rpx 5rpx 5rpx' }" @click.native="backFn" ></cover-image>-->
+      <!--  <cover-view :class="['flex flex-1 fs34', titleAlign]" @click.native="back ? backFn() : null">{{title}}</cover-view>-->
+      <!--</view>-->
+    <!--</view>-->
     <view v-if="src"><al-image width="100%" :height="srcHeight" :src="src" /></view>
     <swiper
         v-if="banner.length"
@@ -165,6 +169,7 @@ export default {
     width: 100%;
     position: fixed;
     top: 0;
+    left: 0;
     z-index: 200;
     border-bottom: 2px solid rgb(239, 239, 239);
   }

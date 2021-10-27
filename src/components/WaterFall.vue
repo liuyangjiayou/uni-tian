@@ -6,8 +6,8 @@
       <view class="video-tag fs24">{{params.ranks_org_name || params.org_name}}</view>
     </view>
     <view class="px24 pb20">
-      <view class="fs26 mt20">{{ index }}、{{params[isUp? 'ranks_video_name_up':'ranks_video_name']}}</view>
-      <view class="fs22 text-color-gray mt10">{{params.ranks_name}}</view>
+      <!--<view class="fs26 mt20">{{ index }}、{{params[isUp? 'ranks_video_name_up':'ranks_video_name']}}</view>-->
+      <view class="fs22 text-color-gray mt10">{{ index }}、{{params.ranks_name}}</view>
       <view class="fs22 text-color-gray3 b2-1 inline-block p5 mt10">编号：{{params.id}}</view>
       <view v-if="vote" class="flex align-center justify-between mt10">
         <view class="flex flex-column">
