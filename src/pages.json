@@ -22,7 +22,7 @@
 		{
 			"path": "pages/index/start",
 			"style": {
-				"navigationBarTitleText": "河北省职工'云'上运动会"
+				"navigationBarTitleText": "河北省职工“云”上运动会"
 			}
 		},
 		{
@@ -34,7 +34,7 @@
 		{
 			"path": "pages/run/run",
 			"style": {
-				"navigationBarTitleText": "'云'端健步走"
+				"navigationBarTitleText": "“云”端健步走"
 			}
 		},
 		{
@@ -130,7 +130,7 @@
 		{
 			"path": "pages/index/webview",
 			"style": {
-				"navigationBarTitleText": "'云'端健步走"
+				"navigationBarTitleText": "“云”端健步走"
 			}
 		},
 		{

@@ -8,9 +8,9 @@
       <view>
         <slot />
       </view>
-      <view class="wrap-btn flex align-center">
-        <view  class="prev flex align-center justify-center" @click="handlerSub">{{ prev }}</view>
-        <view class="next flex align-center justify-center" @click="handlerNext">{{ next }}</view>
+      <view class="wrap-btn flex align-center py20">
+        <!--<view  class="prev flex align-center justify-center" @click="handlerSub">{{ prev }}</view>-->
+        <!--<view class="next flex align-center justify-center" @click="handlerNext">{{ next }}</view>-->
       </view>
       <view class="close-image">
         <al-image width="48rpx" height="48rpx" src="/static/images/answer-close.png" @click.native="close" />

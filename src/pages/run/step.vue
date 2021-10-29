@@ -229,11 +229,12 @@ export default {
     handlerStep(){
       if (this.data.left_dk_times === 0) return false;
       getStepAnswer().then(res => {
-        this.answerData = res.data;
-        this.answertime = res.answertime;
-        this.data.left_dk_times = this.data.left_dk_times--
+        this.dialogVisible = true
+        // this.answerData = res.data;
+        // this.answertime = res.answertime;
+        // this.data.left_dk_times = this.data.left_dk_times--
       })
-      this.dialogVisible = true
+
     }
   }
 }
