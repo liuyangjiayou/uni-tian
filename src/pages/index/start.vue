@@ -24,7 +24,12 @@ export default {
     };
   },
   onLoad() {
+    //#ifdef H5
+    this.barH = this.customBar+10;
+    //#endif
+    // #ifdef MP_WEIXIN
     this.barH = this.customBar;
+    // #endif
     start().then(res => {
       this.info = res;
       // if(!this.info.start_the_thumb) this.info.start_the_thumb = '/static/images/start.png';

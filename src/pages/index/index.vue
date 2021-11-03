@@ -78,7 +78,13 @@ export default {
       const url = data.url;
       if (!url) return
       if (url.indexOf('http') > -1) {
+        // #ifdef H5
+        location.href = url;
+        // #endif
+        // #ifdef MP-WEIXIN
         this.$Router.push({ path: '/pages/index/webView', query: { url: url } })
+        // #endif
+
       } else {
         this.$Router.push({ path: url })
       }

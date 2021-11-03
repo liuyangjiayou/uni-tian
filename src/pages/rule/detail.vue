@@ -1,6 +1,6 @@
 {<template>
   <view-container back :title="info.pro_name">
-    <view class="art-title fs34 text-bold">
+    <view class="art-title fs40 text-bold">
       <text>{{info.pro_name}}</text>
     </view>
     <view v-if="info['gz_url']" class="fs0 mt10">
@@ -43,7 +43,6 @@ export default {
 <style lang="scss" scoped>
 .art-title {
   padding: 8rpx 0 0;
-  background: url("~@/static/images/bg2.png") center top no-repeat;
   background-size: 220rpx 24rpx;
   text-align: center;
   text {

@@ -52,6 +52,9 @@ export default {
   },
   onLoad() {
     this.barH = this.customBar;
+    uni.setNavigationBarTitle({
+      title:"市级比赛"
+    })
     console.log('onLoad match2');
     this.query = this.$Route.query;
     this.params = {...this.query};

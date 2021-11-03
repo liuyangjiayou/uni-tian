@@ -16,7 +16,7 @@
           // #endif
 
           // #ifdef H5
-          Vue.prototype.customBar = 40
+          Vue.prototype.customBar = 70
           // #endif
         }
       });

@@ -10,13 +10,13 @@
       </view>
     </view>
     <divider height="1rpx" />
-    <view class="mt30">简介</view>
+<!--    <view class="mt30">简介</view>-->
     <view :class="[flag ? 'view-detail' : '']">
       <rich-text :nodes="info.pro_desc"></rich-text>
     </view>
     <view class="more-info flex align-center flex-column mt10" @click="flag = !flag">
-      <view>{{flag?'收起':'查看更多'}}</view>
-      <al-image width="18rpx" height="19rpx" :src="require('@/static/images/more'+(flag?'':'1')+'.png')" />
+      <view>{{flag?'查看更多':'收起'}}</view>
+      <al-image width="18rpx" height="19rpx" :src="require('@/static/images/more'+(flag?'1':'')+'.png')" />
     </view>
     <divider height="1rpx" />
     <template v-if="query.pro_type == 2 || query.pro_type == 1">
@@ -29,7 +29,7 @@
     <view class="my30">赛事回放</view>
     <view>
       <view-list v-if="info.pro_list.length" ref="list" :list="info.pro_list" @play="play" />
-      <view v-else class="fs26 py20 text-center text-color-gray">暂无参加队伍</view>
+      <view v-else class="fs26 py20 text-center text-color-gray">暂无视频</view>
     </view>
 <!--    <view v-if="show" class="video-wrap" :style="{top: barH + 'px'}" @click="() => {show = false}">
       <video id="myVideo" :src="src" enable-danmu danmu-btn controls @click.stop />
@@ -45,7 +45,7 @@ name: "index",
   data() {
     return {
       show: true,
-      flag: false,
+      flag: true,
       query: {},
       info: {},
       barH: 0,
@@ -59,6 +59,9 @@ name: "index",
       id: this.$Route.query.id
     }).then(res => {
       this.info = res;
+      uni.setNavigationBarTitle({
+        title:this.info.pro_name
+      })
       this.info.pro_desc = this.info.pro_desc
           .replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
           .replace(/<p([\s\w"=\/\.:;]+)((?:(class="[^"]+")))/ig, '<p')
