@@ -1,4 +1,4 @@
-{<template>
+<template>
   <view-container back :title="info.pro_name">
     <view class="art-title fs40 text-bold">
       <text>{{info.pro_name}}</text>

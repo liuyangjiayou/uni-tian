@@ -144,6 +144,12 @@
 			"style": {
 				"navigationBarTitleText": "今日步数"
 			}
+		},
+		{
+			"path": "pages/enroll/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
 	],
 	"condition": {

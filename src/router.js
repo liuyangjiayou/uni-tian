@@ -79,6 +79,9 @@ const router = createRouter({
         path: '/pages/run/step',
         name: 'step'
     },{
+        path: '/pages/enroll/index',
+        name: 'enroll'
+    },{
         path: '/',
         redirect: { name: 'init' },
     }]

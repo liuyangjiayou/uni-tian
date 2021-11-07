@@ -288,3 +288,10 @@ export const subAnswer = function ({ answer, test_id }) {
     })
 };
 
+//
+export const getRz = function () {
+    return http({
+        url: '/gonghui/rzpage',
+        method: 'POST',
+    })
+};
