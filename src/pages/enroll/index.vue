@@ -5,7 +5,7 @@
       <icon-title title="报名须知" />
     </view>
     <view :class="[flag ? 'view-detail' : '']">
-      <rich-text :nodes="info.bm_intro"></rich-text>
+      <rich-text :nodes="info.bm_intro" />
     </view>
     <view class="more-info flex align-center flex-column mt20" @click="flag = !flag">
       <view>{{flag?'查看更多':'收起'}}</view>
@@ -19,16 +19,16 @@
       <!-- 一般用法 -->
       <uni-card class="card" :isShadow="true">
         <uni-forms ref="form" :modelValue="formData" :rules="rules">
-          <uni-forms-item name="name">
+          <uni-forms-item name="acc">
             <view class="line">
               <al-image class="image" width="25rpx" height="29rpx" src="/static/icon/icon-account.png" />
-              <uni-easyinput type="text" v-model="formData.name" placeholder="请输入基层工会账号" />
+              <uni-easyinput type="text" v-model="formData.acc" placeholder="请输入基层工会账号" />
             </view>
           </uni-forms-item>
-          <uni-forms-item class="last-forms-item" name="pass">
+          <uni-forms-item class="last-forms-item" name="pwd">
             <view class="line">
               <al-image class="image" width="25rpx" height="29rpx" src="/static/icon/icon-pass.png" />
-              <uni-easyinput type="text" v-model="formData.pass" placeholder="请输入基层工会密码" />
+              <uni-easyinput type="text" v-model="formData.pwd" placeholder="请输入基层工会密码" />
             </view>
           </uni-forms-item>
         </uni-forms>
@@ -45,25 +45,25 @@
 </template>
 
 <script>
-import { getRz } from "../../api";
+import { getRz, setRz } from "../../api";
 export default {
   name: "detail",
   data() {
     return {
       info: {},
       formData: {
-        name: '',
-        pass: '',
+        acc: '',
+        pwd: '',
       },
       flag: true,
       rules: {
-        name: {
+        acc: {
           rules: [{
             required: true,
             errorMessage: '请输入基层工会账号',
           }]
         },
-        pass: {
+        pwd: {
           rules: [{
             required: true,
             errorMessage: '请输入基层工会密码',
@@ -88,6 +88,9 @@ export default {
     // 提交认证
     async submit() {
       await this.$refs.form.validate();
+      setRz(this.formData).then(res => {
+        console.log(res);
+      })
       console.log('提交表单')
     },
     // 跳转的到立即注册

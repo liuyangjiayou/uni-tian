@@ -288,10 +288,29 @@ export const subAnswer = function ({ answer, test_id }) {
     })
 };
 
-//
+// 认证页面
 export const getRz = function () {
     return http({
         url: '/gonghui/rzpage',
         method: 'POST',
     })
 };
+
+// 开始认证
+export const setRz = function (data) {
+    return http({
+        url: '/gonghui/rz',
+        method: 'POST',
+        data,
+    })
+};
+
+// 获取队伍成绩
+export const getTeamScore = function () {
+    return http({
+        url: '/user/newscores',
+        method: 'POST',
+    })
+};
+
+

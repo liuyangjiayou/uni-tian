@@ -150,37 +150,34 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},
+		{
+			"path": "pages/info/team",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/signUp/index",
+			"style": {
+				"navigationBarTitleText": "报名"
+			}
 		}
 	],
 	"condition": {
 		"current": 0,
-		"list": [{
-			"name": "score",
-			"path": "/pages/like/detail",
-			"query": "id=77"
-		},{
-			"name": "game",
-			"path": "/pages/game/list",
-			"query": "id=2"
-		},{
-			"name": "rank",
-			"path": "/pages/sport/rank",
-			"query": "id=11&type=1"
-		},
+		"list": [
 			{
-				"name": "sport",
-				"path": "/pages/sport/index",
-				"query": "id=2&pro_type=2&sport=%E9%99%86%E5%9C%B0%E5%86%B0%E7%90%83%E5%B0%84%E9%97%A8"
-			}
-		,
-			{
-				"name": "province",
-				"path": "/pages/like/provin",
-				"query": "id=2"
+				"name": "enroll",
+				"path": "/pages/enroll/index"
 			},
 			{
-				"name": "step",
-				"path": "/pages/run/step"
+				"name": "score-team",
+				"path": "/pages/info/team"
+			},
+			{
+				"name": "signUp",
+				"path": "pages/signUp/index"
 			}
 		]
 	},

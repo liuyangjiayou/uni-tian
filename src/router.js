@@ -82,6 +82,12 @@ const router = createRouter({
         path: '/pages/enroll/index',
         name: 'enroll'
     },{
+        path: "/pages/info/team",
+        name: 'score-team'
+    },{
+        path: "/pages/signUp/index",
+        name: 'signUp'
+    },{
         path: '/',
         redirect: { name: 'init' },
     }]
