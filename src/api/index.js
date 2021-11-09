@@ -313,4 +313,22 @@ export const getTeamScore = function () {
     })
 };
 
+// 获取sys
+export const getSYS = function () {
+    return http({
+        url: '/sys/getsts',
+        method: 'POST',
+    })
+};
+
+// 获取token
+export function getOssToken() {
+    return request({
+        url: '/v1/sys/getsts',
+        method: 'post',
+        customOptions: {
+            no_message: true
+        }
+    })
+}
 
