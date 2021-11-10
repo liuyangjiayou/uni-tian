@@ -23,7 +23,8 @@
       </uni-forms-item>
       <uni-forms-item name="pwd" label="报名视频">
         <view class="flex align-center">
-          <button class="update-btn" @click="uploadVid('./test_liuyang')">选择文件</button><text>未选择任何文件</text>
+          <button :class="['update-btn']" @click="uploadVid">{{ fileName ? '替换文件' : '选择文件' }}</button>
+          <text :class="[fileName ? 'isUp' : '']">{{ fileName || '未选择任何文件' }}</text>
         </view>
       </uni-forms-item>
       <uni-forms-item name="pwd" label="报名成绩">
@@ -37,9 +38,17 @@
 </template>
 
 <script>
-import { getSYS } from '@/api/index.js'
+import { getSYS, getSelect } from '@/api/index.js'
+import crypto from 'crypto-js';
+import { Base64 } from 'js-base64';
+
+function computeSignature(accessKeySecret, canonicalString) {
+  return crypto.enc.Base64.stringify(crypto.HmacSHA1(canonicalString, accessKeySecret));
+}
+
 // 添加文件名后缀方法，例如 .png
 function getSuffix(filename) {
+  console.log(filename, 'liuyang')
   let pos = filename.lastIndexOf('.');
   let suffix = '';
   if (pos !== -1) {
@@ -59,22 +68,31 @@ function getFileName(file, filename) {
 
 // 文件上传
 function fileUpload(type, path, stroeAs) {
+  console.log(stroeAs);
   uni.showLoading({
     title: '文件上传中'
   });
   return new Promise((resolve, reject) => {
     getSYS().then(res => {
-      var data = res?.[0] || {};
-      console.log(data, 'liuyang')
+      let data = res?.[0] || {};
+      const policyText = {
+        expiration: data.Expiration, // 设置policy过期时间。
+        conditions: [
+          // 限制上传大小。
+          ["content-length-range", 0, 1024 * 1024 * 1024],
+        ],
+      };
+      const policy = Base64.encode(JSON.stringify(policyText));
       uni.uploadFile({
-        url: 'http://jtyw-sghysydh.oss-cn-zhangjiakou.aliyuncs.com', //后台返回的阿里云存储的上传地址
+        url: 'https://jtyw-sghysydh.oss-cn-zhangjiakou.aliyuncs.com', //后台返回的阿里云存储的上传地址
         formData: {
           key: stroeAs, //文件名
-          policy: data.Expiration, //后台获取超时时间
+          policy: policy, //后台获取超时时间
           OSSAccessKeyId: data.AccessKeyId,
           success_action_status: '200', //让服务端返回200,不然，默认会返回204
-          signature: data.AccessKeySecret,
+          signature: computeSignature(data.AccessKeySecret, policy) ,
           secure: true,
+          'x-oss-security-token': data.SecurityToken
         },
         filePath: path,
         fileType: type,
@@ -86,7 +104,10 @@ function fileUpload(type, path, stroeAs) {
             icon: 'success',
             duration: 2000
           });
-          resolve(data.host + stroeAs) // 返回保存在阿里oss上的地址
+          resolve({
+            stroeAs: data.host + stroeAs,
+            path: path,
+          }) // 返回保存在阿里oss上的地址
         },
         fail: err => {
           reject(err)
@@ -114,30 +135,31 @@ export default {
         pwd: '',
       },
       dataObj: null,
+      fileName: '',
     }
+  },
+  onLoad(){
+    getSelect().then(res => {
+      this.race = res.list;
+      console.log(res.list, 'lkiuyang');
+    })
   },
   methods: {
     bindPickerChange(e){
       this.raceIndex = e.detail.value
     },
-    uploadVid(file) {
+    uploadVid() {
+      const _self = this;
       return new Promise((resolve, reject) => {
         uni.chooseVideo({
           count: 1,
           sourceType: ['camera', 'album'],
           success: function(res) {
             let videoSrc = res.tempFilePath;
-            if (res.size > 1024 * 1024 * 15) {
-              uni.showToast({
-                title: '文件大小超过系统上传限制：15M',
-                icon: 'none',
-                duration: 1000
-              });
-              return;
-            }
-            let fileName = getFileName("video", file, videoSrc);
+            let reg = /\.\w+$/g
+            let fileName = getFileName("zuopin/", videoSrc.match(reg)[0] || '.mp4', videoSrc);
             fileUpload("video",videoSrc, fileName).then(res => {
-              resolve(res)
+              _self.fileName = '上传成功';
             }).catch(err => {
               reject(err)
             });
@@ -153,57 +175,6 @@ export default {
         })
       })
     },
-    uploadFile(){
-      var self = this;
-      uni.chooseVideo({
-        count: 1,
-        sourceType: ['camera', 'album'],
-        success:  (res) => {
-          self.src = res.tempFilePath;
-          // 分片上传文件
-          const client = Client(this.dataObj);
-          console.log(res);
-          client.multipartUpload('test_liuyang', res.tempFile, {
-            checkpoint: this.checkpoint,
-            progress: async function(p, cpt) {
-              // this.checkpoint = cpt
-              // const e = {}
-              // e.percent = p * 100
-              // option.onProgress(e)
-              console.log(p, cpt, 1)
-            }
-          }).then(({ res }) => {
-            if (res.statusCode === 200) {
-              // option.onSuccess(random_name)
-              console.log('上传成功', 2, res)
-              return res
-            } else {
-              // vm.disabled = false
-              // option.onError('上传失败')
-            }
-          }).catch(error => {
-            // console.error(error)
-            // vm.disabled = false
-            // option.onError('上传失败')
-          })
-          // AccessKeyId: "STS.NU6LCTr9bGRHSrLLVMwtTr1Mx"
-          // AccessKeySecret: "HsiHHrCXKWrBMZeVtdjp5YALt8e361MScsu35q4pMHyv"
-          // Expiration: "2021-11-09T14:48:40Z"
-          // SecurityToken:
-          // uni.uploadFile({
-          //   url: 'https://www.example.com/upload', //仅为示例，非真实的接口地址
-          //   filePath: res.tempFilePath,
-          //   name: 'file',
-          //   formData: {
-          //     'user': 'test'
-          //   },
-          //   success: (uploadFileRes) => {
-          //     console.log(uploadFileRes.data);
-          //   }
-          // });
-        }
-      });
-    }
   }
 }
 </script>
@@ -231,6 +202,13 @@ export default {
   background: #7d7d7d;
   color: #fff;
 }
+.isUp{
+  color: #4cd964;
+}
+/*.update-btn.isUp{*/
+/*  background: #4cd964;*/
+/*  color: #fff;*/
+/*}*/
 .sub-btn{
   background: #27a5e6;
 }

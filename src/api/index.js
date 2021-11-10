@@ -321,10 +321,10 @@ export const getSYS = function () {
     })
 };
 
-// 获取token
-export function getOssToken() {
-    return request({
-        url: '/v1/sys/getsts',
+// 获取项目
+export function getSelect() {
+    return http({
+        url: '/pro/getlist',
         method: 'post',
         customOptions: {
             no_message: true
